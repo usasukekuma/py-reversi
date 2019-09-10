@@ -81,7 +81,7 @@ class game_master(Board):
     def player_print(self, hand):
         print(hand + '番です')
 
-    def end(self,name):
+    def end(self):
             self.winner = None
             score_W = 0
             score_B = 0
@@ -103,9 +103,6 @@ class game_master(Board):
                 judge = '白の勝ち'
                 self.winner = b_LOSE
             print('黒{:d},白{:d}\n{}です。'.format(score_B, score_W, judge))
-            print(name+'として保存中')
-            self.save_list(name)
-            return self.winner
 
     def make_list(self, act_x):
         x, y = act_x
