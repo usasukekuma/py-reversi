@@ -39,7 +39,7 @@ othello = random_player()
 othello.view()
 turn = BLACK
 X1_ = [othello.board_copy()]
-serializers.load_npz('reversi_model.npz', model)
+serializers.load_npz('othello_model.npz', model)
 X1 = np.array(X1_, dtype=np.float32)
 y1 = F.softmax(model.predictor(X1))
 print("y1"+str(y1.data.argmax(1)))
