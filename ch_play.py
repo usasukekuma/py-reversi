@@ -69,7 +69,7 @@ for k in range(0, 100):
             if put_B == 0:
              t_x, t_y = 0, 0
             elif put_B == 65:
-                if othello.can_put_list(BLACK) is []:
+                if othello.can_put_list(BLACK) == []:
                     print('ERROR')
                     break
                 else:

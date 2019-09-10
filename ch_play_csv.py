@@ -46,31 +46,35 @@ for_convert = [(0,0),(1,0),(2,0),(3,0),(4,0),(5,0),(6,0),(7,0),
                (0,6),(1,6),(2,6),(3,6),(4,6),(5,6),(6,6),(7,6),
                (0,7),(1,7),(2,7),(3,7),(4,7),(5,7),(6,7),(7,7)]
 
+B_winner_count = 0
+W_winner_count = 0
+loop_time = 100
 # ゲーム開始
-for n in range(0,100):
+for n in range(0,loop_time):
     othello = random_player()
     othello.view()
     turn = BLACK
-    B_winner_count = 0
-    W_winner_count = 0
-    for i in range(0, 60):
+    i = 0
+    while not othello.can_put_list(BLACK) == [] and not othello.can_put_list(WHITE) == []:
         turn = othello.player_check(i)
         #  chain_player
         if turn == BLACK:
             cu_board = [othello.board_copy()]
             hand = '黒の'
             othello.player_print(hand)
+            okerundesu = othello.can_put_list(BLACK)
+            print(okerundesu)
             print('思考中')
             serializers.load_npz('othello_model.npz', model)
             X1 = np.array(cu_board, dtype=np.float32)
             y1 = F.softmax(model.predictor(X1))
             #  ↑学習モデルをもとに手を算出
             put_B = int((y1.data.argmax(1)))
-            print(type(put_B))
             print("BLACK=" + str(put_B))
             #  パスが出力されたら？本当にパス？
-            if put_B == 65:
-                if othello.can_put_list(BLACK) == []:
+            if put_B == 64:  # 出力６４はパス
+                if okerundesu == []:
+                    #  そもそもplayer_checkで弾かれるはず
                     print('ERROR')
                     sys.exit()
                 else:
@@ -80,35 +84,35 @@ for n in range(0,100):
             else:
                 t_x, t_y = for_convert[put_B]
                 print('('+str(t_x)+','+str(t_y)+')'+'でチェック')
-                if set([(t_x, t_y)]) & set(othello.can_put_list(BLACK)) is not []:
+                if not list(set([(t_x, t_y)]) & set(okerundesu)) == []:
                     x, y = t_x, t_y
                 #  pass動作
                 else:
-                    if othello.can_put_list(BLACK) == []:
+                    if okerundesu == []:
                         print('ERROR')
                         sys.exit()
                     else:
                         print('ランダムに選択されました')
                         x, y = othello.random_action(BLACK)
-
         #  random
         else:
             hand = '白の'
             othello.player_print(hand)
             t_x, t_y = othello.random_action(WHITE)
-            if set([(t_x, t_y)]) & set(othello.can_put_list(WHITE)) is not []:
+            if not list(set([(t_x, t_y)]) & set(othello.can_put_list(WHITE))) == []:
                 x, y = t_x, t_y
             else:
                 print('ERROR')
                 sys.exit()
         othello.put_stone(x, y, turn)
         othello.view()
+        i += 1
     tmp_w = othello.end()
     if tmp_w == b_LOSE:
-        W_winner_count +=1
+        W_winner_count += 1
     elif tmp_w == b_WIN:
         B_winner_count += 1
         continue
-print('黒'+str(B_winner_count)+'、白'+str(W_winner_count)+'\n黒の勝率は'+(B_winner_count/100)+'です')
+print('黒'+str(B_winner_count)+'、白'+str(W_winner_count)+'\n黒の勝率は'+str((B_winner_count/loop_time)*100)+'%です')
 
 
