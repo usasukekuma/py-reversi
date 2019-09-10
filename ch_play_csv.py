@@ -36,6 +36,7 @@ class Classfilter(Chain):
 
 model = Classfilter(Revchain())
 
+
 for_convert = [(0,0),(1,0),(2,0),(3,0),(4,0),(5,0),(6,0),(7,0),
                (0,1),(1,1),(2,1),(3,1),(4,1),(5,1),(6,1),(7,1),
                (0,2),(1,2),(2,2),(3,2),(4,2),(5,2),(6,2),(7,2),
@@ -46,10 +47,12 @@ for_convert = [(0,0),(1,0),(2,0),(3,0),(4,0),(5,0),(6,0),(7,0),
                (0,7),(1,7),(2,7),(3,7),(4,7),(5,7),(6,7),(7,7)]
 
 # ゲーム開始
-for k in range(0, 100):
+for n in range(0,100):
     othello = random_player()
     othello.view()
     turn = BLACK
+    B_winner_count = 0
+    W_winner_count = 0
     for i in range(0, 60):
         turn = othello.player_check(i)
         #  chain_player
@@ -65,30 +68,47 @@ for k in range(0, 100):
             put_B = int((y1.data.argmax(1)))
             print(type(put_B))
             print("BLACK=" + str(put_B))
-            #  ↓出た手がルールに乗っとているかどうか
-            if put_B == 0:
-             t_x, t_y = 0, 0
-            elif put_B == 65:
-                if othello.can_put_list(BLACK) is []:
+            #  パスが出力されたら？本当にパス？
+            if put_B == 65:
+                if othello.can_put_list(BLACK) == []:
                     print('ERROR')
-                    break
+                    sys.exit()
                 else:
-                    x, y = othello.random_action(BLACK)
+                    print('ランダムに選択されました')
+                    othello.random_action(BLACK)
+            #  パスじゃないなら手が本当に打てるてか？
             else:
                 t_x, t_y = for_convert[put_B]
-            if (t_x,t_y) in othello.can_put_list(BLACK) == True:
-                x, y = t_x, t_y
-            else:
-                x, y = othello.random_action(BLACK)
+                print('('+str(t_x)+','+str(t_y)+')'+'でチェック')
+                if set([(t_x, t_y)]) & set(othello.can_put_list(BLACK)) is not []:
+                    x, y = t_x, t_y
+                #  pass動作
+                else:
+                    if othello.can_put_list(BLACK) == []:
+                        print('ERROR')
+                        sys.exit()
+                    else:
+                        print('ランダムに選択されました')
+                        x, y = othello.random_action(BLACK)
+
+        #  random
         else:
             hand = '白の'
             othello.player_print(hand)
-            x, y = othello.random_action(turn)
+            t_x, t_y = othello.random_action(WHITE)
+            if set([(t_x, t_y)]) & set(othello.can_put_list(WHITE)) is not []:
+                x, y = t_x, t_y
+            else:
+                print('ERROR')
+                sys.exit()
         othello.put_stone(x, y, turn)
         othello.view()
-    othello.end()
-
-
-
+    tmp_w = othello.end()
+    if tmp_w == b_LOSE:
+        W_winner_count +=1
+    elif tmp_w == b_WIN:
+        B_winner_count += 1
+        continue
+print('黒'+str(B_winner_count)+'、白'+str(W_winner_count)+'\n黒の勝率は'+(B_winner_count/100)+'です')
 
 

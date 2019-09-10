@@ -1,2 +1,9 @@
-s = [[0 for col in range(8)]for row in range(8)]
-print(s)
+def p():
+    s = [8]
+    return s
+n = 8
+x = 9
+if  p() is not  []:
+    print('OK')
+else:
+    print('ERROR')

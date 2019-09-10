@@ -64,16 +64,12 @@ class game_master(Board):
 
     def player_check(self, i):
         if i % 2 == 0:
-            turn = BLACK
-        else:
-            turn = WHITE
-        if turn is BLACK:
-            if self.can_put_list(turn) is []:
+            if self.can_put_list(BLACK) == []:
                 return WHITE
             else:
                 return BLACK
         else:
-            if self.can_put_list(turn) is []:
+            if self.can_put_list(WHITE) == []:
                 return BLACK
             else:
                 return WHITE
@@ -103,6 +99,9 @@ class game_master(Board):
                 judge = '白の勝ち'
                 self.winner = b_LOSE
             print('黒{:d},白{:d}\n{}です。'.format(score_B, score_W, judge))
+            return self.winner
+
+
 
     def make_list(self, act_x):
         x, y = act_x
