@@ -59,4 +59,6 @@ for n in range(0, battle_time):
         othello.view()
         i += 1
 
+save_list(othello, file_name)
+
 
