@@ -5,6 +5,7 @@ import numpy as np
 b_WIN = 100
 b_LOSE = -100
 DRAW = 50
+PASS = 3
 
 class game_master(Board):
     def put_stone(self, x, y, player):  # 石を置くメソッド
@@ -65,14 +66,14 @@ class game_master(Board):
     def player_check(self, i):
         if i % 2 == 0:
             if self.can_put_list(BLACK) == []:
-                return WHITE
+                return WHITE, PASS
             else:
-                return BLACK
+                return BLACK, 4
         else:
             if self.can_put_list(WHITE) == []:
-                return BLACK
+                return BLACK, PASS
             else:
-                return WHITE
+                return WHITE, 4
 
     def player_print(self, hand):
         print(hand + '番です')
@@ -100,27 +101,6 @@ class game_master(Board):
                 self.winner = b_LOSE
             print('黒{:d},白{:d}\n{}です。'.format(score_B, score_W, judge))
             return self.winner
-
-
-
-    def make_list(self, act_x):
-        x, y = act_x
-        if x == 0 and y == 0:
-            c = 0
-        elif act_x is None:
-            c = 65
-        else:
-            c = x+(8*y)
-        tmp = np.array(self.board_copy())
-        current_board = tmp.flatten()
-        self.game_list.append(current_board)
-        self.game_list.append(c)
-
-    def save_list(self, name):
-        end_file = self.game_list
-        with open(name+'.csv', 'w') as f:
-            writer = csv.writer(f)
-            writer.writerow(end_file)
 
 
 
