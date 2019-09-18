@@ -20,6 +20,7 @@ def save_list(self, name):
         writer = csv.writer(f)
         writer.writerow(end_file)
 
+
 print('学習用ファイル（ランダムバージョン）をつくるなっしー\n試合数を選ぶなっしー:')
 battle_time = input(int())
 print(str(battle_time)+'回試合でつくるなっしー')
@@ -27,15 +28,14 @@ print('ファイル名をきめるなっしー:')
 file_name = input()
 print(str(file_name)+'で保存するなっしー')
 
+
 for n in range(0, battle_time):
     othello = random_player()
     othello.view()
     turn = BLACK
     i = 0
     while not othello.can_put_list(BLACK) == [] and not othello.can_put_list(WHITE) == []:
-        turn, PASS_ = othello.player_check(i)
-        if PASS_ == PASS:
-            act_x = PASS
+        turn = othello.player_check(i)
         if turn == BLACK:
             hand = '黒の'
             othello.player_print(hand)
@@ -43,9 +43,8 @@ for n in range(0, battle_time):
             if not list(set([(t_x, t_y)]) & set(othello.can_put_list(BLACK))) == []:
                 x, y = t_x, t_y
             else:
-                print('ERROR')
-                sys.exit()
-
+                i += 1
+                
         elif turn == WHITE:
             hand = '白の'
             othello.player_print(hand)

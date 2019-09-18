@@ -65,15 +65,9 @@ class game_master(Board):
 
     def player_check(self, i):
         if i % 2 == 0:
-            if self.can_put_list(BLACK) == []:
-                return WHITE, PASS
-            else:
-                return BLACK, 4
+            return BLACK
         else:
-            if self.can_put_list(WHITE) == []:
-                return BLACK, PASS
-            else:
-                return WHITE, 4
+             return WHITE, 4
 
     def player_print(self, hand):
         print(hand + '番です')
