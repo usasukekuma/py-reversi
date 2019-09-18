@@ -102,11 +102,3 @@ class game_master(Board):
             print('黒{:d},白{:d}\n{}です。'.format(score_B, score_W, judge))
             return self.winner
 
-
-
-if __name__ == "__main__":
-    othello = game_master()
-    othello.view()
-    list0 = othello.turn_over_list(2,3,BLACK)
-    list1 = othello.can_put_list(BLACK)
-    print(list0,list1)
