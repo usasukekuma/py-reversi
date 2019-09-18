@@ -1,6 +1,6 @@
 import random
 
-def random_action(can_put_list):
+def random_action(can_put_list, trash_0):
     act_x = random.choice(can_put_list)
     print(act_x)
     return act_x

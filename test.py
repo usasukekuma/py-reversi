@@ -9,6 +9,8 @@ def random_action(can_put_list):
     return act_x
 
 player_1 = random_action
-a = [1,2,3,4,5]
-for n in range (0,3):
-    player_1(a)
+a = []
+if a == []:
+    print('nassyi')
+elif not a == []:
+    print('pyon')

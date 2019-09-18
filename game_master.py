@@ -1,6 +1,6 @@
 from board import *
-import sys
 from random_player import *
+from ch_play import *
 import csv
 import pandas as pd
 import numpy as np
@@ -100,7 +100,10 @@ class game_master(Board):
 
 
 if __name__ == "__main__":
-    print('オセロゲームなっし\nモードを指定するなっし\n試合ファイルを作るなっし→0を入力1\nランダムvsランダムなっし→1を入力')
+    B_winner_count = 0
+    W_winner_count = 0
+    print('オセロゲームなっし\nモードを指定するなっし\n試合ファイルを作るなっし→0を入力1\nランダム　vs　ランダムなっし→1を入力')
+    print('deepくん　VS　ランダムくん→2')
     game_mode = int(input())
     if game_mode == 0:
         sys.exit()
@@ -108,7 +111,10 @@ if __name__ == "__main__":
         print('ランダムVSランダムで実行するなっし')
         player_1 = random_action
         player_2 = random_action
-        print('ok')
+        print('OK')
+    elif game_mode == 2:
+        player_1 = ch_player
+        player_2 = random_action
     print('試合数を選ぶなっし(0以外を入力してくださいなっし)')
     battle_time = int(input())
     for n in range(0, battle_time):
@@ -119,24 +125,24 @@ if __name__ == "__main__":
             turn = othello.player_check(i)
             #  黒のターン
             if turn == BLACK:
+                current_board = [othello.board_copy()]
                 hand = '黒の'
                 othello.player_print(hand)
                 can_put_list = othello.can_put_list(BLACK)
-                t_x, t_y = player_1(can_put_list)
-                if not list(set([(t_x, t_y)]) & set(othello.can_put_list(BLACK))) == []:
-                    x, y = t_x, t_y
+                if not can_put_list == []:
+                    x, y = player_1(can_put_list, current_board)
                 else:
                     i += 1
                     nya = 65
                     continue
             #  白のターン
             elif turn == WHITE:
+                current_board = [othello.board_copy()]
                 hand ='白の'
                 othello.player_print(hand)
                 can_put_list = othello.can_put_list(WHITE)
-                t_x, t_y = player_2(can_put_list)
-                if not list(set([(t_x, t_y)]) & set(othello.can_put_list(WHITE))) == []:
-                    x, y = t_x, t_y
+                if not can_put_list == []:
+                    x, y = player_2(can_put_list, current_board)
                 else:
                     i += 1
                     nya = 65
@@ -144,6 +150,14 @@ if __name__ == "__main__":
             othello.put_stone(x, y, turn)
             othello.view()
             i += 1
+        tmp_w = othello.end()
+        if tmp_w == b_LOSE:
+            W_winner_count += 1
+        elif tmp_w == b_WIN:
+            B_winner_count += 1
+            continue
+    print(str(battle_time)+'回の試合が終了しました。\n勝率は...\n黒:'+str((B_winner_count/battle_time)*100)+'%です。')
+    print('白:'+str((W_winner_count/battle_time)*100)+'%です。')
 
 
 

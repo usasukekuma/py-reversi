@@ -1,5 +1,6 @@
 import sys
 import numpy as np
+import random
 import chainer
 from chainer import cuda, Function, gradient_check, report, training, utils, Variable
 from chainer import datasets, iterators, optimizers, serializers
@@ -7,7 +8,6 @@ from chainer import Link, Chain, ChainList
 import chainer.functions as F
 import chainer.links as L
 from chainer.training import extensions
-from random_player import *
 
 
 class Revchain(Chain):
@@ -45,48 +45,37 @@ for_convert = [(0,0),(1,0),(2,0),(3,0),(4,0),(5,0),(6,0),(7,0),
                (0,6),(1,6),(2,6),(3,6),(4,6),(5,6),(6,6),(7,6),
                (0,7),(1,7),(2,7),(3,7),(4,7),(5,7),(6,7),(7,7)]
 
-# ゲーム開始
-for k in range(0, 100):
-    othello = random_player()
-    othello.view()
-    turn = BLACK
-    for i in range(0, 60):
-        turn = othello.player_check(i)
-        #  chain_player
-        if turn == BLACK:
-            cu_board = [othello.board_copy()]
-            hand = '黒の'
-            othello.player_print(hand)
-            print('思考中')
-            serializers.load_npz('othello_model.npz', model)
-            X1 = np.array(cu_board, dtype=np.float32)
-            y1 = F.softmax(model.predictor(X1))
-            #  ↑学習モデルをもとに手を算出
-            put_B = int((y1.data.argmax(1)))
-            print(type(put_B))
-            print("BLACK=" + str(put_B))
-            #  ↓出た手がルールに乗っとているかどうか
-            if put_B == 0:
-             t_x, t_y = 0, 0
-            elif put_B == 65:
-                if othello.can_put_list(BLACK) == []:
-                    print('ERROR')
-                    break
-                else:
-                    x, y = othello.random_action(BLACK)
-            else:
-                t_x, t_y = for_convert[put_B]
-            if (t_x,t_y) in othello.can_put_list(BLACK) == True:
-                x, y = t_x, t_y
-            else:
-                x, y = othello.random_action(BLACK)
+def ch_player(can_put_list,current_board):
+    serializers.load_npz('othello_model.npz', model)
+    X1 = np.array(current_board, dtype=np.float32)
+    y1 = F.softmax(model.predictor(X1))
+    put_st = int((y1.data.argmax(1)))
+    #  出力がパスのとき
+    if put_st == 64:
+        #  本当にパスならばプレイヤーが呼び出される前にスキップされるはず
+        if  can_put_list == []:
+            print('ERROR')
+            sys.exit()
+        #  予測はパスだけど、打てる手がある場合（予測は完璧じゃない）
         else:
-            hand = '白の'
-            othello.player_print(hand)
-            x, y = othello.random_action(turn)
-        othello.put_stone(x, y, turn)
-        othello.view()
-    othello.end()
+            print('不可能なパスが出力されたため、ランダムに選択されました')
+            act_x = random.choice(can_put_list)
+            return act_x
+    #  予測でパスじゃないなら手が本当に打てるてか？
+    else:
+        t_x, t_y = for_convert[put_st]  # 0~63を座標に変換
+        print('(' + str(t_x) + ',' + str(t_y) + ')' + 'でチェック')
+        if not list(set([(t_x, t_y)]) & set(can_put_list)) == []:
+            #  予測の結果が、打てる手リストに存在するならそのまま
+            return t_x, t_y
+        # 手は出力されたが、おける場所ではなかった場合
+        elif not can_put_list == []:
+            print('不可能な手が出力されたため、ランダムに選択されました')
+            act_x = random.choice(can_put_list)
+            return act_x
+        else:
+            print('ルールエラー。')
+
 
 
 
