@@ -1,4 +1,6 @@
 from board import *
+import sys
+from random_player import *
 import csv
 import pandas as pd
 import numpy as np
@@ -67,7 +69,7 @@ class game_master(Board):
         if i % 2 == 0:
             return BLACK
         else:
-             return WHITE, 4
+            return WHITE
 
     def player_print(self, hand):
         print(hand + '番です')
@@ -95,4 +97,56 @@ class game_master(Board):
                 self.winner = b_LOSE
             print('黒{:d},白{:d}\n{}です。'.format(score_B, score_W, judge))
             return self.winner
+
+
+if __name__ == "__main__":
+    print('オセロゲームなっし\nモードを指定するなっし\n試合ファイルを作るなっし→0を入力1\nランダムvsランダムなっし→1を入力')
+    game_mode = int(input())
+    if game_mode == 0:
+        sys.exit()
+    elif game_mode == 1:
+        print('ランダムVSランダムで実行するなっし')
+        player_1 = random_action
+        player_2 = random_action
+        print('ok')
+    print('試合数を選ぶなっし(0以外を入力してくださいなっし)')
+    battle_time = int(input())
+    for n in range(0, battle_time):
+        othello = game_master()
+        othello.view()
+        i = 0
+        while not othello.can_put_list(BLACK) == [] and not othello.can_put_list(WHITE) == []:
+            turn = othello.player_check(i)
+            #  黒のターン
+            if turn == BLACK:
+                hand = '黒の'
+                othello.player_print(hand)
+                can_put_list = othello.can_put_list(BLACK)
+                t_x, t_y = player_1(can_put_list)
+                if not list(set([(t_x, t_y)]) & set(othello.can_put_list(BLACK))) == []:
+                    x, y = t_x, t_y
+                else:
+                    i += 1
+                    nya = 65
+                    continue
+            #  白のターン
+            elif turn == WHITE:
+                hand ='白の'
+                othello.player_print(hand)
+                can_put_list = othello.can_put_list(WHITE)
+                t_x, t_y = player_2(can_put_list)
+                if not list(set([(t_x, t_y)]) & set(othello.can_put_list(WHITE))) == []:
+                    x, y = t_x, t_y
+                else:
+                    i += 1
+                    nya = 65
+                    continue
+            othello.put_stone(x, y, turn)
+            othello.view()
+            i += 1
+
+
+
+
+
 
