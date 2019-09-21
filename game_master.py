@@ -133,6 +133,8 @@ if __name__ == "__main__":
     print('試合数を選ぶなっし(0以外を入力してくださいなっし)')
     battle_time = int(input())
     print(str(p_b)+'VS'+str(p_w)+'の'+str(battle_time)+'回の試合を開始するなっしー！')
+
+    #  ゲーム開始
     for n in range(0, battle_time):
         othello = game_master()
         othello.view()
