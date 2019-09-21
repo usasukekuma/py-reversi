@@ -1,4 +1,4 @@
-from random_player import *
+from game_master import *
 import sys
 
 def make_list(self, act_x):
@@ -28,35 +28,6 @@ print('ファイル名をきめるなっしー:')
 file_name = input()
 print(str(file_name)+'で保存するなっしー')
 
-
-for n in range(0, battle_time):
-    othello = random_player()
-    othello.view()
-    turn = BLACK
-    i = 0
-    while not othello.can_put_list(BLACK) == [] and not othello.can_put_list(WHITE) == []:
-        turn = othello.player_check(i)
-        if turn == BLACK:
-            hand = '黒の'
-            othello.player_print(hand)
-            t_x, t_y = othello.random_action(BLACK)
-            if not list(set([(t_x, t_y)]) & set(othello.can_put_list(BLACK))) == []:
-                x, y = t_x, t_y
-            else:
-                i += 1
-                
-        elif turn == WHITE:
-            hand = '白の'
-            othello.player_print(hand)
-            t_x, t_y = othello.random_action(WHITE)
-            if not list(set([(t_x, t_y)]) & set(othello.can_put_list(WHITE))) == []:
-                x, y = t_x, t_y
-            else:
-                print('ERROR')
-                sys.exit()
-        othello.put_stone(x, y, turn)
-        othello.view()
-        i += 1
 
 save_list(othello, file_name)
 
