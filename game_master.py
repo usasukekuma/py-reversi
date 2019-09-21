@@ -1,6 +1,6 @@
 from board import *
-from random_player import *
 from ch_play import *
+from basic_player import *
 import csv
 import pandas as pd
 import numpy as np
@@ -8,6 +8,20 @@ b_WIN = 100
 b_LOSE = -100
 DRAW = 50
 PASS = 3
+
+def player_type(t_player):
+    if t_player == 1:
+        tp = ch_player
+        pp = 'deepくん'
+    elif t_player == 2:
+        tp = random_action
+        pp = 'ランダムくん'
+    elif t_player == 3:
+        tp = human_player
+        pp = 'ふなっしー'
+    else:
+        sys.exit()
+    return tp, pp
 
 class game_master(Board):
     def put_stone(self, x, y, player):  # 石を置くメソッド
@@ -102,21 +116,23 @@ class game_master(Board):
 if __name__ == "__main__":
     B_winner_count = 0
     W_winner_count = 0
-    print('オセロゲームなっし\nモードを指定するなっし\n試合ファイルを作るなっし→0を入力1\nランダム　vs　ランダムなっし→1を入力')
-    print('deepくん　VS　ランダムくん→2')
+    print('オセロゲームなっし\nモードを指定するなっし\n試合ファイルを作るなっし→0を入力\nゲームをするなっしー→1')
     game_mode = int(input())
     if game_mode == 0:
+        print('ERROR:まだ実行できません')
         sys.exit()
     elif game_mode == 1:
-        print('ランダムVSランダムで実行するなっし')
-        player_1 = random_action
-        player_2 = random_action
-        print('OK')
-    elif game_mode == 2:
-        player_1 = ch_player
-        player_2 = random_action
+        print('ゲームをするなっし')
+
+    print('黒プレーヤーを選択なっし\ndeepくん→1\nランダムくん→2\n人→3')
+    t_player_b = int(input())
+    player_1, p_b = player_type(t_player_b)
+    print('白プレーヤーを選択なっし\ndeepくん→1\nランダムくん→2\n人→3')
+    t_player_w = int(input())
+    player_2, p_w = player_type(t_player_w)
     print('試合数を選ぶなっし(0以外を入力してくださいなっし)')
     battle_time = int(input())
+    print(str(p_b)+'VS'+str(p_w)+'の'+str(battle_time)+'回の試合を開始するなっしー！')
     for n in range(0, battle_time):
         othello = game_master()
         othello.view()
