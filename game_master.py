@@ -54,7 +54,7 @@ class game_master(Board):
                         # check座標がBOARD_SIZEの範囲内か
                         if 0 <= check_x < BOARD_SIZE and 0 <= check_y < BOARD_SIZE:
                             put = self.board[check_y][check_x]
-                            # 石がないとき、自分の石のときその方向はそこで終了
+                            # 石がないときその方向はそこで終了
                             if put is EMP:
                                 break
                             if put == player:  # 自分の石があったとき。

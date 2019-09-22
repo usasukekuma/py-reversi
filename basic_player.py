@@ -1,7 +1,6 @@
 import random
 
-def human_player(self, player):
-    can_put_list = self.can_put_list(player)
+def human_player(can_put_list, trash_0):
     print('リストから選択！')
     print(str(can_put_list)+':')
     list_number = int(input())
