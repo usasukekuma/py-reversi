@@ -1,5 +1,3 @@
-from game_master import *
-import sys
 
 def make_list(self, act_x):
     x, y = act_x

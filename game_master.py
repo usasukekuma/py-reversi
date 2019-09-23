@@ -4,10 +4,7 @@ from basic_player import *
 import csv
 import pandas as pd
 import numpy as np
-b_WIN = 100
-b_LOSE = -100
-DRAW = 50
-PASS = 3
+import time
 
 def player_type(t_player):
     if t_player == 1:
@@ -114,8 +111,6 @@ class game_master(Board):
 
 
 if __name__ == "__main__":
-    B_winner_count = 0
-    W_winner_count = 0
     print('オセロゲームなっし\nモードを指定するなっし\n試合ファイルを作るなっし→0を入力\nゲームをするなっしー→1')
     game_mode = int(input())
     if game_mode == 0:
@@ -124,6 +119,9 @@ if __name__ == "__main__":
     elif game_mode == 1:
         print('ゲームをするなっし')
 
+    B_winner_count = 0
+    W_winner_count = 0
+    D_winner_count = 0
     print('黒プレーヤーを選択なっし\ndeepくん→1\nランダムくん→2\n人→3')
     t_player_b = int(input())
     player_1, p_b = player_type(t_player_b)
@@ -135,6 +133,7 @@ if __name__ == "__main__":
     print(str(p_b)+'VS'+str(p_w)+'の'+str(battle_time)+'回の試合を開始するなっしー！')
 
     #  ゲーム開始
+    time_s = time.perf_counter()
     for n in range(0, battle_time):
         othello = game_master()
         othello.view()
@@ -173,9 +172,15 @@ if __name__ == "__main__":
             W_winner_count += 1
         elif tmp_w == b_WIN:
             B_winner_count += 1
-            continue
-    print(str(battle_time)+'回の試合が終了しました。\n勝率は...\n黒:'+str((B_winner_count/battle_time)*100)+'%です。')
-    print('白:'+str((W_winner_count/battle_time)*100)+'%です。')
+        elif tmp_w ==DRAW:
+            D_winner_count += 1
+    time_e = time.perf_counter()
+
+    print(str(battle_time)+'回の試合が終了しました。\nresult・・・')
+    print('黒'+str(B_winner_count)+'回'+'白'+str(W_winner_count)+'回、勝ちました.'+'引き分けは'+str(D_winner_count)+'回です')
+    print('勝率は,黒：'+str((B_winner_count/battle_time)*100)+'%\n白：'+str((W_winner_count/battle_time)*100)+'%\n''引き分け：'
+          +str((D_winner_count/battle_time)*100)+'%です。')
+    print(str(battle_time)+'回の実行時間は'+str(time_e-time_s)+'秒です')
 
 
 
