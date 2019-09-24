@@ -27,7 +27,7 @@ class game_master(Board):
             return False  # Falseでおけないよ！ってする
         # ひっくり返せないときはおけない
         turn_over = self.turn_over_list(x, y, player)
-        if not turn_over:  # リストがからのとき＝ひっくり返す石がない
+        if turn_over == [] :  # リストがからのとき＝ひっくり返す石がない
             return False
         self.board[y][x] = player  # 置けるときにそのWorBを代入
         for x, y in turn_over:
@@ -39,9 +39,9 @@ class game_master(Board):
         turn_over = []
         for ay in vector:  # 行のベクトル方向を示す
             for ax in vector:  # 列のベクトル方向
-                turn_over_tmp = []
                 if ax == 0 and ay == 0:  # 0*0はない
                     continue  # 次のループへ
+                turn_over_tmp = []
                 count = 0
                 while(True):
                         count += 1  # 現在地からずらす
@@ -52,14 +52,16 @@ class game_master(Board):
                         if 0 <= check_x < BOARD_SIZE and 0 <= check_y < BOARD_SIZE:
                             put = self.board[check_y][check_x]
                             # 石がないときその方向はそこで終了
-                            if put is EMP:
+                            if put == EMP:
                                 break
-                            if put == player:  # 自分の石があったとき。
-                                if turn_over_tmp is not []:
-                                    turn_over.extend(turn_over_tmp)
-                            # 相手の石があればひっくりかえせるリストに追加位
-                            else:
+                            if not put == player and not put == EMP:  # 自分の石があったとき。
                                 turn_over_tmp.append((check_x, check_y))
+                            # 相手の石があればひっくりかえせるリストに追加位
+                            elif put == player:
+                                if not turn_over_tmp == []:
+                                    turn_over.extend(turn_over_tmp)
+                                elif turn_over_tmp == []:
+                                    break
                         else:
                             break
         return turn_over  # turn_overがこの関数の戻り値
@@ -70,7 +72,7 @@ class game_master(Board):
             for by in range(BOARD_SIZE):
                 if self.board[by][bx] is not EMP:
                     continue
-                if self.turn_over_list(bx, by, player) == []:
+                elif self.turn_over_list(bx, by, player) == []:
                     continue
                 else:
                     can_put.append((bx, by))
@@ -138,7 +140,8 @@ if __name__ == "__main__":
         othello = game_master()
         othello.view()
         i = 0
-        while not othello.can_put_list(BLACK) == [] and not othello.can_put_list(WHITE) == []:
+        nyu = 0
+
             turn = othello.player_check(i)
             #  黒のターン
             if turn == BLACK:
