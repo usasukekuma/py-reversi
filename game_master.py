@@ -148,6 +148,7 @@ if __name__ == "__main__":
                 can_put_list = othello.can_put_list(BLACK)
                 if not can_put_list == []:
                     x, y = player_1(can_put_list, current_board)
+                    print(can_put_list)
                 else:
                     i += 1
                     nya = 65
@@ -155,11 +156,12 @@ if __name__ == "__main__":
             #  白のターン
             elif turn == WHITE:
                 current_board = [othello.board_copy()]
-                hand ='白の'
+                hand = '白の'
                 othello.player_print(hand)
                 can_put_list = othello.can_put_list(WHITE)
                 if not can_put_list == []:
                     x, y = player_2(can_put_list, current_board)
+                    print(can_put_list)
                 else:
                     i += 1
                     nya = 65
