@@ -89,9 +89,6 @@ class game_master(Board):
     def player_print(self, hand):
         print(hand + '番です')
 
-    def put_convert(self, x, y):
-        z = x + 8*y
-        return z
     def end(self):
             self.winner = None
             score_W = 0
