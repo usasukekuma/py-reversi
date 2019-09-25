@@ -6,6 +6,8 @@ import pandas as pd
 import numpy as np
 import time
 
+
+
 def player_type(t_player):
     if t_player == 1:
         tp = ch_player
@@ -87,6 +89,9 @@ class game_master(Board):
     def player_print(self, hand):
         print(hand + '番です')
 
+    def put_convert(self, x, y):
+        z = x + 8*y
+        return z
     def end(self):
             self.winner = None
             score_W = 0

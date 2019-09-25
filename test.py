@@ -1,8 +1,12 @@
-import random
+from game_master import *
+import csv
 
-i = 0
-x = 0
-while not i == 8 and not x == 8:
-    print('continue')
-    i += 1
-    x += 1
+list_c = []
+othello = game_master()
+for x in range(0, 8):
+    for y in range(0, 8):
+        list_a = othello.board[y][x]
+        list_c.append(list_a)
+with open('sample.csv', 'w') as f:
+    writer = csv.writer(f)
+    writer.writerow(list_c)
