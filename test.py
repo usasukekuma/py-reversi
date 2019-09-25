@@ -1,5 +1,6 @@
 from game_master import *
 import csv
+import numpy as np
 
 list_c = []
 othello = game_master()
