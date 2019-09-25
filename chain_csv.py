@@ -18,3 +18,4 @@ class MLP(chainer, Chain):
         h2 = F.relu(self.l2(h1))
         y = self.l3(h2)
         return y
+
