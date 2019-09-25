@@ -114,5 +114,3 @@ for n in range(0,loop_time):
         B_winner_count += 1
         continue
 print('黒'+str(B_winner_count)+'、白'+str(W_winner_count)+'\n黒の勝率は'+str((B_winner_count/loop_time)*100)+'%です')
-
-

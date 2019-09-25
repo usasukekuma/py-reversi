@@ -141,7 +141,7 @@ if __name__ == "__main__":
         othello.view()
         i = 0
         nyu = 0
-
+        while not othello.can_put_list(BLACK) == [] or not othello.can_put_list(WHITE) == []:
             turn = othello.player_check(i)
             #  黒のターン
             if turn == BLACK:

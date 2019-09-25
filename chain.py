@@ -245,6 +245,7 @@ optimizer.setup(model)
 
 updater = training.StandardUpdater(train_iter, optimizer)
 trainer = training.Trainer(updater, (1000, 'epoch'), out='result')
+trainer.extend(extensions.snapshot())
 
 trainer.extend(extensions.ProgressBar())
 trainer.run()

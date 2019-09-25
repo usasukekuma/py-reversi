@@ -1,32 +1,56 @@
+from game_master import *
 
-def make_list(self, act_x):
-    x, y = act_x
-    if x == 0 and y == 0:
-        c = 0
-    elif act_x == PASS:
-        c = 65
-    else:
-        c = x + (8 * y)
-    tmp = np.array(self.board_copy())
-    current_board = tmp.flatten()
-    self.game_list.append(current_board)
-    self.game_list.append(c)
+print('ランダムファイルを作るなっし')
+print('試合数を選ぶなっし(0以外を入力してくださいなっし)')
 
-def save_list(self, name):
-    end_file = self.game_list
-    with open(name + '.csv', 'w') as f:
-        writer = csv.writer(f)
-        writer.writerow(end_file)
+battle_time = int(input())
+print(str(battle_time)+'回ではじめるなっし')
 
+player_1 = random_action
+player_2 = random_action
 
-print('学習用ファイル（ランダムバージョン）をつくるなっしー\n試合数を選ぶなっしー:')
-battle_time = input(int())
-print(str(battle_time)+'回試合でつくるなっしー')
-print('ファイル名をきめるなっしー:')
-file_name = input()
-print(str(file_name)+'で保存するなっしー')
-
-
-save_list(othello, file_name)
+for n in range(0, battle_time):
+    othello = game_master()
+    othello.view()
+    i = 0
+    nyu = 0
+    while not othello.can_put_list(BLACK) == [] or not othello.can_put_list(WHITE) == []:
+        turn = othello.player_check(i)
+        #  黒のターン
+        if turn == BLACK:
+            current_board = [othello.board_copy()]
+            hand = '黒の'
+            othello.player_print(hand)
+            can_put_list = othello.can_put_list(BLACK)
+            if not can_put_list == []:
+                x, y = player_1(can_put_list, current_board)
+                print(can_put_list)
+            else:
+                i += 1
+                nya = 65
+                continue
+        #  白のターン
+        elif turn == WHITE:
+            current_board = [othello.board_copy()]
+            hand = '白の'
+            othello.player_print(hand)
+            can_put_list = othello.can_put_list(WHITE)
+            if not can_put_list == []:
+                x, y = player_2(can_put_list, current_board)
+                print(can_put_list)
+            else:
+                i += 1
+                nya = 65
+                continue
+        othello.put_stone(x, y, turn)
+        othello.view()
+        i += 1
+    tmp_w = othello.end()
+    if tmp_w == b_LOSE:
+        W_winner_count += 1
+    elif tmp_w == b_WIN:
+        B_winner_count += 1
+    elif tmp_w == DRAW:
+        D_winner_count += 1
 
 
