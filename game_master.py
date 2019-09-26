@@ -8,20 +8,6 @@ import time
 
 
 
-def player_type(t_player):
-    if t_player == 1:
-        tp = ch_player
-        pp = 'deepくん'
-    elif t_player == 2:
-        tp = random_action
-        pp = 'ランダムくん'
-    elif t_player == 3:
-        tp = human_player
-        pp = 'ふなっしー'
-    else:
-        sys.exit()
-    return tp, pp
-
 class game_master(Board):
     def put_stone(self, x, y, player):  # 石を置くメソッド
         # すでに石があればおけない(Noneでないところ＝石がある）
@@ -112,6 +98,20 @@ class game_master(Board):
                 self.winner = b_LOSE
             print('黒{:d},白{:d}\n{}です。'.format(score_B, score_W, judge))
             return self.winner
+
+def player_type(t_player):
+    if t_player == 1:
+        tp = ch_player
+        pp = 'deepくん'
+    elif t_player == 2:
+        tp = random_action
+        pp = 'ランダムくん'
+    elif t_player == 3:
+        tp = human_player
+        pp = 'ふなっしー'
+    else:
+        sys.exit()
+    return tp, pp
 
 
 if __name__ == "__main__":

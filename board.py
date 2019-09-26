@@ -6,14 +6,11 @@ b_WIN = 100
 b_LOSE = -100
 DRAW = 50
 PASS = 3
-put_WHITE = [[3, 3], [4, 4]]
-put_BLACK = [[3, 4], [4, 3]]
 
 class Board(object):
     def __init__(self):  # classを呼び出すと自動で呼び出されるメソッド
         # 8*8のリストをつくる
         self.board = []
-        self.game_list = []# リストを作成　
         for a in range(BOARD_SIZE):  # BOARD_SIZE-1の範囲でループ
             # ↑で行↓で列
             self.board.append([EMP for b in range(BOARD_SIZE)])  # 初期値になにもないNONEを指定する(0はWHITEとして定義）

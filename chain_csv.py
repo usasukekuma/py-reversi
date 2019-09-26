@@ -5,17 +5,23 @@ import numpy as np
 from chainer import Chain
 
 
+n_input = 64
+n_hidden = 100
+n_output = 65
+
 class MLP(chainer, Chain):
     def __init__(self):
-        super(MLP, self).__init__(
-            l1=L.Linear(64, 100),
-            l2=L.Linear(100, 100),
-            l3=L.Linear(100, 65)
-        )
+        super().__init__()
+        with self.init_scope():
+            self.l1 = L.Linear(n_input, n_hidden)
+            self.l2 = L.Linear(n_hidden, n_hidden)
+            self.l3 = L.Linear(n_hidden, n_output)
 
     def __call__(self, x):
         h1 = F.relu(self.l1(x))
         h2 = F.relu(self.l2(h1))
-        y = self.l3(h2)
+        y = F.relu(self.l3(h2))
         return y
+
+
 
