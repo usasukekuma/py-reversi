@@ -236,7 +236,6 @@ for line in f:
 print('in'+str(input_x))
 print('out'+str(output_y))
 
-"""
 X = np.array(input_x, dtype=np.float32)
 y = np.array(output_y, dtype=np.int32)
 
@@ -255,5 +254,4 @@ trainer.extend(extensions.ProgressBar())
 trainer.run()
 
 serializers.save_npz('othello_model.npz', model)
-"""
 

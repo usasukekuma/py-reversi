@@ -1,22 +1,56 @@
 from game_master import *
+import pickle
 
-def append_list(x, y, color):
+
+def xy_converter(x, y):
     if x == 8 and y == 8:
         z = 65
     else:
         z = x + y*8
-    for cy in range(0,8):
-        for cx in range(0,8):
-            list_c.append(othello.board[cy][cx])
+    return z
+
+
+def csv_list(x, y, color):
+    list_c.append(othello.board_copy())
     list_c.append(color)
+    z = xy_converter(x, y)
     list_c.append(z)
 
 
-print('ランダムファイルを作るなっし')
-print('試合数を選ぶなっし(0以外を入力してくださいなっし)')
+def pickle_list(x, y, color):
+    list_c.append(othello.board_copy())
+    list_c.append(color)
+    z =xy_converter(x, y)
+    list_c.append(z)
 
+
+def csv_m(f_name):
+    with open(f_name, 'w', newline='') as f:
+        writer = csv.writer(f)
+        writer.writerow(list_c)
+
+
+def pickle_m(f_name):
+
+    with open(f_name, 'wb') as f:
+        pickle.dump(list_c, f)
+
+
+print('ランダムファイルを作るなっし\nファイル名を決めるなっし')
+f_name = str(input())
+print('csvで保存→c,pickleで保存→p')
+file_t = str(input())
+print('試合数を選ぶなっし(0以外を入力してくださいなっし)')
 battle_time = int(input())
 print(str(battle_time)+'回ではじめるなっし')
+
+if file_t == 'c':
+    f_save = csv_m
+    append_l = csv_list
+elif file_t == 'p':
+    f_save = pickle_m
+    append_l = pickle_list
+
 
 player_1 = random_action
 player_2 = random_action
@@ -38,11 +72,11 @@ for n in range(0, battle_time):
             if not can_put_list == []:
                 x, y = player_1(can_put_list, current_board)
                 print(can_put_list)
-                append_list(x, y, color)
+                append_l(x, y, color)
             else:
                 i += 1
                 x, y = 8, 8
-                append_list(x, y, color)
+                append_l(x, y, color)
                 continue
         #  白のターン
         elif turn == WHITE:
@@ -54,11 +88,11 @@ for n in range(0, battle_time):
             if not can_put_list == []:
                 x, y = player_2(can_put_list, current_board)
                 print(can_put_list)
-                append_list(x, y, color)
+                append_l(x, y, color)
             else:
                 i += 1
                 x, y = 8, 8
-                append_list(x, y, color)
+                append_l(x, y, color)
                 continue
         othello.put_stone(x, y, turn)
         othello.view()
@@ -70,10 +104,9 @@ for n in range(0, battle_time):
         list_c.append('WB')
     elif tmp_w == DRAW:
         list_c.append('WD')
-    list_c.append('\n')
+    if file_t == 'c':
+        list_c.append('\n')
+f_save(f_name)
 
-with open('nassyi.csv', 'w', newline='') as f:
-    writer = csv.writer(f)
-    writer.writerow(list_c)
 
 

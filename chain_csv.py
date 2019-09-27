@@ -2,7 +2,9 @@ import chainer
 import chainer.links as L
 import chainer.function as F
 import numpy as np
-from chainer import Chain
+from chainer import Chain, Link, ChainList
+from chainer import Function, report, training, utils, Variable
+from chainer.training import extensions
 
 
 n_input = 64
