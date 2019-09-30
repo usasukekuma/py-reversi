@@ -27,3 +27,4 @@ class MLP(chainer, Chain):
 
 
 
+
