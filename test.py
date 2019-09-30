@@ -22,10 +22,17 @@ for i in range(0,64):
     x = int(input())
     y = for_convert[x]
     print(y)
-"""
+
 import pickle
 with open('a.pickle', 'rb') as f:
     c =pickle.load(f)
 print(type(c))
 print(c)
+"""
 
+list_a = [1,2,3,31,2,3,3,1,2,3,31,2,3,3,1,2,3,31,2,3,3,1,2,3,31,2,3,3,1,2,3,31,2,3,3,1,2,3,31,2,3,3,1,2,3,31,2,3,3,
+          1,2,3,31,2,3,3,1,2,3,31,2,3,3,1,2,3,31,2,3,3,1,2,3,31,2,3,3,1,2,3,31,2,3,3,1,2,3,31,2,3,3,1,2,3,31,2,3,3,]
+list_b = []
+for d in list_a:
+    list_b.append(c)
+print(list_b)
