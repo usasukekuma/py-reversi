@@ -106,7 +106,8 @@ for n in range(0, battle_time):
         list_c.append('WD')
     if file_t == 'c':
         list_c.append('\n')
+print('saving..........')
 f_save(f_name)
-
+print('complete!')
 
 

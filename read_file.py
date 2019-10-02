@@ -1,12 +1,19 @@
-from game_master import *
+list_bwin = []
+list_wwin = []
+list_dwin = []
 
+for csv_row in open('data/ten.csv'):
+    tmp = []
+    if "WB" in csv_row:
+        tmp = csv_row
+        list_bwin.append(tmp)
+    elif "WW" in csv_row:
+        tmp = csv_row
+        list_wwin.append(tmp)
+    elif "WD" in csv_row:
+        tmp = csv_row
+        list_dwin.append(tmp)
 
-
-with open('nassyi.csv', newline='') as f:
-    nassyi_csv = csv.reader(f)
-    nassyi_list = list(nassyi_csv)
-
-battle_count = 10000
-
-for a in range (0, battle_count):
-    for b in
+print(list_bwin)
+print(list_wwin)
+print(list_dwin)

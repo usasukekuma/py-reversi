@@ -23,9 +23,3 @@ for i in range(0,64):
     y = for_convert[x]
     print(y)
 """
-import pickle
-with open('a.pickle', 'rb') as f:
-    c =pickle.load(f)
-print(type(c))
-print(c)
-
