@@ -11,7 +11,9 @@ def xy_converter(x, y):
 
 
 def csv_list(x, y, color):
+    """"
     list_c.append(othello.board_copy())
+    """
     list_c.append(color)
     z = xy_converter(x, y)
     list_c.append(z)
