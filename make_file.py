@@ -11,7 +11,9 @@ def xy_converter(x, y):
 
 
 def csv_list(x, y, color):
+    """"
     list_c.append(othello.board_copy())
+    """
     list_c.append(color)
     z = xy_converter(x, y)
     list_c.append(z)
@@ -106,7 +108,8 @@ for n in range(0, battle_time):
         list_c.append('WD')
     if file_t == 'c':
         list_c.append('\n')
+print('saving..........')
 f_save(f_name)
-
+print('complete!')
 
 

@@ -22,6 +22,7 @@ for i in range(0,64):
     x = int(input())
     y = for_convert[x]
     print(y)
+<<<<<<< HEAD
 
 import pickle
 with open('a.pickle', 'rb') as f:
@@ -36,3 +37,6 @@ list_b = []
 for d in list_a:
     list_b.append(c)
 print(list_b)
+=======
+"""
+>>>>>>> 6ad5fda9d09171668d04c6f552b72909054ea28e
