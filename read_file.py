@@ -12,6 +12,8 @@ n_f = [list_bwin, list_wwin, list_dwin]
 n_s = [tmp_b, tmp_w, tmp_d]
 
 
+def conv(a, b):
+    print(a)
 
 for csv_row in open('a.csv'):
     tmp = []
@@ -24,8 +26,7 @@ for csv_row in open('a.csv'):
     elif "WD" in csv_row:
         tmp = csv_row
         tmp_d.append(tmp)
+print(tmp_b)
+print(tmp_w[-1])
 
-list_bwin = [a for a in tmp_b if not a is '"' or not a is '\n']
-print(list_bwin)
-print(list_wwin)
-print(list_dwin)
+
