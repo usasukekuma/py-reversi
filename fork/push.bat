@@ -1,0 +1,1 @@
+git push ssh://github.com_shadow/usasukekuma/py-reversi.git
