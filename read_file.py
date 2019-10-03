@@ -46,9 +46,8 @@ for d in list_bwin:
     elif d == 'W':
         turn = WHITE
         continue
+    elif d == 100:
+        othello = game_master()
     x, y = conv(d)
     othello.put_stone(x, y, turn)
 
-
-
-print()
