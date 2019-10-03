@@ -9,7 +9,6 @@ def xy_converter(x, y):
         z = x + y*8
     return z
 
-
 def csv_list(x, y, color):
     """"
     list_c.append(othello.board_copy())
