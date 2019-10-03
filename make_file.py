@@ -82,7 +82,6 @@ for n in range(0, battle_time):
         #  白のターン
         elif turn == WHITE:
             color = 'W'
-            current_board = [othello.board_copy()]
             hand = '白の'
             othello.player_print(hand)
             can_put_list = othello.can_put_list(WHITE)
