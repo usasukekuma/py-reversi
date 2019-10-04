@@ -76,11 +76,11 @@ for d in shi:
     elif d == 'W':
         turn = WHITE
         continue
-    elif d == 100:
+    elif d == 100 or d == -100:
         othello = game_master()
         othello.view()
         continue
-    elif d == 65:
+    elif d == 64:
         if turn == BLACK:
             list_bboard.append(copy.deepcopy(othello.board))
             list_bstone.append(d)
@@ -101,7 +101,7 @@ for d in shi:
         othello.put_stone(ax, ay, turn)
         othello.view()
 print(list_bboard)
-print(list_bstone)
+
 
 
 

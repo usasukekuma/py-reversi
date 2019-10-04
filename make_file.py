@@ -5,7 +5,7 @@ import csv
 
 def xy_converter(x, y):
     if x == 8 and y == 8:
-        z = 65
+        z = 64
     else:
         z = x + y*8
     return z
@@ -40,7 +40,7 @@ def pickle_m(f_name):
 
 print('ランダムファイルを作るなっし\nファイル名を決めるなっし')
 f_name = str(input())
-print('csvで保存→c,pickleで保存→p')
+print('csvで保存→c')
 file_t = str(input())
 print('試合数を選ぶなっし(0以外を入力してくださいなっし)')
 battle_time = int(input())
