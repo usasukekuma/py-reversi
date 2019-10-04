@@ -1,30 +1,46 @@
 from game_master import *
 import pandas as pd
 import itertools
+import copy
 
 
 list_bwin_battle = []
 list_wwin_battle = []
 list_dwin_battle = []
 list_bstone = []
-lits_bboard = []
+list_bboard = []
 list_wstone = []
 list_wboard = []
+tmp_1 = []
+tmp_2 = []
+
+def conve(put_st):
+    for_convert = [(0, 0), (1, 0), (2, 0), (3, 0), (4, 0), (5, 0), (6, 0), (7, 0),
+                   (0, 1), (1, 1), (2, 1), (3, 1), (4, 1), (5, 1), (6, 1), (7, 1),
+                   (0, 2), (1, 2), (2, 2), (3, 2), (4, 2), (5, 2), (6, 2), (7, 2),
+                   (0, 3), (1, 3), (2, 3), (3, 3), (4, 3), (5, 3), (6, 3), (7, 3),
+                   (0, 4), (1, 4), (2, 4), (3, 4), (4, 4), (5, 4), (6, 4), (7, 4),
+                   (0, 5), (1, 5), (2, 5), (3, 5), (4, 5), (5, 5), (6, 5), (7, 5),
+                   (0, 6), (1, 6), (2, 6), (3, 6), (4, 6), (5, 6), (6, 6), (7, 6),
+                   (0, 7), (1, 7), (2, 7), (3, 7), (4, 7), (5, 7), (6, 7), (7, 7)]
+    t_x, t_y = for_convert[put_st]
+    return t_x, t_y
 
 tmp_count = []
-
-
-df = pd.read_csv('a.csv', header=None) # 文字列が含まれるので
+print('input file name')
+csv_name = input()
+df = pd.read_csv(csv_name, header=None) # 文字列が含まれるので
 df = df.replace('\r\n', '', regex=True)
+df = df.replace('\n', '', regex=True)
 tmp = df.values.tolist()
+print(tmp)
 tmp = list(itertools.chain.from_iterable(tmp))
 tmp_1 = [x for x in tmp if x]
-print(tmp_1)
 a = 0
 a += int(tmp_1.count('WW'))
 a += int(tmp_1.count('WB'))
 a += int(tmp_1.count('WD'))
-tmp_2 = []
+
 for c in tmp_1:
     if c == 'WB':
         list_bwin_battle.extend(tmp_2)
@@ -40,12 +56,20 @@ for c in tmp_1:
     else:
         tmp_2.append(c)
 
-#  ボード復元
 print(list_bwin_battle)
+
+#  ボード復元
+print('choice&input:black_win or white_win')
+sha = input()
+if sha == 'black_win':
+    shi = list_bwin_battle
+elif sha == 'white_win':
+    shi = list_wwin_battle
+
 othello = game_master()
 othello.view()
-for d in list_bwin_battle:
-    othello.view()
+for d in shi:
+    print(d)
     if d == 'B':
         turn = BLACK
         continue
@@ -54,22 +78,31 @@ for d in list_bwin_battle:
         continue
     elif d == 100:
         othello = game_master()
-        turn = None
+        othello.view()
         continue
     elif d == 65:
         if turn == BLACK:
-            lits_bboard.append(othello.board_copy())
+            list_bboard.append(copy.deepcopy(othello.board))
             list_bstone.append(d)
+        elif turn == WHITE:
+            list_wboard.append(copy.deepcopy(othello.board))
+            list_wstone.append(d)
         continue
     else:
         if turn == BLACK:
-            lits_bboard.append(othello.board)
+            list_bboard.append(copy.deepcopy(othello.board))
             list_bstone.append(d)
-        x, y, = conv(d)
-        othello.put_stone(x, y, turn)
-print(lits_bboard)
-print(list_bwin_battle)
+            ax, ay = conve(int(d))
+            #  白のターン
+        elif turn == WHITE:
+            list_wboard.append(copy.deepcopy(othello.board))
+            list_wstone.append(d)
+            ax, ay = conve(int(d))
+        othello.put_stone(ax, ay, turn)
+        othello.view()
+print(list_bboard)
 print(list_bstone)
+
 
 
 

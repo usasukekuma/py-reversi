@@ -21,7 +21,6 @@ class Board(object):
         self.board[4][3] = BLACK
 
     def view(self):  # Boardを表示するメソッド
-        print(self.board)
         print('\n')
         for disc_y in self.board:  # stoneリスト（行
             for disc_x in disc_y:  # stoneリスト（列

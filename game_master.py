@@ -1,12 +1,7 @@
 from board import *
 from ch_play import *
 from basic_player import *
-import csv
-import pandas as pd
-import numpy as np
 import time
-
-
 
 class game_master(Board):
     def put_stone(self, x, y, player):  # 石を置くメソッド
@@ -99,6 +94,7 @@ class game_master(Board):
             print('黒{:d},白{:d}\n{}です。'.format(score_B, score_W, judge))
             return self.winner
 
+
 def player_type(t_player):
     if t_player == 1:
         tp = ch_player
@@ -188,9 +184,6 @@ if __name__ == "__main__":
     print('勝率は,黒：'+str((B_winner_count/battle_time)*100)+'%\n白：'+str((W_winner_count/battle_time)*100)+'%\n''引き分け：'
           +str((D_winner_count/battle_time)*100)+'%です。')
     print(str(battle_time)+'回の実行時間は'+str(time_e-time_s)+'秒です')
-
-
-
 
 
 

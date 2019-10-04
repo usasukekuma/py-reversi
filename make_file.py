@@ -1,6 +1,7 @@
 from game_master import *
 import pickle
-
+from basic_player import *
+import csv
 
 def xy_converter(x, y):
     if x == 8 and y == 8:
@@ -61,7 +62,8 @@ for n in range(0, battle_time):
     othello = game_master()
     othello.view()
     i = 0
-    while not othello.can_put_list(BLACK) == [] or not othello.can_put_list(WHITE) == []:
+    k = 0
+    while not k == 100:
         turn = othello.player_check(i)
         #  黒のターン
         if turn == BLACK:
@@ -97,6 +99,11 @@ for n in range(0, battle_time):
         othello.put_stone(x, y, turn)
         othello.view()
         i += 1
+        k = 0
+        if othello.can_put_list(BLACK) == []:
+            k += 50
+        if othello.can_put_list(WHITE) == []:
+            k += 50
     tmp_w = othello.end()
     if tmp_w == b_LOSE:
         list_c.append('WW')

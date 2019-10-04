@@ -1,5 +1,5 @@
-""""
 from game_master import *
+""""
 import csv
 import numpy as np
 
@@ -30,11 +30,13 @@ with open('a.pickle', 'rb') as f:
 print(type(c))
 print(c)
 """
+othello=game_master()
 a = ['a','b','c']
 b = [1, 2, 3]
-for x in a:
-    x = []
-    for y in b:
-
-        x.append(y)
-    print(x)
+c=[]
+c.append(a)
+c.append(b)
+print(c)
+print(othello.board_copy())
+c.append(othello.board)
+print(c)
