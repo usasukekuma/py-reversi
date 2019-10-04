@@ -3,10 +3,14 @@ import pandas as pd
 import itertools
 
 
-list_bwin = []
-list_wwin = []
-list_dwin = []
-n_f = [list_bwin, list_wwin, list_dwin]
+list_bwin_battle = []
+list_wwin_battle = []
+list_dwin_battle = []
+list_bstone = []
+lits_bboard = []
+list_wstone = []
+list_wboard = []
+
 tmp_count = []
 
 
@@ -23,22 +27,24 @@ a += int(tmp_1.count('WD'))
 tmp_2 = []
 for c in tmp_1:
     if c == 'WB':
-        list_bwin.extend(tmp_2)
-        list_bwin.append(b_WIN)
+        list_bwin_battle.extend(tmp_2)
+        list_bwin_battle.append(b_WIN)
         tmp_2 = []
     elif c == 'WW':
-        list_wwin.extend(tmp_2)
-        list_wwin.append(b_LOSE)
+        list_wwin_battle.extend(tmp_2)
+        list_wwin_battle.append(b_LOSE)
         tmp_2 = []
     elif c == 'WD':
-        list_dwin.extend(tmp_2)
+        list_dwin_battle.extend(tmp_2)
         tmp_2 = []
     else:
         tmp_2.append(c)
-print(list_bwin)
-print(list_bwin.count(100))
+
+#  ボード復元
+print(list_bwin_battle)
 othello = game_master()
-for d in list_bwin:
+othello.view()
+for d in list_bwin_battle:
     othello.view()
     if d == 'B':
         turn = BLACK
@@ -48,6 +54,22 @@ for d in list_bwin:
         continue
     elif d == 100:
         othello = game_master()
-    x, y = conv(d)
-    othello.put_stone(x, y, turn)
+        turn = None
+        continue
+    elif d == 65:
+        if turn == BLACK:
+            lits_bboard.append(othello.board_copy())
+            list_bstone.append(d)
+        continue
+    else:
+        if turn == BLACK:
+            lits_bboard.append(othello.board)
+            list_bstone.append(d)
+        x, y, = conv(d)
+        othello.put_stone(x, y, turn)
+print(lits_bboard)
+print(list_bwin_battle)
+print(list_bstone)
+
+
 
