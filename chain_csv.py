@@ -60,6 +60,4 @@ trainer = training.Trainer(updater, (1000, 'epoch'), out='result')
 
 trainer.extend(extensions.ProgressBar())
 trainer.run()
-print('学習モデル保存名input.npz')
-p = input()
-serializers.save_npz(p, model)
+serializers.save_npz(saving_name, model)

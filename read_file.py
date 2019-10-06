@@ -29,6 +29,10 @@ def conve(put_st):
 tmp_count = []
 print('input file name')
 csv_name = input()
+print('学習モデル保存名.npz')
+saving_name = input()
+print('choice&input:black_win or white_win')
+sha = input()
 df = pd.read_csv(csv_name, header=None) # 文字列が含まれるので
 df = df.replace('\r\n', '', regex=True)
 df = df.replace('\n', '', regex=True)
@@ -59,8 +63,6 @@ for c in tmp_1:
 print(list_bwin_battle)
 
 #  ボード復元
-print('choice&input:black_win or white_win')
-sha = input()
 if sha == 'black_win':
     shi = list_bwin_battle
 elif sha == 'white_win':
@@ -100,7 +102,6 @@ for d in shi:
             ax, ay = conve(int(d))
         othello.put_stone(ax, ay, turn)
         othello.view()
-print(list_bboard)
 
 
 
