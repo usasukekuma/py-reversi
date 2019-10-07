@@ -10,6 +10,7 @@ import chainer.links as L
 from chainer.training import extensions
 
 
+
 class Revchain(Chain):
     def __init__(self):
         super(Revchain, self).__init__(
@@ -49,8 +50,8 @@ def conv(put_st):
 model = Classfilter(Revchain())
 
 
-def ch_player(can_put_list,current_board):
-    serializers.load_npz('othello_model.npz', model)
+def ch_player(can_put_list,current_board,npz_path):
+    serializers.load_npz(npz_path, model)
     X1 = np.array(current_board, dtype=np.float32)
     y1 = F.softmax(model.predictor(X1))
     put_st = int((y1.data.argmax(1)))
@@ -64,7 +65,8 @@ def ch_player(can_put_list,current_board):
         else:
             print('不可能なパスが出力されたため、ランダムに選択されました')
             act_x = random.choice(can_put_list)
-            return act_x
+            return act_x, 1
+
     #  予測でパスじゃないなら手が本当に打てるてか？
     else:
         t_x, t_y = conv(put_st)  # 0~63を座標に変換

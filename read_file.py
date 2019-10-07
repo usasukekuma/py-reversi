@@ -27,24 +27,25 @@ def conve(put_st):
     return t_x, t_y
 
 tmp_count = []
-print('input file name')
+print('input file path')
 csv_name = input()
-print('学習モデル保存名.npz')
+print('saving model path .npz')
 saving_name = input()
 print('choice&input:black_win or white_win')
 sha = input()
+print('loading...なっしー！')
 df = pd.read_csv(csv_name, header=None) # 文字列が含まれるので
 df = df.replace('\r\n', '', regex=True)
 df = df.replace('\n', '', regex=True)
 tmp = df.values.tolist()
-print(tmp)
+print('converting to listなっし')
 tmp = list(itertools.chain.from_iterable(tmp))
 tmp_1 = [x for x in tmp if x]
 a = 0
 a += int(tmp_1.count('WW'))
 a += int(tmp_1.count('WB'))
 a += int(tmp_1.count('WD'))
-
+print('盤面を復元するなっし！')
 for c in tmp_1:
     if c == 'WB':
         list_bwin_battle.extend(tmp_2)
@@ -84,6 +85,7 @@ for d in shi:
         continue
     elif d == 64:
         if turn == BLACK:
+            # deep copy　じゃないと外のリストのみこぴーされる
             list_bboard.append(copy.deepcopy(othello.board))
             list_bstone.append(d)
         elif turn == WHITE:
@@ -102,6 +104,7 @@ for d in shi:
             ax, ay = conve(int(d))
         othello.put_stone(ax, ay, turn)
         othello.view()
+print('復元は終わったなっし')
 
 
 

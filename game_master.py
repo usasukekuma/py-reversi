@@ -2,6 +2,11 @@ from board import *
 from ch_play import *
 from basic_player import *
 import time
+ERROR_count = 0
+B_error_count = 0
+W_error_count = 0
+
+
 
 class game_master(Board):
     def put_stone(self, x, y, player):  # 石を置くメソッド
@@ -67,9 +72,6 @@ class game_master(Board):
         else:
             return WHITE
 
-    def player_print(self, hand):
-        print(hand + '番です')
-
     def end(self):
             self.winner = None
             score_W = 0
@@ -111,14 +113,7 @@ def player_type(t_player):
 
 
 if __name__ == "__main__":
-    print('オセロゲームなっし\nモードを指定するなっし\n試合ファイルを作るなっし→0を入力\nゲームをするなっしー→1')
-    game_mode = int(input())
-    if game_mode == 0:
-        print('ERROR:まだ実行できません')
-        sys.exit()
-    elif game_mode == 1:
-        print('ゲームをするなっし')
-
+    print('オセロゲームなっし')
     B_winner_count = 0
     W_winner_count = 0
     D_winner_count = 0
@@ -128,6 +123,12 @@ if __name__ == "__main__":
     print('白プレーヤーを選択なっし\ndeepくん→1\nランダムくん→2\n人→3')
     t_player_w = int(input())
     player_2, p_w = player_type(t_player_w)
+    if p_b == 'deepくん':
+        print('input black model path model/')
+        black_npz_path = input()
+    if p_w == 'deepくん':
+        print('input white model path model/')
+        white_npz_path = input()
     print('試合数を選ぶなっし(0以外を入力してくださいなっし)')
     battle_time = int(input())
     print(str(p_b)+'VS'+str(p_w)+'の'+str(battle_time)+'回の試合を開始するなっしー！')
@@ -139,17 +140,17 @@ if __name__ == "__main__":
         othello.view()
         i = 0
         nyu = 0
-        while not othello.can_put_list(BLACK) == [] or not othello.can_put_list(WHITE) == []:
+        while not k == 100:
             turn = othello.player_check(i)
             #  黒のターン
             if turn == BLACK:
                 current_board = [othello.board_copy()]
-                hand = '黒の'
-                othello.player_print(hand)
+                print('黒の番です')
                 can_put_list = othello.can_put_list(BLACK)
                 if not can_put_list == []:
-                    x, y = player_1(can_put_list, current_board)
-                    print(can_put_list)
+                    act_x, o = player_1(can_put_list, current_board, black_npz_path)
+                    if o == 1:
+                        B_error_count += 1
                 else:
                     i += 1
                     nya = 65
@@ -157,11 +158,10 @@ if __name__ == "__main__":
             #  白のターン
             elif turn == WHITE:
                 current_board = [othello.board_copy()]
-                hand = '白の'
-                othello.player_print(hand)
+                print('白の番です')
                 can_put_list = othello.can_put_list(WHITE)
                 if not can_put_list == []:
-                    x, y = player_2(can_put_list, current_board)
+                    x, y = player_2(can_put_list, current_board, white_npz_path)
                     print(can_put_list)
                 else:
                     i += 1
@@ -170,6 +170,11 @@ if __name__ == "__main__":
             othello.put_stone(x, y, turn)
             othello.view()
             i += 1
+        k = 0
+        if othello.can_put_list(BLACK) == []:
+            k += 50
+        if othello.can_put_list(WHITE) == []:
+            k += 50
         tmp_w = othello.end()
         if tmp_w == b_LOSE:
             W_winner_count += 1
