@@ -27,9 +27,9 @@ def conve(put_st):
     return t_x, t_y
 
 tmp_count = []
-print('input file path')
+print('input file path csv/.csv')
 csv_name = input()
-print('saving model path .npz')
+print('saving model path model/.npz')
 saving_name = input()
 print('choice&input:black_win or white_win')
 sha = input()
@@ -61,8 +61,6 @@ for c in tmp_1:
     else:
         tmp_2.append(c)
 
-print(list_bwin_battle)
-
 #  ボード復元
 if sha == 'black_win':
     shi = list_bwin_battle
@@ -72,7 +70,6 @@ elif sha == 'white_win':
 othello = game_master()
 othello.view()
 for d in shi:
-    print(d)
     if d == 'B':
         turn = BLACK
         continue

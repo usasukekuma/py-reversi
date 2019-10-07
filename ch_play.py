@@ -65,7 +65,8 @@ def ch_player(can_put_list,current_board,npz_path):
         else:
             print('不可能なパスが出力されたため、ランダムに選択されました')
             act_x = random.choice(can_put_list)
-            return act_x, 1
+            x, y = act_x
+            return x, y, 1
 
     #  予測でパスじゃないなら手が本当に打てるてか？
     else:
@@ -73,12 +74,13 @@ def ch_player(can_put_list,current_board,npz_path):
         print('(' + str(t_x) + ',' + str(t_y) + ')' + 'でチェック')
         if not list(set([(t_x, t_y)]) & set(can_put_list)) == []:
             #  予測の結果が、打てる手リストに存在するならそのまま
-            return t_x, t_y
+            return t_x, t_y,0
         # 手は出力されたが、おける場所ではなかった場合
         elif not can_put_list == []:
             print('不可能な手が出力されたため、ランダムに選択されました')
             act_x = random.choice(can_put_list)
-            return act_x
+            x, y = act_x
+            return x, y,  1
         else:
             print('ルールエラー。')
 

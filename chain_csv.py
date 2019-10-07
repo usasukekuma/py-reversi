@@ -33,16 +33,6 @@ class Classfilter(Chain):
         accuracy = F.accuracy(y, t)
         report({'loss':loss, 'accuracy':accuracy},self)
         return loss
-class Classfilter(Chain):
-    def __init__(self, predictor):
-        super(Classfilter, self).__init__(predictor=predictor)
-
-    def __call__(self, x, t):
-        y = self.predictor(x)
-        loss = F.softmax_cross_entropy(y, t)
-        accuracy = F.accuracy(y, t)
-        report({'loss':loss, 'accuracy':accuracy},self)
-        return loss
 
 
 X = np.array(list_bboard, dtype=np.float32)

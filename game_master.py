@@ -2,10 +2,14 @@ from board import *
 from ch_play import *
 from basic_player import *
 import time
-ERROR_count = 0
+
+B_winner_count = 0
+W_winner_count = 0
+D_winner_count = 0
 B_error_count = 0
 W_error_count = 0
-j_1 = 0
+bput_count = 0
+wput_count = 0
 
 
 class game_master(Board):
@@ -114,9 +118,6 @@ def player_type(t_player):
 
 if __name__ == "__main__":
     print('オセロゲームなっし')
-    B_winner_count = 0
-    W_winner_count = 0
-    D_winner_count = 0
     print('黒プレーヤーを選択なっし\ndeepくん→1\nランダムくん→2\n人→3')
     t_player_b = int(input())
     player_1, p_b = player_type(t_player_b)
@@ -126,13 +127,18 @@ if __name__ == "__main__":
     if p_b == 'deepくん':
         print('input black model path model/')
         black_npz_path = input()
-        j_1 += 1
+    elif not p_b == 'deepくん':
+        black_npz_path = 1000
     if p_w == 'deepくん':
         print('input white model path model/')
         white_npz_path = input()
-        j_1 += 1
+    elif not p_w == 'deepくん':
+        white_npz_path = 1000
     print('試合数を選ぶなっし(0以外を入力してくださいなっし)')
     battle_time = int(input())
+    if battle_time == 0:
+        print('ERROR')
+        sys.exit()
     print(str(p_b)+'VS'+str(p_w)+'の'+str(battle_time)+'回の試合を開始するなっしー！')
 
     #  ゲーム開始
@@ -141,7 +147,7 @@ if __name__ == "__main__":
         othello = game_master()
         othello.view()
         i = 0
-        nyu = 0
+        k = 0
         while not k == 100:
             turn = othello.player_check(i)
             #  黒のターン
@@ -151,10 +157,12 @@ if __name__ == "__main__":
                 can_put_list = othello.can_put_list(BLACK)
                 if not can_put_list == []:
                     x, y, j = player_1(can_put_list, current_board, black_npz_path)
+                    bput_count += 1
                     if j == 1:
                         B_error_count += 1
                 else:
                     i += 1
+                    bput_count += 1
                     nya = 65
                     continue
             #  白のターン
@@ -164,20 +172,23 @@ if __name__ == "__main__":
                 can_put_list = othello.can_put_list(WHITE)
                 if not can_put_list == []:
                     x, y, j = player_2(can_put_list, current_board, white_npz_path)
+                    wput_count += 1
                     if j == 1:
                         W_error_count += 1
                 else:
                     i += 1
+                    wput_count += 1
                     nya = 65
                     continue
             othello.put_stone(x, y, turn)
             othello.view()
             i += 1
-        k = 0
-        if othello.can_put_list(BLACK) == []:
-            k += 50
-        if othello.can_put_list(WHITE) == []:
-            k += 50
+            k = 0
+            if othello.can_put_list(BLACK) == []:
+                k += 50
+            if othello.can_put_list(WHITE) == []:
+                k += 50
+
         tmp_w = othello.end()
         if tmp_w == b_LOSE:
             W_winner_count += 1
@@ -191,7 +202,12 @@ if __name__ == "__main__":
     print('黒'+str(B_winner_count)+'回'+'白'+str(W_winner_count)+'回、勝ちました.'+'引き分けは'+str(D_winner_count)+'回です')
     print('勝率は,黒：'+str((B_winner_count/battle_time)*100)+'%\n白：'+str((W_winner_count/battle_time)*100)+'%\n''引き分け：'
           +str((D_winner_count/battle_time)*100)+'%です。')
-    if not j_1 == 0:
+    if p_b == 'deepくん':
+        print('黒は'+str(battle_time)+'回試合で'+str(bput_count)+'回打ちました.\n'+str(B_error_count)+
+              '回エラーによるランダム選択が実行されました。\n黒のエラー率'+str((B_error_count/bput_count)*100)+'%')
+    if p_w == 'deepくん':
+        print('白は' + str(battle_time) + '回試合で' + str(wput_count) + '回打ちました.\n'+str(W_error_count)+
+              '回エラーによるランダム選択が実行されました。\n白のエラー率'+str((W_error_count/wput_count)*100)+'%')
     print(str(battle_time)+'回の実行時間は'+str(time_e-time_s)+'秒です')
 
 
