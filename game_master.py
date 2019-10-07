@@ -5,7 +5,7 @@ import time
 ERROR_count = 0
 B_error_count = 0
 W_error_count = 0
-
+j_1 = 0
 
 
 class game_master(Board):
@@ -126,9 +126,11 @@ if __name__ == "__main__":
     if p_b == 'deepくん':
         print('input black model path model/')
         black_npz_path = input()
+        j_1 += 1
     if p_w == 'deepくん':
         print('input white model path model/')
         white_npz_path = input()
+        j_1 += 1
     print('試合数を選ぶなっし(0以外を入力してくださいなっし)')
     battle_time = int(input())
     print(str(p_b)+'VS'+str(p_w)+'の'+str(battle_time)+'回の試合を開始するなっしー！')
@@ -148,8 +150,8 @@ if __name__ == "__main__":
                 print('黒の番です')
                 can_put_list = othello.can_put_list(BLACK)
                 if not can_put_list == []:
-                    act_x, o = player_1(can_put_list, current_board, black_npz_path)
-                    if o == 1:
+                    x, y, j = player_1(can_put_list, current_board, black_npz_path)
+                    if j == 1:
                         B_error_count += 1
                 else:
                     i += 1
@@ -161,8 +163,9 @@ if __name__ == "__main__":
                 print('白の番です')
                 can_put_list = othello.can_put_list(WHITE)
                 if not can_put_list == []:
-                    x, y = player_2(can_put_list, current_board, white_npz_path)
-                    print(can_put_list)
+                    x, y, j = player_2(can_put_list, current_board, white_npz_path)
+                    if j == 1:
+                        W_error_count += 1
                 else:
                     i += 1
                     nya = 65
@@ -188,6 +191,7 @@ if __name__ == "__main__":
     print('黒'+str(B_winner_count)+'回'+'白'+str(W_winner_count)+'回、勝ちました.'+'引き分けは'+str(D_winner_count)+'回です')
     print('勝率は,黒：'+str((B_winner_count/battle_time)*100)+'%\n白：'+str((W_winner_count/battle_time)*100)+'%\n''引き分け：'
           +str((D_winner_count/battle_time)*100)+'%です。')
+    if not j_1 == 0:
     print(str(battle_time)+'回の実行時間は'+str(time_e-time_s)+'秒です')
 
 
