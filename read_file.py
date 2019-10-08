@@ -69,7 +69,6 @@ elif sha == 'white_win':
     shi = list_wwin_battle
 
 othello = game_master()
-othello.view()
 for d in shi:
     if d == 'B':
         turn = BLACK
@@ -79,7 +78,6 @@ for d in shi:
         continue
     elif d == 100 or d == -100:
         othello = game_master()
-        othello.view()
         continue
     elif d == 64:
         if turn == BLACK:
@@ -101,9 +99,13 @@ for d in shi:
             list_wstone.append(d)
             ax, ay = conve(int(d))
         othello.put_stone(ax, ay, turn)
-        othello.view()
 print('復元は終わったなっし')
-
+if sha == 'black_win':
+    input_board = list_bboard
+    input_stone = list_bstone
+elif sha == 'white_win':
+    input_board = list_wboard
+    input_stone = list_wstone
 
 
 

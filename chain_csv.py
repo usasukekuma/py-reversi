@@ -35,8 +35,8 @@ class Classfilter(Chain):
         return loss
 
 
-X = np.array(list_bboard, dtype=np.float32)
-y = np.array(list_bstone, dtype=np.int32)
+X = np.array(input_board, dtype=np.float32)
+y = np.array(input_stone, dtype=np.int32)
 
 train = datasets.TupleDataset(X, y)  # 学習用データを作る datasetsは学習用データを作ってくれる tupleで形を決めている
 train_iter = iterators.SerialIterator(train, batch_size=100)  # iteratoorsは学習データをシャッフルしたりすてくれる
