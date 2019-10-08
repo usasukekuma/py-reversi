@@ -38,8 +38,8 @@ class Classfilter(Chain):
 
 cuda.Device(0).use()
 xp = cuda.cupy
-X = xp.array(list_bboard, dtype=np.float32)
-y = xp.array(list_bstone, dtype=np.int32)
+X = xp.array(input_board, dtype=np.float32)
+y = xp.array(input_stone, dtype=np.int32)
 
 train = datasets.TupleDataset(X, y)  # 学習用データを作る datasetsは学習用データを作ってくれる tupleで形を決めている
 train_iter = iterators.SerialIterator(train, batch_size=100)  # iteratoorsは学習データをシャッフルしたりすてくれる
@@ -56,4 +56,4 @@ trainer = training.Trainer(updater, (1000, 'epoch'), out='result')
 trainer.extend(extensions.ProgressBar())
 trainer.run()
 
-serializers.save_npz('othello_model.npz', model)
+serializers.save_npz(saving_name, model)

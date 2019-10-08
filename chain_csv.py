@@ -1,3 +1,6 @@
+import sys
+import numpy as np
+import random
 import chainer
 import chainer.links as L
 import chainer.function as F
