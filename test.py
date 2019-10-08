@@ -1,5 +1,6 @@
 import sys
 import numpy as np
+import copy
 import random
 import chainer
 from chainer import cuda, Function, gradient_check, report, training, utils, Variable
@@ -8,8 +9,8 @@ from chainer import Link, Chain, ChainList
 import chainer.functions as F
 import chainer.links as L
 from chainer.training import extensions
+s = []
 
-'''
 class Reversi(Chain):
     def __init__(self):
         super().__init__()
@@ -35,29 +36,23 @@ class Classfilter(Chain):
         report({'loss':loss, 'accuracy':accuracy},self)
         return loss
 
-
-
 model = Classfilter(Reversi())
 
-b = [[[0,0,0,0,0,0,0,0],
-     [0,0,0,0,0,0,0,0],
-     [0,0,0,0,0,0,0,0],
-     [0,0,0,1,2,0,0,0],
-     [0,0,0,2,1,0,0,0],
-     [0,0,0,0,0,0,0,0],
-     [0,0,0,0,0,0,0,0],
-     [0,0,0,0,0,0,0,0]]]
-model = Classfilter(Reversi())
+b = [[[0, 0, 0, 0, 0, 0, 0, 0],
+     [0, 0, 0, 0, 0, 0, 0, 0],
+     [0, 0, 0, 0, 0, 0, 0, 0],
+     [0, 0, 0, 1, 2, 0, 0, 0],
+     [0, 0, 0, 2, 1, 0, 0, 0],
+     [0, 0, 0, 0, 0, 0, 0, 0],
+     [0, 0, 0, 0, 0, 0, 0, 0],
+     [0, 0, 0, 0, 0, 0, 0, 0]]]
 
+model = Classfilter(Reversi())
 serializers.load_npz('model/10000black_brwr.npz', model)
 X1 = np.array(b, dtype=np.float32)
 y1 = F.softmax(model.predictor(X1))
 print(type(y1))
-s = y1.data.argsort(1)
+s = np.array(y1)
 print(s)
 put_st = int((y1.data.argmax(1)))
 print(put_st)
-'''
-lista=[1,2,3,4,5,6,7,8,9]
-for i in range(-1, -64,-1):
-    print(lista[i])

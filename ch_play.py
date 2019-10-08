@@ -84,9 +84,3 @@ def ch_player(can_put_list,current_board,npz_path):
             return x, y,  1
         else:
             print('ルールエラー。')
-
-
-
-
-
-
