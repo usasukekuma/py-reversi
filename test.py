@@ -9,7 +9,7 @@ import chainer.functions as F
 import chainer.links as L
 from chainer.training import extensions
 
-
+'''
 class Reversi(Chain):
     def __init__(self):
         super().__init__()
@@ -49,10 +49,15 @@ b = [[[0,0,0,0,0,0,0,0],
      [0,0,0,0,0,0,0,0]]]
 model = Classfilter(Reversi())
 
-
 serializers.load_npz('model/10000black_brwr.npz', model)
 X1 = np.array(b, dtype=np.float32)
 y1 = F.softmax(model.predictor(X1))
-print(y1)
+print(type(y1))
+s = y1.data.argsort(1)
+print(s)
 put_st = int((y1.data.argmax(1)))
 print(put_st)
+'''
+lista=[1,2,3,4,5,6,7,8,9]
+for i in range(-1, -64,-1):
+    print(lista[i])

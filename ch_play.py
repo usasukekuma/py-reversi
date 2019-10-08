@@ -55,6 +55,7 @@ def ch_player(can_put_list,current_board,npz_path):
     X1 = np.array(current_board, dtype=np.float32)
     y1 = F.softmax(model.predictor(X1))
     put_st = int((y1.data.argmax(1)))
+
     #  出力がパスのとき
     if put_st == 64:
         #  本当にパスならばプレイヤーが呼び出される前にスキップされるはず
@@ -74,7 +75,7 @@ def ch_player(can_put_list,current_board,npz_path):
         print('(' + str(t_x) + ',' + str(t_y) + ')' + 'でチェック')
         if not list(set([(t_x, t_y)]) & set(can_put_list)) == []:
             #  予測の結果が、打てる手リストに存在するならそのまま
-            return t_x, t_y,0
+            return t_x, t_y, 0
         # 手は出力されたが、おける場所ではなかった場合
         elif not can_put_list == []:
             print('不可能な手が出力されたため、ランダムに選択されました')
