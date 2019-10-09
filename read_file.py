@@ -40,8 +40,10 @@ df = df.replace('\r\n', '', regex=True)
 df = df.replace('\n', '', regex=True)
 tmp = df.values.tolist()
 print('converting to listなっし')
-tmp = list(itertools.chain.from_iterable(tmp))
+print(tmp)
+tmp = [x for a in tmp for x in a]
 tmp_1 = [x for x in tmp if x]
+print(tmp_1)
 a = 0
 a += int(tmp_1.count('WW'))
 a += int(tmp_1.count('WB'))

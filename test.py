@@ -52,7 +52,11 @@ serializers.load_npz('model/10000black_brwr.npz', model)
 X1 = np.array(b, dtype=np.float32)
 y1 = F.softmax(model.predictor(X1))
 print(type(y1))
-s = np.array(y1)
-print(s)
+p = y1.data.argsort()[:,::-1]
+print(p)
+print(type(p))
+tmp_1 = [x for a in p for x in a]
+print(tmp_1)
 put_st = int((y1.data.argmax(1)))
 print(put_st)
+

@@ -54,33 +54,32 @@ def ch_player(can_put_list,current_board,npz_path):
     serializers.load_npz(npz_path, model)
     X1 = np.array(current_board, dtype=np.float32)
     y1 = F.softmax(model.predictor(X1))
-    put_st = int((y1.data.argmax(1)))
-
+    tm = y1.data.argsort()[:, ::-1]
+    putting_list = [x for a in tm for x in a]
+    s_count = 0
+    for put_st in putting_list:
+        put_st = int(put_st)
     #  出力がパスのとき
-    if put_st == 64:
-        #  本当にパスならばプレイヤーが呼び出される前にスキップされるはず
-        if  can_put_list == []:
-            print('ERROR')
-            sys.exit()
-        #  予測はパスだけど、打てる手がある場合（予測は完璧じゃない）
+        if put_st == 64:
+            #  本当にパスならばプレイヤーが呼び出される前にスキップされるはず
+            if can_put_list == []:
+                print('ERROR')
+                sys.exit()
+            #  予測はパスだけど、打てる手がある場合（予測は完璧じゃない）
+            else:
+                s_count += 1
+                continue
+        #  予測でパスじゃないなら手が本当に打てるてか？
+        elif len(can_put_list) == 1:
+            x, y = can_put_list[0]
+            return x, y, s_count
         else:
-            print('不可能なパスが出力されたため、ランダムに選択されました')
-            act_x = random.choice(can_put_list)
-            x, y = act_x
-            return x, y, 1
-
-    #  予測でパスじゃないなら手が本当に打てるてか？
-    else:
-        t_x, t_y = conv(put_st)  # 0~63を座標に変換
-        print('(' + str(t_x) + ',' + str(t_y) + ')' + 'でチェック')
-        if not list(set([(t_x, t_y)]) & set(can_put_list)) == []:
-            #  予測の結果が、打てる手リストに存在するならそのまま
-            return t_x, t_y, 0
-        # 手は出力されたが、おける場所ではなかった場合
-        elif not can_put_list == []:
-            print('不可能な手が出力されたため、ランダムに選択されました')
-            act_x = random.choice(can_put_list)
-            x, y = act_x
-            return x, y,  1
-        else:
-            print('ルールエラー。')
+            t_x, t_y = conv(put_st)  # 0~63を座標に変換
+            print('(' + str(t_x) + ',' + str(t_y) + ')' + 'でチェック')
+            if not list(set([(t_x, t_y)]) & set(can_put_list)) == []:
+                #  予測の結果が、打てる手リストに存在するならそのまま
+                return t_x, t_y, s_count,
+            # 手は出力されたが、おける場所ではなかった場合
+            else:
+                s_count += 1
+                continue

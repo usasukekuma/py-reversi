@@ -10,7 +10,9 @@ B_error_count = 0
 W_error_count = 0
 bput_count = 0
 wput_count = 0
-
+b_skip_count = 0
+w_skip_count = 0
+pass_count = 0
 
 class game_master(Board):
     def put_stone(self, x, y, player):  # 石を置くメソッド
@@ -100,6 +102,9 @@ class game_master(Board):
             print('黒{:d},白{:d}\n{}です。'.format(score_B, score_W, judge))
             return self.winner
 
+    def save_report(self):
+
+
 
 def player_type(t_player):
     if t_player == 1:
@@ -150,20 +155,22 @@ if __name__ == "__main__":
         k = 0
         while not k == 100:
             turn = othello.player_check(i)
+            skip_count = 0
             #  黒のターン
             if turn == BLACK:
                 current_board = [othello.board_copy()]
                 print('黒の番です')
                 can_put_list = othello.can_put_list(BLACK)
                 if not can_put_list == []:
-                    x, y, j = player_1(can_put_list, current_board, black_npz_path)
+                    x, y, skip_count = player_1(can_put_list, current_board, black_npz_path)
                     bput_count += 1
-                    if j == 1:
+                    if not skip_count == 0:
                         B_error_count += 1
+                        b_skip_count += skip_count
                 else:
                     i += 1
+                    pass_count += 1
                     bput_count += 1
-                    nya = 65
                     continue
             #  白のターン
             elif turn == WHITE:
@@ -171,14 +178,15 @@ if __name__ == "__main__":
                 print('白の番です')
                 can_put_list = othello.can_put_list(WHITE)
                 if not can_put_list == []:
-                    x, y, j = player_2(can_put_list, current_board, white_npz_path)
+                    x, y, skip_count = player_2(can_put_list, current_board, white_npz_path)
                     wput_count += 1
-                    if j == 1:
+                    if not skip_count == 0:
                         W_error_count += 1
+                        w_skip_count += skip_count
                 else:
                     i += 1
+                    pass_count += 1
                     wput_count += 1
-                    nya = 65
                     continue
             othello.put_stone(x, y, turn)
             othello.view()
@@ -200,14 +208,17 @@ if __name__ == "__main__":
 
     print(str(battle_time)+'回の試合が終了しました。\nresult・・・')
     print('黒'+str(B_winner_count)+'回'+'白'+str(W_winner_count)+'回、勝ちました.'+'引き分けは'+str(D_winner_count)+'回です')
-    print('勝率は,黒：'+str((B_winner_count/battle_time)*100)+'%\n白：'+str((W_winner_count/battle_time)*100)+'%\n''引き分け：'
-          +str((D_winner_count/battle_time)*100)+'%です。')
+    print(str(pass_count)+'回パスでした')
+    print('勝率は,黒：'+str((B_winner_count/battle_time)*100)+'%\n白：'+str((W_winner_count/battle_time)*100)+
+          '%\n引き分け：'+str((D_winner_count/battle_time)*100)+'%です。')
     if p_b == 'deepくん':
-        print('黒は'+str(battle_time)+'回試合で'+str(bput_count)+'回打ちました.\n'+str(B_error_count)+
-              '回エラーによるランダム選択が実行されました。\n黒のエラー率'+str((B_error_count/bput_count)*100)+'%')
+        print('黒は'+str(battle_time)+'回試合で'+str(bput_count)+'回打ちました.\n'+str(b_skip_count)+
+              '回、1,2,3,番目に確率が高い手を選択。\n一回目の予想がエラーだった数/自ターン数'+str((b_skip_count/bput_count)*100)+'%'
+              '黒のエラー率(予想に失敗したターン数/回ってきたターン数)\n'+str((B_error_count/bput_count)*100)+'%')
     if p_w == 'deepくん':
-        print('白は' + str(battle_time) + '回試合で' + str(wput_count) + '回打ちました.\n'+str(W_error_count)+
-              '回エラーによるランダム選択が実行されました。\n白のエラー率'+str((W_error_count/wput_count)*100)+'%')
+        print('白は' + str(battle_time) + '回試合で' + str(wput_count) + '回打ちました.\n'+str(w_skip_count)+
+              '回、1,2,3,番目に確率が高い手を選択。\n一回目の予想がエラーだった数/自ターン数'+str((w_skip_count/wput_count)*100)+'%'
+              '白のエラー率(予想に失敗したターン数/自ターン数)\n'+str((W_error_count/wput_count)*100)+'%')
     print(str(battle_time)+'回の実行時間は'+str(time_e-time_s)+'秒です')
 
 
