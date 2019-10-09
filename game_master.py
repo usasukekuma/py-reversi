@@ -19,6 +19,7 @@ b_sp = 0
 b_ep = 0
 w_sp = 0
 w_ep = 0
+repo = []
 
 class game_master(Board):
     def put_stone(self, x, y, player):  # 石を置くメソッド
@@ -110,16 +111,16 @@ class game_master(Board):
 
     def make_report(self,repo, r_name):
         columns_1 = ['試合回数', '黒プレイヤー', '白プレイヤー', '黒が勝った回数',
-                     '白が勝った回数', '引き分けの回数','黒の勝率', '白の勝率', '引き分け率',
-                     '黒一回目の予想がエラーだった数/自ターン数','黒の予想に失敗したターン数/回ってきたターン数',
-                     '白一回目の予想がエラーだった数/自ターン数','白の予想に失敗したターン数/回ってきたターン数']
-        with open('report/'+r_name, 'w',encoding='shift_jis') as f:
+                     '白が勝った回数', '引き分けの回数', '黒の勝率', '白の勝率', '引き分け率',
+                     '黒一回目の予想がエラーだった数/自ターン数', '黒の予想に失敗したターン数/回ってきたターン数',
+                     '白一回目の予想がエラーだった数/自ターン数', '白の予想に失敗したターン数/回ってきたターン数']
+        with open('report/'+r_name, 'w', encoding='utf-8', newline= '') as f:
             writer = csv.writer(f)
             writer.writerow(columns_1)
             writer.writerow(repo)
 
     def save_report(self, repo, r_name):
-        with open('report/'+r_name, 'a') as f:
+        with open('report/'+r_name, 'a', encoding='utf-8', newline='') as f:
             writer = csv.writer(f)
             writer.writerow(repo)
 
