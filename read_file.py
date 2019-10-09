@@ -1,8 +1,6 @@
 from game_master import *
-import pandas as pd
-import itertools
 import copy
-
+import pandas as pd
 
 list_bwin_battle = []
 list_wwin_battle = []

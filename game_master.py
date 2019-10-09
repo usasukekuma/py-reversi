@@ -2,6 +2,8 @@ from board import *
 from ch_play import *
 from basic_player import *
 import time
+import numpy as np
+import csv
 
 B_winner_count = 0
 W_winner_count = 0
@@ -13,6 +15,10 @@ wput_count = 0
 b_skip_count = 0
 w_skip_count = 0
 pass_count = 0
+b_sp = 0
+b_ep = 0
+w_sp = 0
+w_ep = 0
 
 class game_master(Board):
     def put_stone(self, x, y, player):  # 石を置くメソッド
@@ -102,8 +108,20 @@ class game_master(Board):
             print('黒{:d},白{:d}\n{}です。'.format(score_B, score_W, judge))
             return self.winner
 
-    def save_report(self):
+    def make_report(self,repo, r_name):
+        columns_1 = ['試合回数', '黒プレイヤー', '白プレイヤー', '黒が勝った回数',
+                     '白が勝った回数', '引き分けの回数','黒の勝率', '白の勝率', '引き分け率',
+                     '黒一回目の予想がエラーだった数/自ターン数','黒の予想に失敗したターン数/回ってきたターン数',
+                     '白一回目の予想がエラーだった数/自ターン数','白の予想に失敗したターン数/回ってきたターン数']
+        with open('report/'+r_name, 'w',encoding='shift_jis') as f:
+            writer = csv.writer(f)
+            writer.writerow(columns_1)
+            writer.writerow(repo)
 
+    def save_report(self, repo, r_name):
+        with open('report/'+r_name, 'a') as f:
+            writer = csv.writer(f)
+            writer.writerow(repo)
 
 
 def player_type(t_player):
@@ -123,6 +141,11 @@ def player_type(t_player):
 
 if __name__ == "__main__":
     print('オセロゲームなっし')
+    print('レポートｃｓｖを作りますか？新規作成→ new or 追記 →　append　or 作らない→ no ')
+    q = str(input())
+    if not q == 'no':
+        print('レポートファイル名を入力　report/が自動入力')
+        r_name = str(input())
     print('黒プレーヤーを選択なっし\ndeepくん→1\nランダムくん→2\n人→3')
     t_player_b = int(input())
     player_1, p_b = player_type(t_player_b)
@@ -132,13 +155,15 @@ if __name__ == "__main__":
     if p_b == 'deepくん':
         print('input black model path model/')
         black_npz_path = input()
+        p_b = str(black_npz_path)
     elif not p_b == 'deepくん':
-        black_npz_path = 1000
+        black_npz_path = None
     if p_w == 'deepくん':
         print('input white model path model/')
         white_npz_path = input()
+        p_w = str(white_npz_path)
     elif not p_w == 'deepくん':
-        white_npz_path = 1000
+        white_npz_path = None
     print('試合数を選ぶなっし(0以外を入力してくださいなっし)')
     battle_time = int(input())
     if battle_time == 0:
@@ -206,20 +231,33 @@ if __name__ == "__main__":
             D_winner_count += 1
     time_e = time.perf_counter()
 
+    b_p = (B_winner_count/battle_time)* 100
+    w_p = (W_winner_count/battle_time)* 100
+    d_p = (D_winner_count/battle_time)*100
     print(str(battle_time)+'回の試合が終了しました。\nresult・・・')
     print('黒'+str(B_winner_count)+'回'+'白'+str(W_winner_count)+'回、勝ちました.'+'引き分けは'+str(D_winner_count)+'回です')
     print(str(pass_count)+'回パスでした')
-    print('勝率は,黒：'+str((B_winner_count/battle_time)*100)+'%\n白：'+str((W_winner_count/battle_time)*100)+
-          '%\n引き分け：'+str((D_winner_count/battle_time)*100)+'%です。')
+    print('勝率は,黒：'+str(b_p)+'%\n白：'+str(w_p)+
+          '%\n引き分け：'+str(d_p)+'%です。')
     if p_b == 'deepくん':
+        b_sp = (b_skip_count/bput_count)*100
+        b_ep = (B_error_count/bput_count)*100
         print('黒は'+str(battle_time)+'回試合で'+str(bput_count)+'回打ちました.\n'+str(b_skip_count)+
-              '回、1,2,3,番目に確率が高い手を選択。\n一回目の予想がエラーだった数/自ターン数'+str((b_skip_count/bput_count)*100)+'%'
-              '黒のエラー率(予想に失敗したターン数/回ってきたターン数)\n'+str((B_error_count/bput_count)*100)+'%')
+              '回、1,2,3,番目に確率が高い手を選択。\n一回目の予想がエラーだった数/自ターン数'+str(b_sp)+'%'
+              '黒のエラー率(予想に失敗したターン数/回ってきたターン数)\n'+str(b_ep)+'%')
     if p_w == 'deepくん':
+        w_sp = (w_skip_count/wput_count)*100
+        w_ep = (W_error_count/wput_count)*100
         print('白は' + str(battle_time) + '回試合で' + str(wput_count) + '回打ちました.\n'+str(w_skip_count)+
               '回、1,2,3,番目に確率が高い手を選択。\n一回目の予想がエラーだった数/自ターン数'+str((w_skip_count/wput_count)*100)+'%'
-              '白のエラー率(予想に失敗したターン数/自ターン数)\n'+str((W_error_count/wput_count)*100)+'%')
+              '白のエラー率(予想に失敗したターン数/自ターン数)\n'+str(w_ep)+'%')
     print(str(battle_time)+'回の実行時間は'+str(time_e-time_s)+'秒です')
-
+    if not q == 'no':
+        repo = [battle_time, p_b, p_w, B_winner_count, W_winner_count, D_winner_count, b_p, w_p, d_p,
+            b_sp, b_ep, w_sp, w_ep]
+        if q == 'append':
+            othello.save_report(repo, r_name)
+        elif q == 'new':
+            othello.make_report(repo, r_name)
 
 
