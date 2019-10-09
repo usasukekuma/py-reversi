@@ -239,17 +239,17 @@ if __name__ == "__main__":
     print(str(pass_count)+'回パスでした')
     print('勝率は,黒：'+str(b_p)+'%\n白：'+str(w_p)+
           '%\n引き分け：'+str(d_p)+'%です。')
-    if p_b == 'deepくん':
+    if p_b == str(black_npz_path):
         b_sp = (b_skip_count/bput_count)*100
         b_ep = (B_error_count/bput_count)*100
         print('黒は'+str(battle_time)+'回試合で'+str(bput_count)+'回打ちました.\n'+str(b_skip_count)+
-              '回、1,2,3,番目に確率が高い手を選択。\n一回目の予想がエラーだった数/自ターン数'+str(b_sp)+'%'
+              '回、2番目以降確率が高い手を選択。\n一回目の予想がエラーだった数/自ターン数'+str(b_sp)+'%\n'
               '黒のエラー率(予想に失敗したターン数/回ってきたターン数)\n'+str(b_ep)+'%')
-    if p_w == 'deepくん':
+    if p_w == str(white_npz_path):
         w_sp = (w_skip_count/wput_count)*100
         w_ep = (W_error_count/wput_count)*100
         print('白は' + str(battle_time) + '回試合で' + str(wput_count) + '回打ちました.\n'+str(w_skip_count)+
-              '回、1,2,3,番目に確率が高い手を選択。\n一回目の予想がエラーだった数/自ターン数'+str((w_skip_count/wput_count)*100)+'%'
+              '回、2番目以降確率が高い手を選択。\n一回目の予想がエラーだった数/自ターン数'+str((w_skip_count/wput_count)*100)+'%\n'
               '白のエラー率(予想に失敗したターン数/自ターン数)\n'+str(w_ep)+'%')
     print(str(battle_time)+'回の実行時間は'+str(time_e-time_s)+'秒です')
     if not q == 'no':
