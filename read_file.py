@@ -102,10 +102,10 @@ for d in shi:
 print('復元は終わったなっし')
 if sha == 'black_win':
     input_board = list_bboard
-    input_stone = list_bstone
+    output_stone = list_bstone
 elif sha == 'white_win':
     input_board = list_wboard
-    input_stone = list_wstone
+    output_stone = list_wstone
 
 
 
