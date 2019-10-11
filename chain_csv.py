@@ -30,9 +30,9 @@ class Reversi(Chain):
         y = self.l3(h2)
         return y
 
-class Classfilter(Chain):
+class Classfier(Chain):
     def __init__(self, predictor):
-        super(Classfilter, self).__init__(predictor=predictor)
+        super(Classfier, self).__init__(predictor=predictor)
 
     def __call__(self, x, t):
         y = self.predictor(x)

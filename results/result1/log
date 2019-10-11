@@ -1,0 +1,16 @@
+[
+    {
+        "main/loss": 1.450040053462962,
+        "main/accuracy": 0.5906756755178543,
+        "epoch": 50,
+        "iteration": 592,
+        "elapsed_time": 15.2637292
+    },
+    {
+        "main/loss": 0.9202295493183507,
+        "main/accuracy": 0.7731418879450979,
+        "epoch": 100,
+        "iteration": 1184,
+        "elapsed_time": 30.752468500000003
+    }
+]

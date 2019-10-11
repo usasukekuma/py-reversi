@@ -34,6 +34,8 @@ class Classfilter(Chain):
         accuracy = F.accuracy(y, t)
         report({'loss':loss, 'accuracy':accuracy},self)
         return loss
+
+
 def conv(put_st):
     for_convert = [(0, 0), (1, 0), (2, 0), (3, 0), (4, 0), (5, 0), (6, 0), (7, 0),
                    (0, 1), (1, 1), (2, 1), (3, 1), (4, 1), (5, 1), (6, 1), (7, 1),
