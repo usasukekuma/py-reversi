@@ -63,9 +63,9 @@ for c in tmp_1:
         tmp_2.append(c)
 
 #  ボード復元
-if sha == 'black_win':
+if sha == 'black_win' or 'b' or 'black':
     shi = list_bwin_battle
-elif sha == 'white_win':
+elif sha == 'white_win' or 'w' or 'white':
     shi = list_wwin_battle
 
 othello = game_master()
@@ -100,10 +100,10 @@ for d in shi:
             ax, ay = conve(int(d))
         othello.put_stone(ax, ay, turn)
 print('復元は終わったなっし')
-if sha == 'black_win':
+if sha == 'black_win' or 'b' or 'black':
     input_board = list_bboard
     output_stone = list_bstone
-elif sha == 'white_win':
+elif sha == 'white_win' or 'w' or 'white':
     input_board = list_wboard
     output_stone = list_wstone
 

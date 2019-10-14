@@ -1,16 +1,20 @@
 [
     {
-        "main/loss": 1.450040053462962,
-        "main/accuracy": 0.5906756755178543,
+        "main/loss": 1.3459919144299404,
+        "main/accuracy": 0.6090082640775041,
+        "validation/main/loss": 7.8253276472091695,
+        "validation/main/accuracy": 0.04041904699057341,
         "epoch": 50,
-        "iteration": 592,
-        "elapsed_time": 15.2637292
+        "iteration": 484,
+        "elapsed_time": 1.844599800000001
     },
     {
-        "main/loss": 0.9202295493183507,
-        "main/accuracy": 0.7731418879450979,
+        "main/loss": 0.1604992157372783,
+        "main/accuracy": 0.9299792975619219,
+        "validation/main/loss": 12.998710102081295,
+        "validation/main/accuracy": 0.043386665992438796,
         "epoch": 100,
-        "iteration": 1184,
-        "elapsed_time": 30.752468500000003
+        "iteration": 967,
+        "elapsed_time": 3.6476461999999987
     }
 ]

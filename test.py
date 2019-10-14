@@ -9,7 +9,7 @@ import chainer.functions as F
 n_in = 64
 n_hidden = 100
 n_out = 65
-
+gpu_id = -1
 
 class N(chainer.Chain):
 
@@ -32,12 +32,13 @@ x = np.array(input_board, 'float32')
 t = np.array(output_stone, 'int32')
 # read_fileと一連託生
 dataset = TupleDataset(x, t)
-train_val, test = split_dataset_random(dataset, int(len(dataset) * 0.8), seed=0)
-train, valid = split_dataset_random(train_val, int(len(train_val) * 0.8), seed=0)
+ss = len(dataset)
+split_at = int(ss*0.8)
+train, test = split_dataset_random(dataset, split_at, seed=0)
 #  すべての試合の８割を訓練と検証に、、
 train_iter = SerialIterator(train, batch_size=100, repeat=True, shuffle=True)
 #  訓練データを100個＝１セットに　シャッフルもするお！
-valid_iter = iterators.SerialIterator(valid, batch_size=50, shuffle=False, repeat=False)
+valid_iter = iterators.SerialIterator(test, batch_size=50, shuffle=False, repeat=False)
 #  ------end------
 
 
@@ -51,11 +52,21 @@ updater = training.StandardUpdater(train_iter, optimizer)
 trainer = training.Trainer(updater, (100, 'epoch'), out='results/result1')
 #  trainer アップデータを受け取り、訓練全体の管理を行います。イテレータを用いてミニバッチを繰り返し作成し、オプティマイザを使ってネットワークのパラメータを更新します。
 #  訓練の終了タイミングの決定や、設定されたエクステンションの呼び出しも担います
+
 trainer.extend(extensions.ProgressBar())
 
+trainer.extend(extensions.Evaluator(valid_iter, model, device=gpu_id))
 trainer.extend(extensions.LogReport(trigger=(50, 'epoch'), log_name='log'))
+'''
+
+trainer.extend(extensions.LogReport(trigger=(50, 'epoch'), log_name='log'))
+trainer.extend(extensions.Evaluator(test, model, -1))
+trainer.extend(extensions.PrintReport(
+    ['epoch', 'main/loss', 'main/accuracy', 'validation/main/loss', 'validation/main/accuracy', 'elapsed_time']))
+
 trainer.extend(extensions.PlotReport(['fc1/W/grad/mean'], x_key='epoch', file_name='mean.png'))
 trainer.extend(extensions.PlotReport(['main/loss', 'val/main/loss'], x_key='epoch', file_name='loss.png'))
-trainer.extend(extensions.PlotReport(['main/accuracy', 'val/main/accuracy'], x_key='epoch', file_name='accuracy.png'))
-
+trainer.extend(
+    extensions.PlotReport(['main/accuracy', 'validation/main/accuracy'], x_key='epoch', file_name='accuracy.png'))
+'''
 trainer.run()
