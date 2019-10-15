@@ -32,12 +32,6 @@ def csv_m(f_name):
         writer.writerow(list_c)
 
 
-def pickle_m(f_name):
-
-    with open(f_name, 'wb') as f:
-        pickle.dump(list_c, f)
-
-
 print('ランダムファイルを作るなっし\nファイル名を決めるなっし')
 f_name = str(input())
 print('csvで保存→c')
@@ -49,9 +43,6 @@ print(str(battle_time)+'回ではじめるなっし')
 if file_t == 'c':
     f_save = csv_m
     append_l = csv_list
-elif file_t == 'p':
-    f_save = pickle_m
-    append_l = pickle_list
 else:
     print('ERROR')
     sys.exit()

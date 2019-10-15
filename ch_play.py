@@ -9,31 +9,26 @@ import chainer.functions as F
 import chainer.links as L
 from chainer.training import extensions
 
+n_in = 64
+n_hidden = 100
+n_out = 65
+gpu_id = -1
 
 
-class Revchain(Chain):
+class N(chainer.Chain):
+
     def __init__(self):
-        super(Revchain, self).__init__(
-            l1=L.Linear(64,100),
-            l2=L.Linear(100,100),
-            l3=L.Linear(100,65)
-        )
+        super().__init__()
+        with self.init_scope():
+            self.l1 = L.Linear(n_in, n_hidden)
+            self.l2 = L.Linear(n_hidden, n_hidden)
+            self.l3 = L.Linear(n_hidden, n_out)
+
     def __call__(self, x):
-        h1 = F.relu(self.l1(x))
-        h2 = F.relu(self.l2(h1))
-        y = self.l3(h2)
-        return y
-
-class Classfilter(Chain):
-    def __init__(self, predictor):
-        super(Classfilter, self).__init__(predictor=predictor)
-
-    def __call__(self, x, t):
-        y = self.predictor(x)
-        loss = F.softmax_cross_entropy(y, t)
-        accuracy = F.accuracy(y, t)
-        report({'loss':loss, 'accuracy':accuracy},self)
-        return loss
+        h = F.relu(self.l1(x))
+        h = F.relu(self.l2(h))
+        h = self.l3(h)
+        return h
 
 
 def conv(put_st):
@@ -49,15 +44,15 @@ def conv(put_st):
     return t_x, t_y
 
 
-model = Classfilter(Revchain())
+N = N()  # ネットをつくるお
+model = L.Classifier(N)  # classfierのデフォ損失関数はF.softmax_cross_entropy
 
-
-def ch_player(can_put_list,current_board,npz_path):
+def ch_player(can_put_list, current_board, npz_path):
     serializers.load_npz(npz_path, model)
     X1 = np.array(current_board, dtype=np.float32)
     y1 = F.softmax(model.predictor(X1))
-    tm = y1.data.argsort()[:, ::-1]
-    putting_list = [x for a in tm for x in a]
+    tm = y1.data.argsort()[:, ::-1]  # 大きい順に並び替える
+    putting_list = [x for a in tm for x in a]  # 2次配列を1次に変換
     s_count = 0
     for put_st in putting_list:
         put_st = int(put_st)
