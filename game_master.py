@@ -114,13 +114,13 @@ class game_master(Board):
                      '白が勝った回数', '引き分けの回数', '黒の勝率', '白の勝率', '引き分け率',
                      '黒一回目の予想がエラーだった数/自ターン数', '黒の予想に失敗したターン数/回ってきたターン数',
                      '白一回目の予想がエラーだった数/自ターン数', '白の予想に失敗したターン数/回ってきたターン数']
-        with open('report/'+r_name, 'w', encoding='utf-8', newline= '') as f:
+        with open('report/'+r_name, 'w', encoding='shift_jis', newline='') as f:
             writer = csv.writer(f)
             writer.writerow(columns_1)
             writer.writerow(repo)
 
     def save_report(self, repo, r_name):
-        with open('report/'+r_name, 'a', encoding='utf-8', newline='') as f:
+        with open('report/'+r_name, 'a', encoding='shift_jis', newline='') as f:
             writer = csv.writer(f)
             writer.writerow(repo)
 
@@ -142,11 +142,13 @@ def player_type(t_player):
 
 if __name__ == "__main__":
     print('オセロゲームなっし')
-    print('レポートｃｓｖを作りますか？新規作成→ new or 追記 →　append　or 作らない→ no ')
+    print('レポートｃｓｖを作りますか？新規作成→ new  追記 →　append, a　 作らない→ no ')
     q = str(input())
     if not q == 'no':
-        print('レポートファイル名を入力　report/が自動入力')
+        print('レポートファイル名を入力　report/が自動入力 デフォでrepo.csv')
         r_name = str(input())
+        if r_name == '':
+            r_name = 'repo.csv'
     print('黒プレーヤーを選択なっし\ndeepくん→1\nランダムくん→2\n人→3')
     t_player_b = int(input())
     player_1, p_b = player_type(t_player_b)
@@ -257,7 +259,7 @@ if __name__ == "__main__":
     if not q == 'no':
         repo = [battle_time, p_b, p_w, B_winner_count, W_winner_count, D_winner_count, b_p, w_p, d_p,
             b_sp, b_ep, w_sp, w_ep]
-        if q == 'append':
+        if q == 'append' or q == 'a':
             othello.save_report(repo, r_name)
         elif q == 'new':
             othello.make_report(repo, r_name)
