@@ -52,7 +52,9 @@ if file_t == 'c':
 elif file_t == 'p':
     f_save = pickle_m
     append_l = pickle_list
-
+else:
+    print('ERROR')
+    sys.exit()
 
 player_1 = random_action
 player_2 = random_action

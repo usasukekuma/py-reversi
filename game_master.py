@@ -180,6 +180,7 @@ if __name__ == "__main__":
         i = 0
         k = 0
         while not k == 100:
+            k = 0
             turn = othello.player_check(i)
             skip_count = 0
             #  黒のターン
@@ -194,6 +195,7 @@ if __name__ == "__main__":
                         B_error_count += 1
                         b_skip_count += skip_count
                 else:
+                    print('pass')
                     i += 1
                     pass_count += 1
                     bput_count += 1
@@ -210,6 +212,7 @@ if __name__ == "__main__":
                         W_error_count += 1
                         w_skip_count += skip_count
                 else:
+                    print('pass')
                     i += 1
                     pass_count += 1
                     wput_count += 1
@@ -217,23 +220,21 @@ if __name__ == "__main__":
             othello.put_stone(x, y, turn)
             othello.view()
             i += 1
-            k = 0
             if othello.can_put_list(BLACK) == []:
                 k += 50
             if othello.can_put_list(WHITE) == []:
                 k += 50
-
         tmp_w = othello.end()
         if tmp_w == b_LOSE:
             W_winner_count += 1
         elif tmp_w == b_WIN:
             B_winner_count += 1
-        elif tmp_w ==DRAW:
+        elif tmp_w == DRAW:
             D_winner_count += 1
     time_e = time.perf_counter()
 
-    b_p = (B_winner_count/battle_time)* 100
-    w_p = (W_winner_count/battle_time)* 100
+    b_p = (B_winner_count/battle_time)*100
+    w_p = (W_winner_count/battle_time)*100
     d_p = (D_winner_count/battle_time)*100
     print(str(battle_time)+'回の試合が終了しました。\nresult・・・')
     print('黒'+str(B_winner_count)+'回'+'白'+str(W_winner_count)+'回、勝ちました.'+'引き分けは'+str(D_winner_count)+'回です')
