@@ -135,6 +135,9 @@ def player_type(t_player):
     elif t_player == 3:
         tp = human_player
         pp = 'ふなっしー'
+    elif t_player == 4:
+        tp = input_player
+        pp = 'input_player'
     else:
         sys.exit()
     return tp, pp

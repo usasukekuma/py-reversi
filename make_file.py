@@ -31,24 +31,27 @@ def csv_m(f_name):
         writer = csv.writer(f)
         writer.writerow(list_c)
 
-
+u= 999
 print('ランダムファイルを作るなっし\nファイル名を決めるなっし')
 f_name = str(input())
-print('csvで保存→c')
-file_t = str(input())
+print('プレイヤー1を選ぶなっし ランダム→r or 入力→ｎ')
+p1 = str(input())
+print('プレイヤー2を選ぶなっし ランダム→r or 入力→ｎ')
+p2 = str(input())
+if p1 == 'r':
+    player_1 = random_action
+elif p1 == 'n':
+    player_1 = input_player
+if p2 == 'r':
+    player_2 = random_action
+elif p2 == 'n':
+    player_2 = input_player
 print('試合数を選ぶなっし(0以外を入力してくださいなっし)')
 battle_time = int(input())
 print(str(battle_time)+'回ではじめるなっし')
+f_save = csv_m
+append_l = csv_list
 
-if file_t == 'c':
-    f_save = csv_m
-    append_l = csv_list
-else:
-    print('ERROR')
-    sys.exit()
-
-player_1 = random_action
-player_2 = random_action
 list_c = []
 for n in range(0, battle_time):
     list_a = []
@@ -61,12 +64,11 @@ for n in range(0, battle_time):
         #  黒のターン
         if turn == BLACK:
             color = 'B'
+            print('黒の番です')
             current_board = [othello.board_copy()]
-            hand = '黒の'
-            othello.player_print(hand)
             can_put_list = othello.can_put_list(BLACK)
             if not can_put_list == []:
-                x, y = player_1(can_put_list, current_board)
+                x, y, u = player_1(can_put_list, current_board, u)
                 print(can_put_list)
                 append_l(x, y, color)
             else:
@@ -77,11 +79,10 @@ for n in range(0, battle_time):
         #  白のターン
         elif turn == WHITE:
             color = 'W'
-            hand = '白の'
-            othello.player_print(hand)
+            print('白の番です')
             can_put_list = othello.can_put_list(WHITE)
             if not can_put_list == []:
-                x, y = player_2(can_put_list, current_board)
+                x, y, u = player_2(can_put_list, current_board, u)
                 print(can_put_list)
                 append_l(x, y, color)
             else:
@@ -104,8 +105,7 @@ for n in range(0, battle_time):
         list_c.append('WB')
     elif tmp_w == DRAW:
         list_c.append('WD')
-    if file_t == 'c':
-        list_c.append('\n')
+    list_c.append('\n')
 print('saving..........')
 f_save(f_name)
 print('complete!')

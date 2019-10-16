@@ -25,13 +25,17 @@ def conve(put_st):
     return t_x, t_y
 
 
+#  ファイル名とか初期設定
 tmp_count = []
 print('input file path csv/.csv')
 csv_name = input()
 print('saving model path model/.npz')
 saving_name = input()
-print('choice&input:black_win or white_win')
+print('black_win or white_winどっちのモデルをつくる？')
 sha = input()
+print('resultの保存パスを選ぶ（results以下を選択)')
+result_out = str(input())
+#  --------------
 print('loading...なっしー！')
 df = pd.read_csv(csv_name, header=None) # 文字列が含まれるので
 df = df.replace('\r\n', '', regex=True)
@@ -41,7 +45,6 @@ print('converting to listなっし')
 print(tmp)
 tmp = [x for a in tmp for x in a]
 tmp_1 = [x for x in tmp if x]
-print(tmp_1)
 a = 0
 a += int(tmp_1.count('WW'))
 a += int(tmp_1.count('WB'))

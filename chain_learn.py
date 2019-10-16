@@ -44,20 +44,18 @@ valid_iter = iterators.SerialIterator(test, batch_size=50, shuffle=False, repeat
 
 N = N()  # ネットをつくるお
 model = L.Classifier(N)  # classfierのデフォ損失関数はF.softmax_cross_entropy
-optimizer = optimizers.MomentumSGD(lr=0.1)  # 勾配関数
+optimizer = optimizers.SGD(lr=0.1)  # 勾配関数
 optimizer.setup(model)
 updater = training.StandardUpdater(train_iter, optimizer)
 #  updater イテレータ・オプティマイザを統括し、順伝播・損失・逆伝播の計算、そしてパラメータの更新（オプティマイザの呼び出し）という、
 #  訓練ループ内の定型的な処理を実行します。 by tutorial
-trainer = training.Trainer(updater, (1000, 'epoch'), out='results/result1')
+trainer = training.Trainer(updater, (1000, 'epoch'), out='results/'+result_out)
 #  trainer アップデータを受け取り、訓練全体の管理を行います。イテレータを用いてミニバッチを繰り返し作成し、オプティマイザを使ってネットワークのパラメータを更新します。
 #  訓練の終了タイミングの決定や、設定されたエクステンションの呼び出しも担います
 
 trainer.extend(extensions.ProgressBar())
-
 trainer.extend(extensions.Evaluator(valid_iter, model, device=gpu_id))
 trainer.extend(extensions.LogReport(trigger=(50, 'epoch'), log_name='log'))
-
 
 '''
 trainer.extend(extensions.Evaluator(test, model, -1))
@@ -71,4 +69,6 @@ trainer.extend(
 '''
 
 trainer.run()
+print('学習は終わった。保存する')
 serializers.save_npz(saving_name, model)
+print('モデルを'+saving_name+'で保存しました')
