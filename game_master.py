@@ -55,12 +55,13 @@ class game_master(Board):
                             # 石がないときその方向はそこで終了
                             if put == EMP:
                                 break
-                            if not put == player and not put == EMP:  # 自分の石があったとき。
+                            if not put == player and not put == EMP:
                                 turn_over_tmp.append((check_x, check_y))
                             # 相手の石があればひっくりかえせるリストに追加位
-                            elif put == player:
+                            elif put == player:  # 自分の石があったとき。
                                 if not turn_over_tmp == []:
                                     turn_over.extend(turn_over_tmp)
+                                    break
                                 elif turn_over_tmp == []:
                                     break
                         else:

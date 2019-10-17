@@ -5,7 +5,7 @@ BOARD_SIZE = 8
 b_WIN = 100
 b_LOSE = -100
 DRAW = 50
-PASS = 3
+
 
 class Board(object):
     def __init__(self):  # classを呼び出すと自動で呼び出されるメソッド
