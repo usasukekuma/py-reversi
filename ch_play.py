@@ -75,7 +75,7 @@ def ch_player(can_put_list, current_board, npz_path):
             print('(' + str(t_x) + ',' + str(t_y) + ')' + 'でチェック')
             if not list(set([(t_x, t_y)]) & set(can_put_list)) == []:
                 #  予測の結果が、打てる手リストに存在するならそのまま
-                return t_x, t_y, s_count,
+                return t_x, t_y, s_count
             # 手は出力されたが、おける場所ではなかった場合
             else:
                 s_count += 1

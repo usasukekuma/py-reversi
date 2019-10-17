@@ -87,28 +87,24 @@ class game_master(Board):
             return WHITE
 
     def end(self):
-            self.winner = None
-            score_W = 0
-            score_B = 0
-            print('ゲーム終了\nスコアチェック中')
-            for ay in range(8):  # 行のベクトル方向を示す
-                for ax in range(8):  # 列のベクトル方向
-                    check = self.board[ay][ax]
-                    if check is WHITE:
-                        score_W += 1
-                    elif check is BLACK:
-                        score_B += 1
-            if score_B == score_W:
-                judge = '引き分け'
-                self.winner = DRAW
-            elif score_W < score_B:
-                judge = '黒の勝ち'
-                self.winner = b_WIN
-            else:
-                judge = '白の勝ち'
-                self.winner = b_LOSE
-            print('黒{:d},白{:d}\n{}です。'.format(score_B, score_W, judge))
-            return self.winner
+        in_judge = None
+        in_score_W = 0
+        in_score_B = 0
+        print('ゲーム終了\nスコアチェック中')
+        for ay in range(8):  # 行のベクトル方向を示す
+            for ax in range(8):  # 列のベクトル方向
+                check = self.board[ay][ax]
+                if check is WHITE:
+                    in_score_W += 1
+                elif check is BLACK:
+                    in_score_B += 1
+        if in_score_B == in_score_W:
+            in_judge = '引き分け'
+        elif in_score_W < in_score_B:
+            in_judge = '黒の勝ち'
+        else:
+            in_judge = '白の勝ち'
+        return in_judge, in_score_B, in_score_W
 
     def make_report(self,repo, r_name):
         columns_1 = ['試合回数', '黒プレイヤー', '白プレイヤー', '黒が勝った回数',
@@ -230,6 +226,8 @@ if __name__ == "__main__":
                 k += 50
             if othello.can_put_list(WHITE) == []:
                 k += 50
+        judge, score_B, score_W = othello.end()
+        print(str(judge)+'です.黒'+str(score_B)+'石,白'+str(score_W)+'石です.')
         tmp_w = othello.end()
         if tmp_w == b_LOSE:
             W_winner_count += 1
@@ -238,7 +236,6 @@ if __name__ == "__main__":
         elif tmp_w == DRAW:
             D_winner_count += 1
     time_e = time.perf_counter()
-
     b_p = (B_winner_count/battle_time)*100
     w_p = (W_winner_count/battle_time)*100
     d_p = (D_winner_count/battle_time)*100
