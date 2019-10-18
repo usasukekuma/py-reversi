@@ -8,7 +8,7 @@ from chainer import Chain, Link, ChainList,datasets, iterators,cuda
 from chainer import Function, report, training, utils, Variable, optimizers, serializers
 from chainer.training import extensions
 from read_file import *
-import matplotlib.pyplot as plt
+
 
 n_input = 64
 n_hidden = 100
