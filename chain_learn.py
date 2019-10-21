@@ -49,7 +49,7 @@ optimizer.setup(model)
 updater = training.StandardUpdater(train_iter, optimizer)
 #  updater イテレータ・オプティマイザを統括し、順伝播・損失・逆伝播の計算、そしてパラメータの更新（オプティマイザの呼び出し）という、
 #  訓練ループ内の定型的な処理を実行します。 by tutorial
-trainer = training.Trainer(updater, (1000, 'epoch'), out='results/'+result_out)
+trainer = training.Trainer(updater, (100, 'epoch'), out='results/'+result_out)
 #  trainer アップデータを受け取り、訓練全体の管理を行います。イテレータを用いてミニバッチを繰り返し作成し、オプティマイザを使ってネットワークのパラメータを更新します。
 #  訓練の終了タイミングの決定や、設定されたエクステンションの呼び出しも担います
 

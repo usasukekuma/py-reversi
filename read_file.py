@@ -50,7 +50,6 @@ df = df.replace('\r\n', '', regex=True)
 df = df.replace('\n', '', regex=True)
 tmp = df.values.tolist()
 print('converting to listなっし')
-print(tmp)
 tmp = [x for a in tmp for x in a]
 tmp_1 = [x for x in tmp if x]
 a = 0

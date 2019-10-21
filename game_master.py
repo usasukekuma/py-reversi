@@ -90,7 +90,6 @@ class game_master(Board):
         in_judge = None
         in_score_W = 0
         in_score_B = 0
-        print('ゲーム終了\nスコアチェック中')
         for ay in range(8):  # 行のベクトル方向を示す
             for ax in range(8):  # 列のベクトル方向
                 check = self.board[ay][ax]
@@ -226,9 +225,8 @@ if __name__ == "__main__":
                 k += 50
             if othello.can_put_list(WHITE) == []:
                 k += 50
-        judge, score_B, score_W = othello.end()
-        print(str(judge)+'です.黒'+str(score_B)+'石,白'+str(score_W)+'石です.')
-        tmp_w = othello.end()
+        tmp_w, score_B, score_W = othello.end()
+        print(str(tmp_w) + 'です.黒' + str(score_B) + '石,白' + str(score_W) + '石です.')
         if tmp_w == b_LOSE:
             W_winner_count += 1
         elif tmp_w == b_WIN:
