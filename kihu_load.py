@@ -2,7 +2,6 @@ from game_master import *
 from basic_player import *
 import csv
 import copy
-kihu_put_list = []
 
 
 def kihu_load():
@@ -49,12 +48,12 @@ def csv_list(x, y, color):
     list_c.append(z)
 
 def new_csv(f_name):
-    with open(f_name, 'w', newline='') as f:
+    with open(f_name, 'w', newline="") as f:
         writer = csv.writer(f)
         writer.writerow(list_c)
 
 def a_csv(f_name):
-    with open('report/' + f_name, 'a', newline='') as f:
+    with open(f_name, 'a', newline="") as f:
         writer = csv.writer(f)
         writer.writerow(list_c)
 
@@ -77,8 +76,9 @@ if __name__ == "__main__":
     battle_time = int(input())
     print(str(battle_time) + '回ではじめるなっし')
     list_c = []  # 保存するB43とかをためておくリスト
-    for loop_time in range(0,battle_time):
+    for loop_time in range(0, battle_time):
         kl = kihu_load()
+        kihu_put_list = []
         kihu_put_list.extend(copy.deepcopy(kl))
         othello = game_master()
         othello.view()
@@ -134,7 +134,6 @@ if __name__ == "__main__":
         elif tmp_w == '引き分け':
             list_c.append('WD')
         list_c.append('\n')
-
     print('saving..........')
     f_save(f_name)
     print('complete!')
