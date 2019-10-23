@@ -98,6 +98,7 @@ for d in shi:
             t_list_wstone = []
             t_list_wboard = []
             othello = game_master()
+            bs += 1
             continue
         elif ttt == 'y':
             if score_B - score_W >= score_point:
