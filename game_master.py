@@ -227,11 +227,11 @@ if __name__ == "__main__":
                 k += 50
         tmp_w, score_B, score_W = othello.end()
         print(str(tmp_w) + 'です.黒' + str(score_B) + '石,白' + str(score_W) + '石です.')
-        if tmp_w == b_LOSE:
+        if tmp_w == '白の勝ち':
             W_winner_count += 1
-        elif tmp_w == b_WIN:
+        elif tmp_w == '黒の勝ち':
             B_winner_count += 1
-        elif tmp_w == DRAW:
+        elif tmp_w == '引き分け':
             D_winner_count += 1
     time_e = time.perf_counter()
     b_p = (B_winner_count/battle_time)*100
