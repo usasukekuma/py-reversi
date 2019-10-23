@@ -1,4 +1,7 @@
-t_x, t_y = 1,2
-can_put_list = [(1,2)]
-if not list(set((t_x, t_y)) & set(can_put_list)) == []:
-    print('y')
+import csv
+tmp = []
+with open('k.csv') as f:
+    for row in f.read().splitlines():
+        tmp.append(list(row))
+
+print(tmp[203])

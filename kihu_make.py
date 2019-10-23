@@ -3,7 +3,8 @@ from basic_player import *
 import csv
 import copy
 
-def kihu_load(kihurow):
+
+def kihu_load():
 
     ucon = {'A1': (0, 0), 'B1': (1, 0), 'C1': (2, 0), 'D1': (3, 0), 'E1': (4, 0), 'F1': (5, 0), 'G1': (6, 0),'H1': (7, 0),
             'A2': (0, 1), 'B2': (1, 1), 'C2': (2, 1), 'D2': (3, 1), 'E2': (4, 1), 'F2': (5, 1), 'G2': (6, 1),'H2': (7, 1),
@@ -16,7 +17,7 @@ def kihu_load(kihurow):
     new_kihu = []
     in_kihu_put = []
     print('棋譜を入力')
-    kihu = kihurow
+    kihu = list(input())
     while not kihu == []:
         k = []
         k.append(kihu.pop(0))
@@ -56,16 +57,9 @@ def a_csv(f_name):
         writer = csv.writer(f)
         writer.writerow(list_c)
 
-def inp(inp_name):
-    inp_list = []
-    with open(inp_name) as f:
-        for row in f.read().splitlines():
-            inp_list.append(list(row))
-    return inp_list
-
 
 if __name__ == "__main__":
-    print('出力　新規 n or 追記 a')
+    print('新規 n or 追記 a')
     ty = str(input())
     if ty == 'n':
         print('ファイル名を決めるなっし')
@@ -75,9 +69,6 @@ if __name__ == "__main__":
         print('ファイルパスを入力')
         f_name = str(input())
         f_save = a_csv
-    print('入力ファイルパスを入力なっし')
-    inp_name = str(input())
-    inp_list = inp(inp_name)
     player_1 = kihu_player
     player_2 = kihu_player
     append_l = csv_list
@@ -85,17 +76,17 @@ if __name__ == "__main__":
     battle_time = int(input())
     print(str(battle_time) + '回ではじめるなっし')
     list_c = []  # 保存するB43とかをためておくリスト
+    kl = kihu_load()
+
     for loop_time in range(0, battle_time):
-        print(loop_time)
-        kl = []
-        kl = kihu_load(inp_list[loop_time])
+        kl = kihu_load()
         kihu_put_list = []
-        kihu_count = 0
         kihu_put_list.extend(copy.deepcopy(kl))
         othello = game_master()
         othello.view()
         i = 0
         k = 0
+        kihu_count = 0
         while not k == 100:
             turn = othello.player_check(i)
             #  黒のターン
