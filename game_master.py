@@ -110,13 +110,13 @@ class game_master(Board):
                      '白が勝った回数', '引き分けの回数', '黒の勝率', '白の勝率', '引き分け率',
                      '黒一回目の予想がエラーだった数/自ターン数', '黒の予想に失敗したターン数/回ってきたターン数',
                      '白一回目の予想がエラーだった数/自ターン数', '白の予想に失敗したターン数/回ってきたターン数']
-        with open('report/'+r_name, 'w', encoding='shift_jis', newline='') as f:
+        with open('report/'+r_name, 'w', encoding='shift_jis', newline="") as f:
             writer = csv.writer(f)
             writer.writerow(columns_1)
             writer.writerow(repo)
 
     def save_report(self, repo, r_name):
-        with open('report/'+r_name, 'a', encoding='shift_jis', newline='') as f:
+        with open('report/'+r_name, 'a', encoding='shift_jis', newline="") as f:
             writer = csv.writer(f)
             writer.writerow(repo)
 

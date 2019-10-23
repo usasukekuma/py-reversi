@@ -14,6 +14,7 @@ t_list_bboard = []
 t_list_wstone = []
 t_list_wboard = []
 tmp_2 = []
+bs = 0
 
 def conve(put_st):
     for_convert = [(0, 0), (1, 0), (2, 0), (3, 0), (4, 0), (5, 0), (6, 0), (7, 0),
@@ -107,6 +108,7 @@ for d in shi:
                 t_list_wstone = []
                 t_list_wboard = []
                 othello = game_master()
+                bs += 1
                 continue
             else:
                 t_list_bboard = []
@@ -136,6 +138,7 @@ for d in shi:
             ax, ay = conve(int(d))
         othello.put_stone(ax, ay, turn)
 print('復元は終わったなっし')
+print(bs)
 if sha == 'black_win' or 'b' or 'black':
     input_board = list_bboard
     output_stone = list_bstone

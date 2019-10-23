@@ -9,8 +9,12 @@ list_bstone = []
 list_bboard = []
 list_wstone = []
 list_wboard = []
-tmp_1 = []
+t_list_bstone = []
+t_list_bboard = []
+t_list_wstone = []
+t_list_wboard = []
 tmp_2 = []
+bs = 0
 
 def conve(put_st):
     for_convert = [(0, 0), (1, 0), (2, 0), (3, 0), (4, 0), (5, 0), (6, 0), (7, 0),
@@ -33,11 +37,16 @@ print('saving model path model/.npz')
 saving_name = input()
 print('black_win or white_winどっちのモデルをつくる？')
 sha = input()
+print('スコアを考慮しますか？ y or n')
+ttt = input()
+if ttt == 'y':
+    print('黒が○石数差をつけて勝利')
+    score_point = int(input())
 print('resultの保存パスを選ぶ（results以下を選択)')
 result_out = str(input())
 #  --------------
 print('loading...なっしー！')
-df = pd.read_csv(csv_name, header=None) # 文字列が含まれるので
+df = pd.read_csv(csv_name, header=None)  # 文字列が含まれるので
 df = df.replace('\r\n', '', regex=True)
 df = df.replace('\n', '', regex=True)
 tmp = df.values.tolist()
@@ -60,6 +69,7 @@ for c in tmp_1:
         tmp_2 = []
     elif c == 'WD':
         list_dwin_battle.extend(tmp_2)
+        list_wwin_battle.append(DRAW)
         tmp_2 = []
     else:
         tmp_2.append(c)
@@ -78,33 +88,61 @@ for d in shi:
     elif d == 'W':
         turn = WHITE
         continue
-    elif d == 100 or d == -100:
-        othello = game_master()
-        continue
+    elif d == 100:
+        judge, score_B, score_W = othello.end()
+        if ttt == 'n':
+            list_bboard.extend(copy.deepcopy(t_list_bboard))
+            list_bstone.extend(copy.deepcopy(t_list_bstone))
+            t_list_bboard = []
+            t_list_bstone = []
+            t_list_wstone = []
+            t_list_wboard = []
+            othello = game_master()
+            continue
+        elif ttt == 'y':
+            if score_B - score_W >= score_point:
+                list_bboard.extend(copy.deepcopy(t_list_bboard))
+                list_bstone.extend(copy.deepcopy(t_list_bstone))
+                t_list_bboard = []
+                t_list_bstone = []
+                t_list_wstone = []
+                t_list_wboard = []
+                othello = game_master()
+                bs += 1
+                continue
+            else:
+                t_list_bboard = []
+                t_list_bstone = []
+                t_list_wstone = []
+                t_list_wboard = []
+                othello = game_master()
+                continue
     elif d == 64:
         if turn == BLACK:
             # deep copy　じゃないと外のリストのみこぴーされる
-            list_bboard.append(copy.deepcopy(othello.board))
-            list_bstone.append(d)
+            t_list_bboard.append(copy.deepcopy(othello.board))
+            t_list_bstone.append(d)
         elif turn == WHITE:
-            list_wboard.append(copy.deepcopy(othello.board))
-            list_wstone.append(d)
+            t_list_wboard.append(copy.deepcopy(othello.board))
+            t_list_wstone.append(d)
         continue
     else:
         if turn == BLACK:
-            list_bboard.append(copy.deepcopy(othello.board))
-            list_bstone.append(d)
+            t_list_bboard.append(copy.deepcopy(othello.board))
+            t_list_bstone.append(d)
             ax, ay = conve(int(d))
             #  白のターン
         elif turn == WHITE:
-            list_wboard.append(copy.deepcopy(othello.board))
-            list_wstone.append(d)
+            t_list_wboard.append(copy.deepcopy(othello.board))
+            t_list_wstone.append(d)
             ax, ay = conve(int(d))
         othello.put_stone(ax, ay, turn)
 print('復元は終わったなっし')
+print(bs)
 if sha == 'black_win' or 'b' or 'black':
     input_board = list_bboard
     output_stone = list_bstone
 elif sha == 'white_win' or 'w' or 'white':
     input_board = list_wboard
     output_stone = list_wstone
+

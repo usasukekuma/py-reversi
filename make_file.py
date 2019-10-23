@@ -54,7 +54,7 @@ def new_csv(f_name):
         writer.writerow(list_c)
 
 def a_csv(f_name):
-    with open('report/' + f_name, 'a', newline='') as f:
+    with open(f_name, 'a', newline="") as f:
         writer = csv.writer(f)
         writer.writerow(list_c)
 
