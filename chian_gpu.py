@@ -18,12 +18,14 @@ class N(chainer.Chain):
         with self.init_scope():
             self.l1 = L.Linear(n_in, n_hidden)
             self.l2 = L.Linear(n_hidden, n_hidden)
-            self.l3 = L.Linear(n_hidden, n_out)
+            self.l3 = L.Linear(n_hidden, n_hidden)
+            self.l4 = L.Linear(n_hidden, n_out)
 
     def __call__(self, x):
         h = F.relu(self.l1(x))
         h = F.relu(self.l2(h))
-        h = self.l3(h)
+        h = F.relu(self.l3(h))
+        h = self.l4(h)
         return h
 
 
@@ -38,12 +40,14 @@ train, test = split_dataset_random(dataset, split_at, seed=0)
 #  すべての試合の８割を訓練と検証に、、
 train_iter = SerialIterator(train, batch_size=100, repeat=True, shuffle=True)
 #  訓練データを100個＝１セットに　シャッフルもするお！
-valid_iter = iterators.SerialIterator(test, batch_size=50, shuffle=False, repeat=False)
+valid_iter = iterators.SerialIterator(test, batch_size=100, shuffle=False, repeat=False)
 #  ------end------
 
 
 N = N()  # ネットをつくるお
 model = L.Classifier(N)  # classfierのデフォ損失関数はF.softmax_cross_entropy
+chainer.cuda.get_device(gpu_id).use()
+model.to_gpu()
 optimizer = optimizers.SGD(lr=0.1)  # 勾配関数
 optimizer.setup(model)
 updater = training.StandardUpdater(train_iter, optimizer, device=gpu_id)
@@ -70,5 +74,6 @@ trainer.extend(
 
 trainer.run()
 print('学習は終わった。保存する')
+model.to_cpu()
 serializers.save_npz(saving_name, model)
 print('モデルを'+saving_name+'で保存しました')
