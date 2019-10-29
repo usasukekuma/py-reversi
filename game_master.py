@@ -187,7 +187,7 @@ if __name__ == "__main__":
                 print('黒の番です')
                 can_put_list = othello.can_put_list(BLACK)
                 if not can_put_list == []:
-                    x, y, skip_count = player_1(can_put_list, current_board, black_npz_path)
+                    x, y = player_1(can_put_list, current_board, black_npz_path)
                     bput_count += 1
                 else:
                     print('pass')
@@ -201,7 +201,7 @@ if __name__ == "__main__":
                 print('白の番です')
                 can_put_list = othello.can_put_list(WHITE)
                 if not can_put_list == []:
-                    x, y, skip_count = player_2(can_put_list, current_board, white_npz_path)
+                    x, y = player_2(can_put_list, current_board, white_npz_path)
                     wput_count += 1
                 else:
                     print('pass')
