@@ -2,9 +2,9 @@ EMP = 0
 BLACK = 1
 WHITE = 2
 BOARD_SIZE = 8
-b_WIN = 100
-b_LOSE = -100
-DRAW = 50
+b_WIN = 600
+b_LOSE = 300
+DRAW = 250
 
 
 class Board(object):

@@ -53,23 +53,21 @@ tmp = df.values.tolist()
 print('converting to listなっし')
 tmp = [x for a in tmp for x in a]
 tmp_1 = [x for x in tmp if x]
-a = 0
-a += int(tmp_1.count('WW'))
-a += int(tmp_1.count('WB'))
-a += int(tmp_1.count('WD'))
 print('盤面を復元するなっし！')
+wwww = 0
 for c in tmp_1:
     if c == 'WB':
         list_bwin_battle.extend(tmp_2)
         list_bwin_battle.append(b_WIN)
         tmp_2 = []
+        wwww +=1
     elif c == 'WW':
         list_wwin_battle.extend(tmp_2)
         list_wwin_battle.append(b_LOSE)
         tmp_2 = []
     elif c == 'WD':
         list_dwin_battle.extend(tmp_2)
-        list_wwin_battle.append(DRAW)
+        list_dwin_battle.append(DRAW)
         tmp_2 = []
     else:
         tmp_2.append(c)
@@ -82,15 +80,14 @@ elif sha == 'b_lose' or 'l':
 
 othello = game_master()
 shi_len = len(shi)
-for g in range(0,shi_len):
-    d = shi.pop(0)
+for d in shi:
     if d == 'B':
         turn = BLACK
         continue
     elif d == 'W':
         turn = WHITE
         continue
-    elif d == 100:
+    elif d == b_WIN:
         judge, score_B, score_W = othello.end()
         if ttt == 'n':
             list_bboard.extend(copy.deepcopy(t_list_bboard))
@@ -103,8 +100,11 @@ for g in range(0,shi_len):
             wb += 1
             continue
         elif ttt == 'y':
+            print('b')
             print(score_B,score_W)
             if score_B - score_W >= score_point:
+                print('a')
+                print(score_B,score_W)
                 list_bboard.extend(copy.deepcopy(t_list_bboard))
                 list_bstone.extend(copy.deepcopy(t_list_bstone))
                 t_list_bboard = []
@@ -149,6 +149,6 @@ if sha == 'black_win' or 'b' or 'black':
 elif sha == 'white_win' or 'w' or 'white':
     input_board = list_wboard
     output_stone = list_wstone
-
+print(wwww)
 print(input_board)
 print(output_stone)

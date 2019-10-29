@@ -1,41 +1,22 @@
-import sys
-import numpy as np
-import random
-import chainer
-from chainer import cuda, Function, gradient_check, report, training, utils, Variable
-from chainer import datasets, iterators, optimizers, serializers
-from chainer import Link, Chain, ChainList
-import chainer.functions as F
-import chainer.links as L
-from chainer.training import extensions
+from game_master import *
+import copy
+import pandas as pd
 
-n_in = 64
-n_hidden = 100
-n_out = 65
-gpu_id = -1
+list_bwin_battle = []
+list_wwin_battle = []
+list_dwin_battle = []
+list_bstone = []
+list_bboard = []
+list_wstone = []
+list_wboard = []
+t_list_bstone = []
+t_list_bboard = []
+t_list_wstone = []
+t_list_wboard = []
+tmp_2 = []
+bs = 0
 
-
-# chainerのモデルで戦う　Class N は学習時と同じ構造にする
-class N(chainer.Chain):
-
-    def __init__(self):
-        super().__init__()
-        with self.init_scope():
-            self.l1 = L.Linear(n_in, n_hidden)
-            self.l2 = L.Linear(n_hidden, n_hidden)
-            self.l3 = L.Linear(n_hidden, n_hidden)
-            self.l4 = L.Linear(n_hidden, n_out)
-
-    def __call__(self, x):
-        h = F.relu(self.l1(x))
-        h = F.relu(self.l2(h))
-        h = F.relu(self.l3(h))
-        h = self.l4(h)
-        return h
-
-
-
-def conv(put_st):  #　０～６４の出力を座標に変換
+def conve(put_st):
     for_convert = [(0, 0), (1, 0), (2, 0), (3, 0), (4, 0), (5, 0), (6, 0), (7, 0),
                    (0, 1), (1, 1), (2, 1), (3, 1), (4, 1), (5, 1), (6, 1), (7, 1),
                    (0, 2), (1, 2), (2, 2), (3, 2), (4, 2), (5, 2), (6, 2), (7, 2),
@@ -48,13 +29,120 @@ def conv(put_st):  #　０～６４の出力を座標に変換
     return t_x, t_y
 
 
-N = N()  # ネットをつくるお
-model = L.Classifier(N)  # classfierのデフォ損失関数はF.softmax_cross_entropy
-#　　モデルを読み込んで実際に手を打つ
+#  ファイル名とか初期設定
+tmp_count = []
+print('input file path csv/.csv')
+csv_name = input()
+print('saving model path model/.npz')
+saving_name = input()
+print('black_win or white_winどっちのモデルをつくる？')
+sha = input()
+print('スコアを考慮しますか？ y or n')
+ttt = input()
+if ttt == 'y':
+    print('黒が○石数差をつけて勝利')
+    score_point = int(input())
+print('resultの保存パスを選ぶ（results以下を選択)')
+result_out = str(input())
+#  --------------
+print('loading...なっしー！')
+df = pd.read_csv(csv_name, header=None)  # 文字列が含まれるので
+df = df.replace('\r\n', '', regex=True)
+df = df.replace('\n', '', regex=True)
+tmp = df.values.tolist()
+print('converting to listなっし')
+tmp = [x for a in tmp for x in a]
+tmp_1 = [x for x in tmp if x]
+a = 0
+a += int(tmp_1.count('WW'))
+a += int(tmp_1.count('WB'))
+a += int(tmp_1.count('WD'))
+print('盤面を復元するなっし！')
+for c in tmp_1:
+    if c == 'WB':
+        list_bwin_battle.extend(tmp_2)
+        list_bwin_battle.append(b_WIN)
+        tmp_2 = []
+    elif c == 'WW':
+        list_wwin_battle.extend(tmp_2)
+        list_wwin_battle.append(b_LOSE)
+        tmp_2 = []
+    elif c == 'WD':
+        list_dwin_battle.extend(tmp_2)
+        list_wwin_battle.append(DRAW)
+        tmp_2 = []
+    else:
+        tmp_2.append(c)
 
-def ch_player(current_board):
-    serializers.load_npz('model/SGD/100000b_brwr_1000e_5n.npz', model)
-    X1 = np.array(current_board, dtype=np.float32)
-    y1 = F.softmax(model.predictor(X1))
-    tm = y1.data.argsort()[:, ::-1]  # 大きい順に並び替える
-    putting_list = [x for a in tm for x in a]  
+#  ボード復元
+if sha == 'black_win' or 'b' or 'black':
+    shi = list_bwin_battle
+elif sha == 'white_win' or 'w' or 'white':
+    shi = list_wwin_battle
+
+othello = game_master()
+for d in shi:
+    if d == 'B':
+        turn = BLACK
+        continue
+    elif d == 'W':
+        turn = WHITE
+        continue
+    elif d == 600:
+        judge, score_B, score_W = othello.end()
+        if ttt == 'n':
+            list_bboard.extend(copy.deepcopy(t_list_bboard))
+            list_bstone.extend(copy.deepcopy(t_list_bstone))
+            t_list_bboard = []
+            t_list_bstone = []
+            t_list_wstone = []
+            t_list_wboard = []
+            othello = game_master()
+            bs += 1
+            continue
+        elif ttt == 'y':
+            if score_B - score_W >= score_point:
+                list_bboard.extend(copy.deepcopy(t_list_bboard))
+                list_bstone.extend(copy.deepcopy(t_list_bstone))
+                t_list_bboard = []
+                t_list_bstone = []
+                t_list_wstone = []
+                t_list_wboard = []
+                othello = game_master()
+                bs += 1
+                continue
+            else:
+                t_list_bboard = []
+                t_list_bstone = []
+                t_list_wstone = []
+                t_list_wboard = []
+                othello = game_master()
+                continue
+    elif d == 64:
+        if turn == BLACK:
+            # deep copy　じゃないと外のリストのみこぴーされる
+            t_list_bboard.append(copy.deepcopy(othello.board))
+            t_list_bstone.append(d)
+        elif turn == WHITE:
+            t_list_wboard.append(copy.deepcopy(othello.board))
+            t_list_wstone.append(d)
+        continue
+    else:
+        if turn == BLACK:
+            t_list_bboard.append(copy.deepcopy(othello.board))
+            t_list_bstone.append(d)
+            ax, ay = conve(int(d))
+            #  白のターン
+        elif turn == WHITE:
+            t_list_wboard.append(copy.deepcopy(othello.board))
+            t_list_wstone.append(d)
+            ax, ay = conve(int(d))
+        othello.put_stone(ax, ay, turn)
+print('復元は終わったなっし')
+print(bs)
+if sha == 'black_win' or 'b' or 'black':
+    input_board = list_bboard
+    output_stone = list_bstone
+elif sha == 'white_win' or 'w' or 'white':
+    input_board = list_wboard
+    output_stone = list_wstone

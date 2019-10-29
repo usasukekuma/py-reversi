@@ -92,10 +92,10 @@ class game_master(Board):
         for ay in range(8):  # 行のベクトル方向を示す
             for ax in range(8):  # 列のベクトル方向
                 check = self.board[ay][ax]
-                if check is WHITE:
-                    in_score_W += 1
-                elif check is BLACK:
+                if check == BLACK:
                     in_score_B += 1
+                elif check == WHITE:
+                    in_score_W += 1
         if in_score_B == in_score_W:
             in_judge = '引き分け'
         elif in_score_B > in_score_W:
