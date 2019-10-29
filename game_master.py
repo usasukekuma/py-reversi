@@ -1,5 +1,5 @@
 from board import *
-from ch_play import *
+from multimodel import *
 from basic_player import *
 import time
 import numpy as np
@@ -227,6 +227,8 @@ if __name__ == "__main__":
                 k += 50
         tmp_w, score_B, score_W = othello.end()
         print(str(tmp_w) + 'です.黒' + str(score_B) + '石,白' + str(score_W) + '石です.')
+        print(str(n+1)+'回目の試合が終わりました')
+        print(str(((n+1)/battle_time)*100)+'%')
         if tmp_w == '白の勝ち':
             W_winner_count += 1
         elif tmp_w == '黒の勝ち':

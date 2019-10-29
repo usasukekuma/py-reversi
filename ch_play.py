@@ -51,12 +51,13 @@ def conv(put_st):  #　０～６４の出力を座標に変換
 N = N()  # ネットをつくるお
 model = L.Classifier(N)  # classfierのデフォ損失関数はF.softmax_cross_entropy
 #　　モデルを読み込んで実際に手を打つ
+
 def ch_player(can_put_list, current_board, npz_path):
     serializers.load_npz(npz_path, model)
     X1 = np.array(current_board, dtype=np.float32)
     y1 = F.softmax(model.predictor(X1))
-    tm = y1.data.argsort()[:, ::-1]  # 大きい順に並び替える
-    putting_list = [x for a in tm for x in a]  # 2次配列を1次に変換
+    tm = y1.data.argsort()[:, ::-1] # 大きい順に並び替える
+    putting_list = [x for a in tm for x in a] # 2次配列を1次に変換
     s_count = 0
     for put_st in putting_list:
         put_st = int(put_st)
