@@ -95,7 +95,7 @@ def ch_player(can_put_list, current_board, npz_path):
     len_can_put_list = len(can_put_list)
     if len_can_put_list == 1:
         x, y = can_put_list[0]
-        return x, y, 0
+        return x, y
     else:
         for xy in can_put_list:
             x, y = xy
@@ -112,7 +112,7 @@ def ch_player(can_put_list, current_board, npz_path):
             eval_list.append(eval_put)
         txy = can_put_list[eval_list.index(max(eval_list))]
         x, y = txy
-        return x, y, 0
+        return x, y
 
 
 

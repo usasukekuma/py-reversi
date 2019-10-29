@@ -18,12 +18,14 @@ class N(chainer.Chain):
         with self.init_scope():
             self.l1 = L.Linear(n_in, n_hidden)
             self.l2 = L.Linear(n_hidden, n_hidden)
-            self.l3 = L.Linear(n_hidden, n_out)
+            self.l3 = L.Linear(n_hidden, n_hidden)
+            self.l4 = L.Linear(n_hidden, n_out)
 
     def __call__(self, x):
         h = F.relu(self.l1(x))
         h = F.relu(self.l2(h))
-        h = self.l3(h)
+        h = F.relu(self.l3(h))
+        h = self.l4(h)
         return h
 
 
@@ -44,7 +46,7 @@ valid_iter = iterators.SerialIterator(test, batch_size=50, shuffle=False, repeat
 
 N = N()  # ネットをつくるお
 model = L.Classifier(N)  # classfierのデフォ損失関数はF.softmax_cross_entropy
-optimizer = optimizers.SGD(lr=0.1)  # 勾配関数
+optimizer = optimizers.Adam()  # 勾配関数
 optimizer.setup(model)
 updater = training.StandardUpdater(train_iter, optimizer)
 #  updater イテレータ・オプティマイザを統括し、順伝播・損失・逆伝播の計算、そしてパラメータの更新（オプティマイザの呼び出し）という、

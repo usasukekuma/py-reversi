@@ -12,8 +12,6 @@ B_error_count = 0
 W_error_count = 0
 bput_count = 0
 wput_count = 0
-b_skip_count = 0
-w_skip_count = 0
 pass_count = 0
 b_sp = 0
 b_ep = 0
@@ -183,7 +181,6 @@ if __name__ == "__main__":
         while not k == 100:
             k = 0
             turn = othello.player_check(i)
-            skip_count = 0
             #  黒のターン
             if turn == BLACK:
                 current_board = [othello.board_copy()]
@@ -192,9 +189,6 @@ if __name__ == "__main__":
                 if not can_put_list == []:
                     x, y, skip_count = player_1(can_put_list, current_board, black_npz_path)
                     bput_count += 1
-                    if not skip_count == 0:
-                        B_error_count += 1
-                        b_skip_count += skip_count
                 else:
                     print('pass')
                     i += 1
@@ -209,9 +203,6 @@ if __name__ == "__main__":
                 if not can_put_list == []:
                     x, y, skip_count = player_2(can_put_list, current_board, white_npz_path)
                     wput_count += 1
-                    if not skip_count == 0:
-                        W_error_count += 1
-                        w_skip_count += skip_count
                 else:
                     print('pass')
                     i += 1
@@ -244,18 +235,6 @@ if __name__ == "__main__":
     print(str(pass_count)+'回パスでした')
     print('勝率は,黒：'+str(b_p)+'%\n白：'+str(w_p)+
           '%\n引き分け：'+str(d_p)+'%です。')
-    if p_b == str(black_npz_path):
-        b_sp = (b_skip_count/bput_count)*100
-        b_ep = (B_error_count/bput_count)*100
-        print('黒は'+str(battle_time)+'回試合で'+str(bput_count)+'回打ちました.\n'+str(b_skip_count)+
-              '回、2番目以降確率が高い手を選択。\n一回目の予想がエラーだった数/自ターン数'+str(b_sp)+'%\n'
-              '黒のエラー率(予想に失敗したターン数/回ってきたターン数)\n'+str(b_ep)+'%')
-    if p_w == str(white_npz_path):
-        w_sp = (w_skip_count/wput_count)*100
-        w_ep = (W_error_count/wput_count)*100
-        print('白は' + str(battle_time) + '回試合で' + str(wput_count) + '回打ちました.\n'+str(w_skip_count)+
-              '回、2番目以降確率が高い手を選択。\n一回目の予想がエラーだった数/自ターン数'+str((w_skip_count/wput_count)*100)+'%\n'
-              '白のエラー率(予想に失敗したターン数/自ターン数)\n'+str(w_ep)+'%')
     print(str(battle_time)+'回の実行時間は'+str(time_e-time_s)+'秒です')
     if not q == 'no':
         repo = [battle_time, p_b, p_w, B_winner_count, W_winner_count, D_winner_count, b_p, w_p, d_p,

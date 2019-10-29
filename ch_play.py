@@ -53,35 +53,26 @@ model = L.Classifier(N)  # classfierのデフォ損失関数はF.softmax_cross_e
 #　　モデルを読み込んで実際に手を打つ
 
 def ch_player(can_put_list, current_board, npz_path):
-    serializers.load_npz(npz_path, model)
+    serializers.load_npz(npz_path,model)
     X1 = np.array(current_board, dtype=np.float32)
     y1 = F.softmax(model.predictor(X1))
-    tm = y1.data.argsort()[:, ::-1] # 大きい順に並び替える
-    putting_list = [x for a in tm for x in a] # 2次配列を1次に変換
-    s_count = 0
-    for put_st in putting_list:
-        put_st = int(put_st)
-    #  出力がパスのとき
-        if put_st == 64:
-            #  本当にパスならばプレイヤーが呼び出される前にスキップされるはず
-            if can_put_list == []:
-                print('ERROR')
-                sys.exit()
-            #  予測はパスだけど、打てる手がある場合（予測は完璧じゃない）
-            else:
-                s_count += 1
-                continue
-        #  予測でパスじゃないなら手が本当に打てるてか？
-        elif len(can_put_list) == 1:
-            x, y = can_put_list[0]
-            return x, y, s_count
-        else:
-            t_x, t_y = conv(put_st)  # 0~63を座標に変換
-            print('(' + str(t_x) + ',' + str(t_y) + ')' + 'でチェック')
-            if not list(set([(t_x, t_y)]) & set(can_put_list)) == []:
-                #  予測の結果が、打てる手リストに存在するならそのまま
-                return t_x, t_y, s_count
-            # 手は出力されたが、おける場所ではなかった場合
-            else:
-                s_count += 1
-                continue
+    tm1 = y1.data.argsort()
+    putting_list = [x1 for a1 in tm1 for x1 in a1]
+    eval_list = []
+    put_perf = []
+    len_can_put_list = len(can_put_list)
+    if len_can_put_list == 1:
+        x, y = can_put_list[0]
+        return x, y
+    else:
+        for xy in can_put_list:
+            x, y = xy
+            z = x + y * 8
+            put_perf.append(putting_list.index(z))
+
+        for eval_index in range(0, len_can_put_list):
+            ppf = (int(put_perf[eval_index]))*1.2
+            eval_list.append(ppf)
+        txy = can_put_list[eval_list.index(max(eval_list))]
+        x, y = txy
+        return x, y

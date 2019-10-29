@@ -15,7 +15,7 @@ def human_player(can_put_list, trash_0, trash1):  # キーボードからの入�
     list_number = int(input())
     act_x = can_put_list[list_number]
     x, y = act_x
-    return x, y, 0
+    return x, y
 
 
 def input_player(can_put_list, trash_0, trash1):  # リバーシプロジェクトサイトの棋譜データを元に戦う用
@@ -41,14 +41,14 @@ def input_player(can_put_list, trash_0, trash1):  # リバーシプロジェク�
         x, y = ucon[nyu]
     elif nyu.islower():
         x, y = lcon[nyu]
-    return x, y, 0
+    return x, y
 
 
 def random_action(can_put_list, trash, trash1):  # そのままランダムにうつ
     act_x = random.choice(can_put_list)
     print(act_x)
     x, y = act_x
-    return x, y, 0
+    return x, y
 
 
 
