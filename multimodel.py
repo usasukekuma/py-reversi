@@ -55,7 +55,7 @@ model3 = L.Classifier(N5)
 
 
 def first_player(current_board):
-    serializers.load_npz('model/SGD/10sb_100000brwr_1000e_5n.npz', model1)
+    serializers.load_npz('model/Adam/20sb_100000brwr_1000e_5n.npz', model1)
     X1 = np.array(current_board, dtype=np.float32)
     y1 = F.softmax(model1.predictor(X1))
     tm1 = y1.data.argsort()
@@ -81,7 +81,7 @@ def third_player(current_board):
 
 
 
-def ch_player(can_put_list, current_board, npz_path):
+def ch_multi(can_put_list, current_board, npz_path):
     f_putting_list = []
     s_putting_list = []
     t_putting_list = []

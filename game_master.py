@@ -1,4 +1,5 @@
 from board import *
+from ch_play import *
 from multimodel import *
 from basic_player import *
 import time
@@ -97,7 +98,7 @@ class game_master(Board):
                     in_score_B += 1
         if in_score_B == in_score_W:
             in_judge = '引き分け'
-        elif in_score_W < in_score_B:
+        elif in_score_B > in_score_W:
             in_judge = '黒の勝ち'
         else:
             in_judge = '白の勝ち'
@@ -132,6 +133,9 @@ def player_type(t_player):
     elif t_player == 4:
         tp = input_player
         pp = 'input_player'
+    elif t_player == 5:
+        tp = ch_multi
+        pp = 'multi'
     else:
         sys.exit()
     return tp, pp
@@ -146,7 +150,7 @@ if __name__ == "__main__":
         r_name = str(input())
         if r_name == '':
             r_name = 'repo.csv'
-    print('黒プレーヤーを選択なっし\ndeepくん→1\nランダムくん→2\n人→3')
+    print('黒プレーヤーを選択なっし\ndeep(single)くん→1\nランダムくん→2\n人→3\n\n棋譜→4\ndeepくん(multi)→5')
     t_player_b = int(input())
     player_1, p_b = player_type(t_player_b)
     print('白プレーヤーを選択なっし\ndeepくん→1\nランダムくん→2\n人→3')

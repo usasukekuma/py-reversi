@@ -14,7 +14,7 @@ t_list_bboard = []
 t_list_wstone = []
 t_list_wboard = []
 tmp_2 = []
-bs = 0
+wb = 0
 
 def conve(put_st):
     for_convert = [(0, 0), (1, 0), (2, 0), (3, 0), (4, 0), (5, 0), (6, 0), (7, 0),
@@ -35,7 +35,7 @@ print('input file path csv/.csv')
 csv_name = input()
 print('saving model path model/.npz')
 saving_name = input()
-print('black_win or white_winどっちのモデルをつくる？')
+print('bwin or blose')
 sha = input()
 print('スコアを考慮しますか？ y or n')
 ttt = input()
@@ -75,9 +75,9 @@ for c in tmp_1:
         tmp_2.append(c)
 
 #  ボード復元
-if sha == 'black_win' or 'b' or 'black':
+if sha == 'b_win' or 'b':
     shi = list_bwin_battle
-elif sha == 'white_win' or 'w' or 'white':
+elif sha == 'b_lose' or 'l':
     shi = list_wwin_battle
 
 othello = game_master()
@@ -98,9 +98,10 @@ for d in shi:
             t_list_wstone = []
             t_list_wboard = []
             othello = game_master()
-            bs += 1
+            wb += 1
             continue
         elif ttt == 'y':
+            print(score_B,score_W)
             if score_B - score_W >= score_point:
                 list_bboard.extend(copy.deepcopy(t_list_bboard))
                 list_bstone.extend(copy.deepcopy(t_list_bstone))
@@ -109,7 +110,7 @@ for d in shi:
                 t_list_wstone = []
                 t_list_wboard = []
                 othello = game_master()
-                bs += 1
+                wb += 1
                 continue
             else:
                 t_list_bboard = []
@@ -139,7 +140,7 @@ for d in shi:
             ax, ay = conve(int(d))
         othello.put_stone(ax, ay, turn)
 print('復元は終わったなっし')
-print(bs)
+print(wb)
 if sha == 'black_win' or 'b' or 'black':
     input_board = list_bboard
     output_stone = list_bstone
