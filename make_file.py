@@ -106,7 +106,6 @@ if __name__ == "__main__":
             #  黒のターン
             if turn == BLACK:
                 color = 'B'
-                print('黒の番です')
                 current_board = [othello.board_copy()]
                 can_put_list = othello.can_put_list(BLACK)
                 if not can_put_list == []:
@@ -121,12 +120,10 @@ if __name__ == "__main__":
             #  白のターン
             elif turn == WHITE:
                 color = 'W'
-                print('白の番です')
                 current_board = [othello.board_copy()]
                 can_put_list = othello.can_put_list(WHITE)
                 if not can_put_list == []:
                     x, y= player_2(can_put_list, current_board, kihu_count)
-                    print(can_put_list)
                     append_l(x, y, color)
                 else:
                     i += 1
@@ -134,7 +131,7 @@ if __name__ == "__main__":
                     append_l(x, y, color)
                     continue
             othello.put_stone(x, y, turn)
-            othello.view()
+
             kihu_count += 1
             i += 1
             k = 0
@@ -142,13 +139,16 @@ if __name__ == "__main__":
                 k += 50
             if othello.can_put_list(WHITE) == []:
                 k += 50
+        WIN_info = None
         tmp_w, score_B, score_W = othello.end()
-        if score_W > score_B:
-            list_c.append('WW')
-        elif score_W < score_B:
-            list_c.append('WB')
-        elif score_W == score_B:
-            list_c.append('WD')
+        print(score_B,score_W)
+        if score_B is score_W:
+            WIN_info = DRAW
+        elif score_B > score_W:
+            WIN_info = b_WIN
+        else:
+            WIN_info = b_LOSE
+        list_c.append(WIN_info)
         list_c.append('\n')
     print('saving..........')
     f_save(f_name)

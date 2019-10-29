@@ -14,7 +14,9 @@ t_list_bboard = []
 t_list_wstone = []
 t_list_wboard = []
 tmp_2 = []
+tmp_3 = []
 wb = 0
+END = 859
 
 def conve(put_st):
     for_convert = [(0, 0), (1, 0), (2, 0), (3, 0), (4, 0), (5, 0), (6, 0), (7, 0),
@@ -51,26 +53,26 @@ df = df.replace('\r\n', '', regex=True)
 df = df.replace('\n', '', regex=True)
 tmp = df.values.tolist()
 print('converting to listなっし')
-tmp = [x for a in tmp for x in a]
-tmp_1 = [x for x in tmp if x]
+tmp1 = [x for a in tmp for x in a]
+tmp_2 = [x for x in tmp1 if x]
 print('盤面を復元するなっし！')
 wwww = 0
-for c in tmp_1:
-    if c == 'WB':
-        list_bwin_battle.extend(tmp_2)
-        list_bwin_battle.append(b_WIN)
-        tmp_2 = []
+for c in tmp_2:
+    if c == b_WIN:
+        list_bwin_battle.extend(tmp_3)
+        list_bwin_battle.append(END)
+        tmp_3 = []
         wwww +=1
-    elif c == 'WW':
-        list_wwin_battle.extend(tmp_2)
-        list_wwin_battle.append(b_LOSE)
-        tmp_2 = []
-    elif c == 'WD':
-        list_dwin_battle.extend(tmp_2)
-        list_dwin_battle.append(DRAW)
-        tmp_2 = []
+    elif c == b_LOSE:
+        list_wwin_battle.extend(tmp_3)
+        list_wwin_battle.append(END)
+        tmp_3 = []
+    elif c == DRAW:
+        list_dwin_battle.extend(tmp_3)
+        list_dwin_battle.append(END)
+        tmp_3 = []
     else:
-        tmp_2.append(c)
+        tmp_3.append(c)
 
 #  ボード復元
 if sha == 'b_win' or 'b':
@@ -87,7 +89,7 @@ for d in shi:
     elif d == 'W':
         turn = WHITE
         continue
-    elif d == b_WIN:
+    elif d == END:
         judge, score_B, score_W = othello.end()
         if ttt == 'n':
             list_bboard.extend(copy.deepcopy(t_list_bboard))
