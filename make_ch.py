@@ -101,11 +101,11 @@ if __name__ == "__main__":
             if othello.can_put_list(WHITE) == []:
                 k += 50
         tmp_w, score_B, score_W = othello.end()
-        if tmp_w == '白の勝ち':
+        if score_W > score_B:
             list_c.append('WW')
-        elif tmp_w == '黒の勝ち':
+        elif score_W < score_B:
             list_c.append('WB')
-        elif tmp_w == '引き分け':
+        elif score_W == score_B:
             list_c.append('WD')
         list_c.append('\n')
     print('saving..........')

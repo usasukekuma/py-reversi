@@ -81,7 +81,9 @@ elif sha == 'b_lose' or 'l':
     shi = list_wwin_battle
 
 othello = game_master()
-for d in shi:
+shi_len = len(shi)
+for g in range(0,shi_len):
+    d = shi.pop(0)
     if d == 'B':
         turn = BLACK
         continue
@@ -148,3 +150,5 @@ elif sha == 'white_win' or 'w' or 'white':
     input_board = list_wboard
     output_stone = list_wstone
 
+print(input_board)
+print(output_stone)
