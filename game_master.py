@@ -106,9 +106,7 @@ class game_master(Board):
 
     def make_report(self,repo, r_name):
         columns_1 = ['試合回数', '黒プレイヤー', '白プレイヤー', '黒が勝った回数',
-                     '白が勝った回数', '引き分けの回数', '黒の勝率', '白の勝率', '引き分け率',
-                     '黒一回目の予想がエラーだった数/自ターン数', '黒の予想に失敗したターン数/回ってきたターン数',
-                     '白一回目の予想がエラーだった数/自ターン数', '白の予想に失敗したターン数/回ってきたターン数']
+                     '白が勝った回数', '引き分けの回数', '黒の勝率', '白の勝率', '引き分け率']
         with open('report/'+r_name, 'w', encoding='shift_jis', newline="") as f:
             writer = csv.writer(f)
             writer.writerow(columns_1)
@@ -241,8 +239,7 @@ if __name__ == "__main__":
           '%\n引き分け：'+str(d_p)+'%です。')
     print(str(battle_time)+'回の実行時間は'+str(time_e-time_s)+'秒です')
     if not q == 'no':
-        repo = [battle_time, p_b, p_w, B_winner_count, W_winner_count, D_winner_count, b_p, w_p, d_p,
-            b_sp, b_ep, w_sp, w_ep]
+        repo = [battle_time, p_b, p_w, B_winner_count, W_winner_count, D_winner_count, b_p, w_p, d_p]
         if q == 'append' or q == 'a':
             othello.save_report(repo, r_name)
         elif q == 'new':
