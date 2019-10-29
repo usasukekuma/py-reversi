@@ -51,6 +51,7 @@ def conv(put_st):  #　０～６４の出力を座標に変換
 N5 = N5()  # ネットをつくるお
 model1 = L.Classifier(N5)  # classfierのデフォ損失関数はF.softmax_cross_entropy
 model2 = L.Classifier(N5)
+model3 = L.Classifier(N5)
 
 
 def first_player(current_board):
@@ -58,7 +59,7 @@ def first_player(current_board):
     X1 = np.array(current_board, dtype=np.float32)
     y1 = F.softmax(model1.predictor(X1))
     tm1 = y1.data.argsort()
-    putting_list = [x for a in tm1 for x in a]
+    putting_list = [x1 for a1 in tm1 for x1 in a1]
     return putting_list
 
 
@@ -67,7 +68,15 @@ def second_player(current_board):
     X2 = np.array(current_board, dtype=np.float32)
     y2 = F.softmax(model2.predictor(X2))
     tm2 = y2.data.argsort()
-    putting_list = [x for a in tm2 for x in a]
+    putting_list = [x2 for a2 in tm2 for x2 in a2]
+    return putting_list
+
+def third_player(current_board):
+    serializers.load_npz('model/SGD/10sb_100000brwr_1000e_5n.npz', model3)
+    X3 = np.array(current_board, dtype=np.float32)
+    y3 = F.softmax(model2.predictor(X3))
+    tm3 = y3.data.argsort()
+    putting_list = [x3 for a3 in tm3 for x3 in a3]
     return putting_list
 
 
@@ -75,11 +84,14 @@ def second_player(current_board):
 def ch_player(can_put_list, current_board, npz_path):
     f_putting_list = []
     s_putting_list = []
+    t_putting_list = []
     eval_list = []
     put_perf = []
     put_pers = []
+    put_pert = []
     f_putting_list = first_player(current_board)
     s_putting_list = second_player(current_board)
+    t_putting_list = third_player(current_board)
     len_can_put_list = len(can_put_list)
     if len_can_put_list == 1:
         x, y = can_put_list[0]
@@ -90,11 +102,13 @@ def ch_player(can_put_list, current_board, npz_path):
             z = x + y * 8
             put_perf.append(f_putting_list.index(z))
             put_pers.append(s_putting_list.index(z))
+            put_pert.append(t_putting_list.index(z))
 
         for eval_index in range(0, len_can_put_list):
-            ppf = (int(put_perf[eval_index]))*1.2
-            pps = (int(put_pers[eval_index]))*0.8
-            eval_put = ppf+pps
+            ppf = (int(put_perf[eval_index]))*1
+            pps = (int(put_pers[eval_index]))*1
+            ppt = (int(put_pert[eval_index]))*1
+            eval_put = ppf+pps+ppt
             eval_list.append(eval_put)
         txy = can_put_list[eval_list.index(max(eval_list))]
         x, y = txy
