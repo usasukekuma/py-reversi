@@ -105,9 +105,9 @@ def ch_player(can_put_list, current_board, npz_path):
             put_pert.append(t_putting_list.index(z))
 
         for eval_index in range(0, len_can_put_list):
-            ppf = (int(put_perf[eval_index]))*1
-            pps = (int(put_pers[eval_index]))*1
-            ppt = (int(put_pert[eval_index]))*1
+            ppf = (int(put_perf[eval_index]))*1.2
+            pps = (int(put_pers[eval_index]))*1.1
+            ppt = (int(put_pert[eval_index]))*0.8
             eval_put = ppf+pps+ppt
             eval_list.append(eval_put)
         txy = can_put_list[eval_list.index(max(eval_list))]
