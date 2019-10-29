@@ -15,6 +15,7 @@ n_out = 65
 gpu_id = -1
 
 
+# chainerのモデルで戦う　Class N は学習時と同じ構造にする
 class N(chainer.Chain):
 
     def __init__(self):
@@ -33,7 +34,8 @@ class N(chainer.Chain):
         return h
 
 
-def conv(put_st):
+
+def conv(put_st):  #　０～６４の出力を座標に変換
     for_convert = [(0, 0), (1, 0), (2, 0), (3, 0), (4, 0), (5, 0), (6, 0), (7, 0),
                    (0, 1), (1, 1), (2, 1), (3, 1), (4, 1), (5, 1), (6, 1), (7, 1),
                    (0, 2), (1, 2), (2, 2), (3, 2), (4, 2), (5, 2), (6, 2), (7, 2),
@@ -48,7 +50,7 @@ def conv(put_st):
 
 N = N()  # ネットをつくるお
 model = L.Classifier(N)  # classfierのデフォ損失関数はF.softmax_cross_entropy
-
+#　　モデルを読み込んで実際に手を打つ
 def ch_player(can_put_list, current_board, npz_path):
     serializers.load_npz(npz_path, model)
     X1 = np.array(current_board, dtype=np.float32)

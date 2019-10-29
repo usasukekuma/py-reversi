@@ -1,7 +1,7 @@
 import random
 
 
-def human_player(can_put_list, trash_0, trash1):
+def human_player(can_put_list, trash_0, trash1):  # キーボードからの入力を受け付ける
     for_convert = [(0, 0), (1, 0), (2, 0), (3, 0), (4, 0), (5, 0), (6, 0), (7, 0),
                    (0, 1), (1, 1), (2, 1), (3, 1), (4, 1), (5, 1), (6, 1), (7, 1),
                    (0, 2), (1, 2), (2, 2), (3, 2), (4, 2), (5, 2), (6, 2), (7, 2),
@@ -18,7 +18,7 @@ def human_player(can_put_list, trash_0, trash1):
     return x, y, 0
 
 
-def input_player(can_put_list, trash_0, trash1):
+def input_player(can_put_list, trash_0, trash1):  # リバーシプロジェクトサイトの棋譜データを元に戦う用
     lcon = {'a1':(0, 0), 'b1':(1, 0), 'c1':(2, 0), 'd1':(3, 0), 'e1':(4, 0), 'f1':(5, 0), 'g1':(6, 0), 'h1':(7, 0),
             'a2':(0, 1), 'b2':(1, 1), 'c2':(2, 1), 'd2':(3, 1), 'e2':(4, 1), 'f2':(5, 1), 'g2':(6, 1), 'h2':(7, 1),
             'a3':(0, 2), 'b3':(1, 2), 'c3':(2, 2), 'd3':(3, 2), 'e3':(4, 2), 'f3':(5, 2), 'g3':(6, 2), 'h3':(7, 2),
@@ -44,7 +44,7 @@ def input_player(can_put_list, trash_0, trash1):
     return x, y, 0
 
 
-def random_action(can_put_list, trash, trash1):
+def random_action(can_put_list, trash, trash1):  # そのままランダムにうつ
     act_x = random.choice(can_put_list)
     print(act_x)
     x, y = act_x
