@@ -120,8 +120,9 @@ class game_master(Board):
 
 def player_type(t_player):
     if t_player == 1:
-        tp = ch_player
+        tp = single_ch
         pp = 'deepくん'
+
     elif t_player == 2:
         tp = random_action
         pp = 'ランダムくん'
@@ -133,6 +134,9 @@ def player_type(t_player):
         pp = 'input_player'
     elif t_player == 5:
         tp = ch_multi
+        pp = 'multi'
+    elif t_player == 6:
+        tp = ch_multi_plyaer
         pp = 'multi'
     else:
         sys.exit()
@@ -148,17 +152,19 @@ if __name__ == "__main__":
         r_name = str(input())
         if r_name == '':
             r_name = 'repo.csv'
-    print('黒プレーヤーを選択なっし\ndeep(single)くん→1\nランダムくん→2\n人→3\n棋譜→4\ndeepくん(multi)→5')
+    print('黒プレーヤーを選択なっし\ndeep(single)くん→1\nランダムくん→2\n人→3\n棋譜→4\ndeepくん(multi)→5\ndeepくん負け→6')
     t_player_b = int(input())
     player_1, p_b = player_type(t_player_b)
     print('白プレーヤーを選択なっし\ndeepくん→1\nランダムくん→2\n人→3')
     t_player_w = int(input())
     player_2, p_w = player_type(t_player_w)
-    if p_b == 'deepくん':
+    if t_player_b == 1:
         print('input black model path model/')
         black_npz_path = input()
         p_b = str(black_npz_path)
-    elif not p_b == 'deepくん':
+    elif t_player_b == 6:
+        black_npz_path = 'LOSER'
+    else:
         black_npz_path = None
     if p_w == 'deepくん':
         print('input white model path model/')
