@@ -223,5 +223,23 @@
         "epoch": 250,
         "iteration": 899000,
         "elapsed_time": 4852.031527499999
+    },
+    {
+        "main/loss": 3.1070780754089355,
+        "main/accuracy": 0.20069138705730438,
+        "validation/main/loss": 4.198955059051514,
+        "validation/main/accuracy": 0.10176819562911987,
+        "epoch": 260,
+        "iteration": 934960,
+        "elapsed_time": 5028.3773120999995
+    },
+    {
+        "main/loss": 3.1125974655151367,
+        "main/accuracy": 0.20120351016521454,
+        "validation/main/loss": 4.183558464050293,
+        "validation/main/accuracy": 0.10043338686227798,
+        "epoch": 270,
+        "iteration": 970920,
+        "elapsed_time": 5197.602234499999
     }
 ]
