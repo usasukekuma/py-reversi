@@ -57,9 +57,7 @@ df = df.replace('\n', '', regex=True)
 tmp = df.values.tolist()
 print('converting to listなっし')
 tmp1 = [x for a in tmp for x in a]
-print(tmp1)
 tmp_2 = [x for x in tmp1 if not x == '']
-print(tmp_2)
 print('盤面を復元するなっし！')
 wwww = 0
 
@@ -85,10 +83,14 @@ if sha == 'b_win' or 'b':
     shi = list_bwin_battle
 elif sha == 'b_lose' or 'l':
     shi = list_wwin_battle
-
+print(tmp_2.count('WB'))
+tmp1 = []
+tmp_2 = []
 othello = game_master()
 shi_len = len(shi)
-for d in shi:
+
+for g in range(0,len(shi)):
+    d = shi.pop(0)
     if d == 'B':
         turn = BLACK
         continue
@@ -98,7 +100,6 @@ for d in shi:
     elif d == END:
         judge, score_B, score_W = othello.end()
         if ttt == 'n':
-            print(score_B, score_W)
             list_bboard.extend(copy.deepcopy(t_list_bboard))
             list_bstone.extend(copy.deepcopy(t_list_bstone))
             t_list_bboard = []
@@ -109,11 +110,7 @@ for d in shi:
             wb += 1
             continue
         elif ttt == 'y':
-            print('b')
-            print(score_B, score_W)
             if score_B - score_W >= score_point:
-                print('a')
-                print(score_B,score_W)
                 list_bboard.extend(copy.deepcopy(t_list_bboard))
                 list_bstone.extend(copy.deepcopy(t_list_bstone))
                 t_list_bboard = []
@@ -130,28 +127,26 @@ for d in shi:
                 t_list_wboard = []
                 othello = game_master()
                 continue
-    elif d == 64:
-        if turn == BLACK:
-            # deep copy　じゃないと外のリストのみこぴーされる
-            t_list_bboard.append(copy.deepcopy(othello.board))
-            t_list_bstone.append(d)
-        elif turn == WHITE:
-            t_list_wboard.append(copy.deepcopy(othello.board))
-            t_list_wstone.append(d)
-        continue
-    else:
-        if turn == BLACK:
-            t_list_bboard.append(copy.deepcopy(othello.board))
-            t_list_bstone.append(d)
-            ax, ay = conve(int(d))
-            #  白のターン
-        elif turn == WHITE:
-            t_list_wboard.append(copy.deepcopy(othello.board))
-            t_list_wstone.append(d)
-            ax, ay = conve(int(d))
-        othello.put_stone(ax, ay, turn)
-        othello.view()
-        print(d)
+        elif d == 64:
+            if turn == BLACK:
+                # deep copy　じゃないと外のリストのみこぴーされる
+                t_list_bboard.append(copy.deepcopy(othello.board))
+                t_list_bstone.append(d)
+            elif turn == WHITE:
+                t_list_wboard.append(copy.deepcopy(othello.board))
+                t_list_wstone.append(d)
+            continue
+        else:
+            if turn == BLACK:
+                t_list_bboard.append(copy.deepcopy(othello.board))
+                t_list_bstone.append(d)
+                ax, ay = conve(int(d))
+                #  白のターン
+            elif turn == WHITE:
+                t_list_wboard.append(copy.deepcopy(othello.board))
+                t_list_wstone.append(d)
+                ax, ay = conve(int(d))
+            othello.put_stone(ax, ay, turn)
 
 print('復元は終わったなっし')
 print(wb)
@@ -162,7 +157,3 @@ elif sha == 'white_win' or 'w' or 'white':
     input_board = list_wboard
     output_stone = list_wstone
 print(wwww)
-print(tmp_2.count('WB'))
-print(input_board)
-print(output_stone)
-print(shi)
