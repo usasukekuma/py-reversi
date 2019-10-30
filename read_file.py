@@ -104,6 +104,7 @@ for g in range(0,len(shi)):
             t_list_bstone = []
             t_list_wstone = []
             t_list_wboard = []
+            wb += 1
             othello = game_master()
             continue
         elif ttt == 'y':
@@ -114,6 +115,7 @@ for g in range(0,len(shi)):
                 t_list_bstone = []
                 t_list_wstone = []
                 t_list_wboard = []
+                wb += 1
                 othello = game_master()
                 continue
             else:
@@ -151,3 +153,4 @@ if sha == 'black_win' or 'b' or 'black':
 elif sha == 'white_win' or 'w' or 'white':
     input_board = list_wboard
     output_stone = list_wstone
+print(wb)

@@ -29,6 +29,7 @@ class N(chainer.Chain):
         return h
 
 
+
 # ------データ作成---------
 x = np.array(input_board, 'float32')
 t = np.array(output_stone, 'int32')
