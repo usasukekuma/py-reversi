@@ -64,16 +64,16 @@ print('盤面を復元するなっし！')
 wwww = 0
 
 for che in tmp_2:
-    if che == 'WB':
+    if che == b_WIN:
         list_bwin_battle.extend(tmp_3)
         list_bwin_battle.append(END)
         tmp_3 = []
         wwww += 1
-    elif che == 'WW':
+    elif che == b_LOSE:
         list_wwin_battle.extend(tmp_3)
         list_wwin_battle.append(END)
         tmp_3 = []
-    elif che == 'WD':
+    elif che == DRAW:
         list_dwin_battle.extend(tmp_3)
         list_dwin_battle.append(END)
         tmp_3 = []
@@ -162,7 +162,7 @@ elif sha == 'white_win' or 'w' or 'white':
     input_board = list_wboard
     output_stone = list_wstone
 print(wwww)
-print(tmp_2.count('WB'))
+print(tmp_2.count(600))
 print(input_board)
 print(output_stone)
 print(shi)

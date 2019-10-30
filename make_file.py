@@ -3,7 +3,7 @@ from basic_player import *
 import csv
 import copy
 kihu_put_list = []
-
+bbw =0
 
 def kihu_load():
 
@@ -132,7 +132,7 @@ if __name__ == "__main__":
                     list_c.append(z)
                     continue
             othello.put_stone(x, y, turn)
-
+            othello.view()
             kihu_count += 1
             i += 1
             k = 0
@@ -144,18 +144,19 @@ if __name__ == "__main__":
         print(score_B,score_W)
         wscore = score_B - score_W
         if wscore == 0:
-            list_c.append(DRAW)
+            list_c.append('WD')
             print('DRAW')
         elif wscore >= 1:
-            list_c.append(b_WIN)
+            list_c.append('WB')
+            bbw+=1
             print('WIN')
         else:
-            list_c.append(b_LOSE)
+            list_c.append('WW')
             print('Lose')
         list_c.append('\n')
         print(list_c[-2])
     print('saving..........')
     f_save(f_name)
     print('complete!')
-
+    print(bbw)
 
