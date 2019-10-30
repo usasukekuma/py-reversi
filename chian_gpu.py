@@ -38,9 +38,9 @@ ss = len(dataset)
 split_at = int(ss*0.8)
 train, test = split_dataset_random(dataset, split_at, seed=0)
 #  すべての試合の８割を訓練と検証に、、
-train_iter = SerialIterator(train, batch_size=10, repeat=True, shuffle=True)
+train_iter = SerialIterator(train, batch_size=100, repeat=True, shuffle=True)
 #  訓練データを100個＝１セットに　シャッフルもするお！
-valid_iter = iterators.SerialIterator(test, batch_size=10, shuffle=False, repeat=False)
+valid_iter = iterators.SerialIterator(test, batch_size=100, shuffle=False, repeat=False)
 #  ------end------
 
 
