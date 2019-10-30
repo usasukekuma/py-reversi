@@ -14,5 +14,4 @@
 1000,model/SGD/10sb_100000brwr_1000e_5n.npz,ランダムくん,674,289,37,67.4,28.9,3.7,,,,,
 1000,model/SGD/kihu203b_10batch_1000e_5n.npz,ランダムくん,493,470,37,49.3,47,3.7,,,,,
 1000,model/SGD/kihu203b_10batch_400e.npz,ランダムくん,494,460,46,49.4,46,4.6,,,,,
-1000,model/Adam/20sb_100000brwr_1000e_5n.npz,ランダムくん,535,394,71,53.5,39.4,7.1,,,,,
 old,old,old,old,old,old,old,old,old,old,old,old,old,old
