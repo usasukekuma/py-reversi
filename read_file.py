@@ -127,26 +127,26 @@ for g in range(0,len(shi)):
                 t_list_wboard = []
                 othello = game_master()
                 continue
-        elif d == 64:
-            if turn == BLACK:
-                # deep copy　じゃないと外のリストのみこぴーされる
-                t_list_bboard.append(copy.deepcopy(othello.board))
-                t_list_bstone.append(d)
-            elif turn == WHITE:
-                t_list_wboard.append(copy.deepcopy(othello.board))
-                t_list_wstone.append(d)
+    elif d == 64:
+        if turn == BLACK:
+            # deep copy　じゃないと外のリストのみこぴーされる
+            t_list_bboard.append(copy.deepcopy(othello.board))
+            t_list_bstone.append(d)
+        elif turn == WHITE:
+            t_list_wboard.append(copy.deepcopy(othello.board))
+            t_list_wstone.append(d)
             continue
-        else:
-            if turn == BLACK:
-                t_list_bboard.append(copy.deepcopy(othello.board))
-                t_list_bstone.append(d)
-                ax, ay = conve(int(d))
-                #  白のターン
-            elif turn == WHITE:
-                t_list_wboard.append(copy.deepcopy(othello.board))
-                t_list_wstone.append(d)
-                ax, ay = conve(int(d))
-            othello.put_stone(ax, ay, turn)
+    else:
+        if turn == BLACK:
+            t_list_bboard.append(copy.deepcopy(othello.board))
+            t_list_bstone.append(d)
+            ax, ay = conve(int(d))
+            #  白のターン
+        elif turn == WHITE:
+            t_list_wboard.append(copy.deepcopy(othello.board))
+            t_list_wstone.append(d)
+            ax, ay = conve(int(d))
+        othello.put_stone(ax, ay, turn)
 
 print('復元は終わったなっし')
 print(wb)
@@ -157,3 +157,5 @@ elif sha == 'white_win' or 'w' or 'white':
     input_board = list_wboard
     output_stone = list_wstone
 print(wwww)
+print(input_board)
+print(output_stone)
