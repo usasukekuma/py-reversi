@@ -83,7 +83,6 @@ if sha == 'b_win' or 'b':
     shi = list_bwin_battle
 elif sha == 'b_lose' or 'l':
     shi = list_wwin_battle
-print(tmp_2.count('WB'))
 tmp1 = []
 tmp_2 = []
 othello = game_master()
@@ -107,7 +106,6 @@ for g in range(0,len(shi)):
             t_list_wstone = []
             t_list_wboard = []
             othello = game_master()
-            wb += 1
             continue
         elif ttt == 'y':
             if score_B - score_W >= score_point:
@@ -118,7 +116,6 @@ for g in range(0,len(shi)):
                 t_list_wstone = []
                 t_list_wboard = []
                 othello = game_master()
-                wb += 1
                 continue
             else:
                 t_list_bboard = []
@@ -149,13 +146,9 @@ for g in range(0,len(shi)):
         othello.put_stone(ax, ay, turn)
 
 print('復元は終わったなっし')
-print(wb)
 if sha == 'black_win' or 'b' or 'black':
     input_board = list_bboard
     output_stone = list_bstone
 elif sha == 'white_win' or 'w' or 'white':
     input_board = list_wboard
     output_stone = list_wstone
-print(wwww)
-print(input_board)
-print(output_stone)

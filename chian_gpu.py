@@ -38,9 +38,9 @@ ss = len(dataset)
 split_at = int(ss*0.8)
 train, test = split_dataset_random(dataset, split_at, seed=0)
 #  すべての試合の８割を訓練と検証に、、
-train_iter = SerialIterator(train, batch_size=100, repeat=True, shuffle=True)
+train_iter = SerialIterator(train, batch_size=10, repeat=True, shuffle=True)
 #  訓練データを100個＝１セットに　シャッフルもするお！
-valid_iter = iterators.SerialIterator(test, batch_size=100, shuffle=False, repeat=False)
+valid_iter = iterators.SerialIterator(test, batch_size=10, shuffle=False, repeat=False)
 #  ------end------
 
 
@@ -59,7 +59,7 @@ trainer = training.Trainer(updater, (1000, 'epoch'), out='results/'+result_out)
 
 trainer.extend(extensions.ProgressBar())
 trainer.extend(extensions.Evaluator(valid_iter, model, device=gpu_id))
-trainer.extend(extensions.LogReport(trigger=(50, 'epoch'),log_name='log'))
+trainer.extend(extensions.LogReport(trigger=(10, 'epoch'),log_name='log'))
 
 '''
 trainer.extend(extensions.Evaluator(test, model, -1))

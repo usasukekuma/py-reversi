@@ -40,13 +40,13 @@ train, test = split_dataset_random(dataset, split_at, seed=0)
 #  すべての試合の８割を訓練と検証に、、
 train_iter = SerialIterator(train, batch_size=100, repeat=True, shuffle=True)
 #  訓練データを100個＝１セットに　シャッフルもするお！
-valid_iter = iterators.SerialIterator(test, batch_size=50, shuffle=False, repeat=False)
+valid_iter = iterators.SerialIterator(test, batch_size=100, shuffle=False, repeat=False)
 #  ------end------
 
 
 N = N()  # ネットをつくるお
 model = L.Classifier(N)  # classfierのデフォ損失関数はF.softmax_cross_entropy
-optimizer = optimizers.Adam()  # 勾配関数
+optimizer = optimizers.SGD(lr=0.1)  # 勾配関数
 optimizer.setup(model)
 updater = training.StandardUpdater(train_iter, optimizer)
 #  updater イテレータ・オプティマイザを統括し、順伝播・損失・逆伝播の計算、そしてパラメータの更新（オプティマイザの呼び出し）という、
