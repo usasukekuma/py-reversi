@@ -148,7 +148,7 @@ if __name__ == "__main__":
         r_name = str(input())
         if r_name == '':
             r_name = 'repo.csv'
-    print('黒プレーヤーを選択なっし\ndeep(single)くん→1\nランダムくん→2\n人→3\n\n棋譜→4\ndeepくん(multi)→5')
+    print('黒プレーヤーを選択なっし\ndeep(single)くん→1\nランダムくん→2\n人→3\n棋譜→4\ndeepくん(multi)→5')
     t_player_b = int(input())
     player_1, p_b = player_type(t_player_b)
     print('白プレーヤーを選択なっし\ndeepくん→1\nランダムくん→2\n人→3')
