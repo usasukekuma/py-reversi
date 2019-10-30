@@ -102,7 +102,6 @@ if __name__ == "__main__":
                 can_put_list = othello.can_put_list(BLACK)
                 if not can_put_list == []:
                     x, y = player_1(can_put_list, current_board, kihu_count)
-                    list_c.append(color)
                     z = xy_converter(x, y)
                     list_c.append(z)
                 else:
