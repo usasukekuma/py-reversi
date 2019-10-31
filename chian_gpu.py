@@ -1,4 +1,4 @@
-from read_file import *
+from make_read import *
 from chainer.datasets import TupleDataset, split_dataset_random
 from chainer.iterators import SerialIterator
 import chainer

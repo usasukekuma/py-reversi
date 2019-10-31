@@ -34,6 +34,10 @@ ttt = input()
 if ttt == 'y':
     print('黒が○石数差以上をつけて勝利')
     score_point = int(input())
+print('saving model path model/.npz')
+saving_name = input()
+print('resultの保存パスを選ぶ（results以下を選択)')
+result_out = str(input())
 print(str(battle_time)+'回ではじめるなっし')
 turn_count = 0
 while not turn_count == battle_time:
@@ -102,13 +106,13 @@ while not turn_count == battle_time:
     elif sha == 'white_win' or 'w' or 'white':
         if ttt == 'y':
             if score_W - score_B >= score_point:
-                list_wboard.extend(copy.deepcopy(t_list_wboard))
-                list_wstone.extend(copy.deepcopy(t_list_wstone))
+                list_wboard.extend(copy.deepcopy(t_list_bboard))
+                list_wstone.extend(copy.deepcopy(t_list_bstone))
                 turn_count += 1
         elif ttt == 'n':
             if score_W > score_W:
-                list_wboard.extend(copy.deepcopy(t_list_wboard))
-                list_wstone.extend(copy.deepcopy(t_list_wstone))
+                list_wboard.extend(copy.deepcopy(t_list_bboard))
+                list_wstone.extend(copy.deepcopy(t_list_bstone))
                 turn_count += 1
 print('100%')
 if sha == 'black_win' or 'b' or 'black':
