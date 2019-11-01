@@ -14,7 +14,7 @@ n_hidden = 100
 n_out = 65
 gpu_id = -1
 
-player_num = 2
+player_num = 3
 f_mul = 1.2
 s_mul = 1
 t_mul = 1
