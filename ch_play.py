@@ -166,7 +166,9 @@ def ch_loser(can_put_list, current_board):
         print(eval_put_l)
         eval_list_l.append(eval_put_l)
     return eval_list_l
-def ch_multi_plyaer(can_put_list, current_board, npz_path):
+
+
+def ch_multi_player(can_put_list, current_board, npz_path):
     eval_list = []
     if len(can_put_list) == 1:
         x, y = can_put_list[0]

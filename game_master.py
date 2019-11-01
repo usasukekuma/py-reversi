@@ -133,10 +133,10 @@ def player_type(t_player):
         tp = input_player
         pp = 'input_player'
     elif t_player == 5:
-        tp = ch_multi_plyaer
+        tp = ch_multi_player
         pp = 'multi'
     elif t_player == 6:
-        tp = ch_multi_plyaer
+        tp = ch_multi_player
         pp = 'multi'
     else:
         sys.exit()

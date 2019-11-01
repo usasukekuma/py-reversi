@@ -31,7 +31,7 @@ sha = input()
 print('スコアを考慮しますか？ y or n')
 ttt = input()
 if ttt == 'y':
-    print('黒が○石数差以上をつけて勝利')
+    print('○石数差以上をつけて勝利')
     score_point = int(input())
 print('saving model path model/.npz')
 saving_name = input()
