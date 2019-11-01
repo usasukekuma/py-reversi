@@ -1,6 +1,5 @@
 from game_master import *
 from basic_player import *
-import csv
 import copy
 
 
@@ -27,7 +26,7 @@ def xy_converter(x, y):
 
 print('input数を選ぶなっし(0以外を入力してくださいなっし)')
 battle_time = int(input())
-print('bwin or blose')
+print('bwin or wwin')
 sha = input()
 print('スコアを考慮しますか？ y or n')
 ttt = input()

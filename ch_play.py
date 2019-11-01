@@ -118,8 +118,9 @@ def ch_winner(can_put_list, current_board):
     put_pers = []
     put_pert = []
     f_putting_list = load_ch5(current_board, npz_path='model/SGD/10sb_2957brwr_1000e_5n.npz')
-    s_putting_list = load_ch3(current_board, npz_path='model/SGD/20sb_1462brwr_1000e_3n.npz')
-    t_putting_list = load_ch5(current_board, npz_path='model/SGD/4458b_brwr_1000e_5n.npz')
+    s_putting_list = load_ch5(current_board, npz_path='model/SGD/4458b_brwr_1000e_5n.npz')
+    t_putting_list = load_ch3(current_board, npz_path='model/SGD/4458b_brwr_1000e_3n.npz')
+
     len_can_put_list = len(can_put_list)
 
     for xy in can_put_list:
@@ -127,12 +128,14 @@ def ch_winner(can_put_list, current_board):
         z = x + y * 8
         put_perf.append(f_putting_list.index(z))  #それぞれのモデルで予測した置ける場所に対する順位（評価値）
         put_pers.append(s_putting_list.index(z))  #putting_listは低→高順なので　index番号が大きほど勝てそうと予測したということ
+
         put_pert.append(t_putting_list.index(z))  #なのでインデックス番号を取得して、can_put_listのインデックス番号と対応するように保存
 
     for eval_index in range(0, len_can_put_list):
         ppf = (put_perf[eval_index]) * 1  # 格納された順位（評価値を取得）
-        pps = (put_pers[eval_index]) * 1  #can_put_listのインデックス番号と対応するので[0]で抜き出したものは
-        ppt = (put_pert[eval_index]) * 1  #can_put_list[0]に格納された座標の評価値
+        pps = (put_pers[eval_index]) * 1.1
+        ppt = (put_pert[eval_index]) * 1.1  #can_put_list[0]に格納された座標の評価値
+
         eval_put = ppf + pps + ppt
         eval_list_w.append(eval_put)
     return eval_list_w
@@ -165,10 +168,14 @@ def ch_loser(can_put_list, current_board):
     return eval_list_l
 def ch_multi_plyaer(can_put_list, current_board, npz_path):
     eval_list = []
-    if npz_path == 'LOSER':
-        eval_list = ch_loser(can_put_list,current_board)
+    if len(can_put_list) == 1:
+        x, y = can_put_list[0]
+        return x, y
     else:
-        eval_list = ch_winner(can_put_list,current_board)
+        if npz_path == 'LOSER':
+            eval_list = ch_loser(can_put_list, current_board)
+        else:
+            eval_list = ch_winner(can_put_list, current_board)
     print(eval_list)
     print(can_put_list)
     txy = can_put_list[eval_list.index(max(eval_list))]
