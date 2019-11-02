@@ -77,7 +77,7 @@ for che in tmp_2:
         tmp_3 = []
     else:
         tmp_3.append(che)
-    ppc+=1
+    ppc += 1
 #  ボード復元
 if sha == 'b_win' or 'b':
     shi = list_bwin_battle
@@ -87,7 +87,7 @@ tmp1 = []
 tmp_2 = []
 othello = game_master()
 shi_len = len(shi)
-g=0
+g = 0
 while not len(shi) == 0:
     print(str(g)+'/'+str(shi_len))
     d = shi.pop(0)
@@ -111,7 +111,7 @@ while not len(shi) == 0:
             g += 1
             continue
         elif ttt == 'y':
-            g +=1
+            g += 1
             if score_B - score_W >= score_point:
                 list_bboard.extend(copy.deepcopy(t_list_bboard))
                 list_bstone.extend(copy.deepcopy(t_list_bstone))
@@ -148,14 +148,14 @@ while not len(shi) == 0:
             t_list_wboard.append(copy.deepcopy(othello.board))
             t_list_wstone.append(d)
             ax, ay = conve(int(d))
-        g+=1
+        g += 1
         othello.put_stone(ax, ay, turn)
 
 print('復元は終わったなっし')
-if sha == 'black_win' or 'b' or 'black':
+if sha == 'black_win' or sha == 'b' or sha == 'black':
     input_board = list_bboard
     output_stone = list_bstone
-elif sha == 'white_win' or 'w' or 'white':
+elif sha == 'white_win' or sha == 'w' or sha == 'white':
     input_board = list_wboard
     output_stone = list_wstone
 print(wb)

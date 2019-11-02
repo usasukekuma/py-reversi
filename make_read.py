@@ -26,10 +26,10 @@ def xy_converter(x, y):
 
 print('input数を選ぶなっし(0以外を入力してくださいなっし)')
 battle_time = int(input())
-print('bwin or wwin')
-sha = input()
+print('b_win or w_win')
+sha = str(input())
 print('スコアを考慮しますか？ y or n')
-ttt = input()
+ttt = str(input())
 if ttt == 'y':
     print('○石数差以上をつけて勝利')
     score_point = int(input())
@@ -91,7 +91,7 @@ while not turn_count == battle_time:
         if othello.can_put_list(WHITE) == []:
             k += 50
     tmp_w, score_B, score_W = othello.end()
-    if sha == 'black_win' or 'b' or 'black':
+    if sha == 'black_win' or sha == 'b' or sha == 'black':
         if ttt == 'y':
             if score_B - score_W >= score_point:
                 list_bboard.extend(copy.deepcopy(t_list_bboard))
@@ -102,14 +102,14 @@ while not turn_count == battle_time:
                 list_bboard.extend(copy.deepcopy(t_list_bboard))
                 list_bstone.extend(copy.deepcopy(t_list_bstone))
                 turn_count += 1
-    elif sha == 'white_win' or 'w' or 'white':
+    elif sha == 'white_win' or sha == 'w' or sha == 'white':
         if ttt == 'y':
             if score_W - score_B >= score_point:
                 list_wboard.extend(copy.deepcopy(t_list_bboard))
                 list_wstone.extend(copy.deepcopy(t_list_bstone))
                 turn_count += 1
         elif ttt == 'n':
-            if score_W > score_W:
+            if score_W > score_B:
                 list_wboard.extend(copy.deepcopy(t_list_bboard))
                 list_wstone.extend(copy.deepcopy(t_list_bstone))
                 turn_count += 1
