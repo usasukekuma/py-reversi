@@ -1,6 +1,5 @@
 from board import *
 from ch_play import *
-from multimodel import *
 from basic_player import *
 import time
 import numpy as np

@@ -114,10 +114,10 @@ while not turn_count == battle_time:
                 list_wstone.extend(copy.deepcopy(t_list_bstone))
                 turn_count += 1
 print('100%')
-if sha == 'black_win' or 'b' or 'black':
+if sha == 'black_win' or sha == 'b' or sha == 'black':
     input_board = list_bboard
     output_stone = list_bstone
-elif sha == 'white_win' or 'w' or 'white':
+elif sha == 'white_win' or sha == 'w' or sha == 'white':
     input_board = list_wboard
     output_stone = list_wstone
 
