@@ -45,3 +45,4 @@ old,old,old,old,old,old,old,old,old,old,old,old,old,old
 1000,multi,ランダムくん,748,217,35,74.8,21.7,3.5000000000000004,'model/SGD/20sb_11042brwr_1000e_5n.npz'/'model/SGD/10sb_2957brwr_1000e_5n.npz',1.2/1.15
 1000,model/Adam/4458b_brwr_1000e_5n.npz,ランダムくん,554,401,45,55.400000000000006,40.1,4.5
 1000,model/Adam/10sb_2957brwr_1000e_5n.npz,ランダムくん,558,391,51,55.800000000000004,39.1,5.1
+1000,model/SGD/45627brwr_1000e_5n.npz,ランダムくん,708,253,39,70.8,25.3,3.9
