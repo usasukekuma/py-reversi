@@ -1,4 +1,4 @@
-from make_read import *
+from read_file import *
 from chainer.datasets import TupleDataset, split_dataset_random
 from chainer.iterators import SerialIterator
 import chainer
@@ -18,14 +18,12 @@ class N(chainer.Chain):
         with self.init_scope():
             self.l1 = L.Linear(n_in, n_hidden)
             self.l2 = L.Linear(n_hidden, n_hidden)
-            self.l3 = L.Linear(n_hidden, n_hidden)
-            self.l4 = L.Linear(n_hidden, n_out)
+            self.l3 = L.Linear(n_hidden, n_out)
 
     def __call__(self, x):
         h = F.relu(self.l1(x))
         h = F.relu(self.l2(h))
-        h = F.relu(self.l3(h))
-        h = self.l4(h)
+        h = self.l3(h)
         return h
 
 

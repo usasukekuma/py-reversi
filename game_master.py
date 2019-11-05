@@ -136,7 +136,7 @@ def player_type(t_player):
         pp = 'multi'
     elif t_player == 6:
         tp = ch_multi_player
-        pp = 'multi'
+        pp = 'loser'
     else:
         sys.exit()
     return tp, pp

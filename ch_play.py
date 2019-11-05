@@ -14,13 +14,17 @@ n_hidden = 100
 n_out = 65
 gpu_id = -1
 
-player_num = 3
+player_num = 2
 f_mul = 1.2
-s_mul = 1
+s_mul = 1.1
 t_mul = 1
+loser_mul = 1.2
 f_npz_path = 'model/SGD/20sb_11042brwr_1000e_5n.npz'
 s_npz_path = 'model/SGD/10sb_2957brwr_1000e_5n.npz'
-t_npz_path = 1
+t_npz_path = ''
+loser_path = 'model/SGD/20sbloser_10000brwr_1000e_5n.npz'
+switch_first_half = ''
+switch_second_half = 'model/SGD/20sb_11042brwr_1000e_5n.npz'
 
 # chainerのモデルで戦う　Class N は学習時と同じ構造にする
 class N5(chainer.Chain):
@@ -77,7 +81,7 @@ model3 = L.Classifier(N3)
 # classfierのデフォ損失関数はF.softmax_cross_entropy
 
 
-def load_ch(current_board, npz_path):
+def load_predict(current_board, npz_path):
     if '5n' in str(npz_path):
         model = model5
     elif '3n' in str(npz_path):
@@ -91,7 +95,7 @@ def load_ch(current_board, npz_path):
 
 
 def single_ch(can_put_list, current_board, npz_path):
-    putting_list = load_ch(current_board, npz_path)
+    putting_list = load_predict(current_board, npz_path)
     eval_list = []
     put_perf = []
     len_can_put_list = len(can_put_list)
@@ -117,10 +121,10 @@ def ch_winner(can_put_list, current_board):
     put_perf = []
     put_pers = []
     put_pert = []
-    f_putting_list = load_ch(current_board, npz_path=f_npz_path)
-    s_putting_list = load_ch(current_board, npz_path=s_npz_path)
+    f_putting_list = load_predict(current_board, npz_path=f_npz_path)
+    s_putting_list = load_predict(current_board, npz_path=s_npz_path)
     if player_num == 3:
-        t_putting_list = load_ch(current_board, npz_path=t_npz_path)
+        t_putting_list = load_predict(current_board, npz_path=t_npz_path)
     len_can_put_list = len(can_put_list)
 
     for xy in can_put_list:
@@ -142,12 +146,11 @@ def ch_winner(can_put_list, current_board):
     return eval_list_w
 
 
-
 def ch_loser(can_put_list, current_board):
     eval_list_l = []
     put_perl = []
-    eval_list_w = ch_winner(can_put_list,current_board)
-    l_putting_list = load_ch(current_board, npz_path='model/SGD/kihu203b_10batch_1000e_5n.npz')
+    eval_list_w = ch_winner(can_put_list, current_board)
+    l_putting_list = load_predict(current_board, npz_path=loser_path)
 
     for xy in can_put_list:
         x, y = xy
@@ -156,7 +159,7 @@ def ch_loser(can_put_list, current_board):
 
     for eval_idx in range(0,len(eval_list_w)):
         w_p = eval_list_w[eval_idx]
-        ppl = (put_perl[eval_idx]) * 1
+        ppl = (put_perl[eval_idx]) * loser_mul
         if ppl == 0:
             ppl = 0
         else:
@@ -181,6 +184,22 @@ def ch_multi_player(can_put_list, current_board, npz_path):
             eval_list = ch_winner(can_put_list, current_board)
     print(eval_list)
     print(can_put_list)
+    txy = can_put_list[eval_list.index(max(eval_list))]
+    x, y = txy
+    return x, y
+
+
+def switch_model(can_put_list, current_board, npz_path):
+    if len(can_put_list) == 1:
+        x, y = can_put_list[0]
+        return x, y
+
+    elif current_board.count(0) >= 20:
+
+    else:
+        single_ch(can_put_list, current_board, npz_path = switch_second_half)
+
+
     txy = can_put_list[eval_list.index(max(eval_list))]
     x, y = txy
     return x, y

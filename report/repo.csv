@@ -15,6 +15,7 @@
 1000,model/SGD/kihu203b_10batch_1000e_5n.npz,ランダムくん,493,470,37,49.3,47,3.7,,,,,
 1000,model/SGD/kihu203b_10batch_400e.npz,ランダムくん,494,460,46,49.4,46,4.6,,,,,
 old,old,old,old,old,old,old,old,old,old,old,old,old,old
+1000,model/SGD/20sbloser_10000brwr_1000e_5n.npz,ランダムくん,156,822,22,15.6,82.19999999999999,2.1999999999999997
 1000,model/SGD/kihu203b_10batch_1000e_5n.npz,ランダムくん,506,450,44,50.6,45,4.4,,,,,
 1000,model/SGD/4458b_brwr_1000e_5n.npz,ランダムくん,546,417,37,54.6,41.7,3.7,,,,,
 1000,model/SGD/4458b_brwr_1000e_3n.npz,ランダムくん,575,371,54,57.5,37.1,5.4,,,,,
@@ -22,9 +23,9 @@ old,old,old,old,old,old,old,old,old,old,old,old,old,old
 1000,model/SGD/20sb_1462brwr_1000e_5n.npz,ランダムくん,586,377,37,58.6,37.7,3.7,,,,,
 1000,model/SGD/20sb_1462brwr_1000e_3n.npz,ランダムくん,612,348,40,61.2,34.8,4,,,,,
 1000,model/SGD/10sb_2957brwr_1000e_5n.npz,ランダムくん,679,282,39,67.9,28.2,3.9,,,,,
+1000,model/SGD/10sb_2957brwr_1000e_3n.npz,ランダムくん,665,298,37,66.5,29.799999999999997,3.6999999999999997
 1000,model/Adam/10sb_2957brwr_1000e_5n.npz,ランダムくん,558,391,51,55.800000000000004,39.1,5.1
 1000,model/SGD/20sb_11042brwr_1000e_5n.npz,ランダムくん,749,216,35,74.9,21.6,3.5000000000000004
-↑の3ｎ
 1000,model/SGD/10sb_29803brwr_1000e_5n.npz,ランダムくん,679,278,43,67.9,27.800000000000004,4.3
 1000,model/SGD/45627brwr_1000e_5n.npz,ランダムくん,708,253,39,70.8,25.3,3.9
 1000,multi,ランダムくん,650,298,52,65,29.8,5.2,SGD/10sb_2957brwr_1000e_5n.npz//SGD/20sb_1462brwr_1000e_3n.npz/SGD/4458b_brwr_1000e_5n.npz,1.2/1.1/0.8,,,
@@ -47,3 +48,5 @@ old,old,old,old,old,old,old,old,old,old,old,old,old,old
 1000,multi,ランダムくん,742,219,39,74.2,21.9,3.9,'model/SGD/20sb_11042brwr_1000e_5n.npz'/'model/SGD/10sb_2957brwr_1000e_5n.npz',1.2/1
 1000,multi,ランダムくん,769,188,43,76.9,18.8,4.3,'model/SGD/20sb_11042brwr_1000e_5n.npz'/'model/SGD/10sb_2957brwr_1000e_5n.npz',1.2/1.1
 1000,multi,ランダムくん,748,217,35,74.8,21.7,3.5000000000000004,'model/SGD/20sb_11042brwr_1000e_5n.npz'/'model/SGD/10sb_2957brwr_1000e_5n.npz',1.2/1.15
+1000,loser,ランダムくん,803,169,28,80.30000000000001,16.900000000000002,2.8000000000000003,SGD/20sb_11042brwr_1000e_5n.npz'/SGD/10sb_2957brwr_1000e_5n.npz'/LOSGD/20sbloser_10000brwr_1000e_5n.npz',1.2/1.1/1,
+1000,loser,ランダムくん,815,158,27,81.5,15.8,2.7,SGD/20sb_11042brwr_1000e_5n.npz'/SGD/10sb_2957brwr_1000e_5n.npz'/LOSGD/20sbloser_10000brwr_1000e_5n.npz',1.2/1.1/1.2
