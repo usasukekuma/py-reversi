@@ -40,7 +40,7 @@ result_out = str(input())
 print(str(battle_time)+'回ではじめるなっし')
 turn_count = 0
 while not turn_count == battle_time:
-    print(str(round((turn_count/battle_time)*100, -3))+'%')
+    print(str((turn_count/battle_time)*100)+'%')
     othello = game_master()
     i = 0
     k = 0

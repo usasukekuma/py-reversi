@@ -23,8 +23,8 @@ f_npz_path = 'model/SGD/20sb_11042brwr_1000e_5n.npz'
 s_npz_path = 'model/SGD/10sb_2957brwr_1000e_5n.npz'
 t_npz_path = ''
 loser_path = 'model/SGD/20sbloser_10000brwr_1000e_5n.npz'
-switch_first_half = ''
-switch_second_half = 'model/SGD/20sb_11042brwr_1000e_5n.npz'
+switch_first_half = 'model/SGD/20sb_11042brwr_1000e_5n.npz'
+switch_second_half = 'LOSER'
 
 # chainerのモデルで戦う　Class N は学習時と同じ構造にする
 class N5(chainer.Chain):
@@ -190,16 +190,13 @@ def ch_multi_player(can_put_list, current_board, npz_path):
 
 
 def switch_model(can_put_list, current_board, npz_path):
+    tmp1 = [b for a in current_board for b in a]
+    tmp_2 = [d for c in tmp1 for d in c]
     if len(can_put_list) == 1:
         x, y = can_put_list[0]
-        return x, y
-
-    elif current_board.count(0) >= 20:
-
+    elif tmp_2.count(0) <= 20:
+        x, y = single_ch(can_put_list, current_board, npz_path=switch_first_half)
     else:
-        single_ch(can_put_list, current_board, npz_path = switch_second_half)
-
-
-    txy = can_put_list[eval_list.index(max(eval_list))]
-    x, y = txy
+        x, y = ch_multi_player(can_put_list, current_board, npz_path=switch_second_half)
     return x, y
+

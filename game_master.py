@@ -137,6 +137,9 @@ def player_type(t_player):
     elif t_player == 6:
         tp = ch_multi_player
         pp = 'loser'
+    elif t_player == 7:
+        tp = switch_model
+        pp = 'switch'
     else:
         sys.exit()
     return tp, pp
@@ -151,7 +154,7 @@ if __name__ == "__main__":
         r_name = str(input())
         if r_name == '':
             r_name = 'repo.csv'
-    print('黒プレーヤーを選択なっし\ndeep(single)くん→1\nランダムくん→2\n人→3\n棋譜→4\ndeepくん(multi)→5\ndeepくん負け→6')
+    print('黒プレーヤーを選択なっし\ndeep(single)くん→1\nランダムくん→2\n人→3\n棋譜→4\ndeepくん(multi)→5\ndeepくん負け→6\nswitch→7')
     t_player_b = int(input())
     player_1, p_b = player_type(t_player_b)
     print('白プレーヤーを選択なっし\ndeepくん→1\nランダムくん→2\n人→3')
