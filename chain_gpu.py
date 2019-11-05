@@ -5,6 +5,7 @@ import chainer
 from chainer import iterators,optimizers,training,cuda
 import chainer.links as L
 import chainer.functions as F
+import subprocess
 
 n_in = 64
 n_hidden = 100
@@ -76,3 +77,6 @@ print('学習は終わった。保存する')
 model.to_cpu()
 serializers.save_npz(saving_name, model)
 print('モデルを'+saving_name+'で保存しました')
+if shut == 'Y' or shut == 'yes' or shut == 'y':
+    cmd = 'shutdown -s -f -t 0'
+    subprocess.run(cmd, shell=True)

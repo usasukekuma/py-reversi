@@ -37,6 +37,8 @@ print('saving model path model/.npz')
 saving_name = input()
 print('resultの保存パスを選ぶ（results以下を選択)')
 result_out = str(input())
+print('終了後シャットダウンしますか？ Y or N')
+shut = str(input())
 print(str(battle_time)+'回ではじめるなっし')
 turn_count = 0
 while not turn_count == battle_time:
