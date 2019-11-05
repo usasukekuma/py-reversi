@@ -13,20 +13,23 @@ n_in = 64
 n_hidden = 100
 n_out = 65
 gpu_id = -1
-
+# player_numは、ch_winnerの用いるモデル数
 player_num = 2
+# f_mul~loser_mulは、それぞれのモデルが出力した評価値の対する重み付け
 f_mul = 1.2
 s_mul = 1.1
 t_mul = 1
-loser_mul = 1.2
+loser_mul = 1.5
+# モデルのパス
 f_npz_path = 'model/SGD/20sb_11042brwr_1000e_5n.npz'
-s_npz_path = 'model/SGD/10sb_2957brwr_1000e_5n.npz'
-t_npz_path = ''
+s_npz_path = 'model/SGD/45627brwr_1000e_5n.npz'
+# player_num=2のときはt_npz_pathは読み込まれないbut空にはできないので。1とかいれておく
+t_npz_path = 'model/SGD/10sb_2957brwr_1000e_5n.npz'
 loser_path = 'model/SGD/20sbloser_10000brwr_1000e_5n.npz'
 switch_first_half = 'model/SGD/20sb_11042brwr_1000e_5n.npz'
 switch_second_half = 'LOSER'
-
-# chainerのモデルで戦う　Class N は学習時と同じ構造にする
+# ↑LOSERにすると負けモデルのマイナス評価を取り入れたswitchができる＊switch_modelのelse以下をch_multi_playerにしておく
+# chainerのモデルで戦う　Class N は学習時と同じ構造にする必要があるのでN３とN5両方用意してある
 class N5(chainer.Chain):
 
     def __init__(self):
@@ -82,6 +85,7 @@ model3 = L.Classifier(N3)
 
 
 def load_predict(current_board, npz_path):
+    # モデルのファイル名にふくまれる文字で学習時のネット構造を判別している
     if '5n' in str(npz_path):
         model = model5
     elif '3n' in str(npz_path):
@@ -90,7 +94,7 @@ def load_predict(current_board, npz_path):
     X1 = np.array(current_board, dtype=np.float32)
     y1 = F.softmax(model.predictor(X1))
     tm1 = y1.data.argsort()
-    putting_list = [x1 for a1 in tm1 for x1 in a1]
+    putting_list = [x1 for a1 in tm1 for x1 in a1]  # １次元配列に変換
     return putting_list
 
 
