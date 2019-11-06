@@ -28,6 +28,7 @@ old,old,old,old,old,old,old,old,old,old,old,old,old,old
 1000,model/Adam/10sb_2957brwr_1000e_5n.npz,ランダムくん,558,391,51,55.800000000000004,39.1,5.1
 1000,model/SGD/20sb_11042brwr_1000e_5n.npz,ランダムくん,749,216,35,74.9,21.6,3.5000000000000004
 1000,model/SGD/20sb_11042brwr_1000e_3n.npz,ランダムくん,696,277,27,69.6,27.700000000000003,2.7
+1000,model/SGD/10sb_29803brwr_1000e_3n.npz,ランダムくん,651,304,45,65.10000000000001,30.4,4.5
 1000,model/SGD/10sb_29803brwr_1000e_5n.npz,ランダムくん,679,278,43,67.9,27.800000000000004,4.3
 1000,model/SGD/45627brwr_1000e_5n.npz,ランダムくん,708,253,39,70.8,25.3,3.9
 1000,multi,ランダムくん,650,298,52,65,29.8,5.2,SGD/10sb_2957brwr_1000e_5n.npz//SGD/20sb_1462brwr_1000e_3n.npz/SGD/4458b_brwr_1000e_5n.npz,1.2/1.1/0.8,,,
@@ -57,3 +58,4 @@ old,old,old,old,old,old,old,old,old,old,old,old,old,old
 1000,switch,ランダムくん,774,189,37,77.4,18.9,3.6999999999999997,'model/SGD/20sb_11042brwr_1000e_5n.npz'/SGD/10sb_2957brwr_1000e_5n.npz'/LO'model/SGD/20sbloser_10000brwr_1000e_5n.npz',1.2/1.1/1.2,'model/SGD/20sb_11042brwr_1000e_5n.npz'
 1000,loser,ランダムくん,783,181,36,78.3,18.099999999999998,3.5999999999999996,SGD/20sb_11042brwr_1000e_5n.npz'/SGD/45627brwr_1000e_5n.npz'/SGD/10sb_2957brwr_1000e_5n.npz'/LOSGD/20sbloser_10000brwr_1000e_5n.npz',1.2/1.1/1/LO1.2
 1000,loser,ランダムくん,800,167,33,80.0,16.7,3.3000000000000003,/SGD/20sb_11042brwr_1000e_5n.npz/SGD/45627brwr_1000e_5n.npz/SGD/10sb_2957brwr_1000e_5n.npz/SGD/20sbloser_10000brwr_1000e_5n.npz,1.2/1.1/1/1.5
+
