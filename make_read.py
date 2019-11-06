@@ -39,7 +39,7 @@ print('resultの保存パスを選ぶ（results以下を選択)')
 result_out = str(input())
 print('終了後シャットダウンしますか？ Y or N')
 shut = str(input())
-print(str(battle_time)+'回ではじめるなっし')
+print(str(battle_time)+'回でデータ生成をはじめるなっし')
 turn_count = 0
 while not turn_count == battle_time:
     print(str((turn_count/battle_time)*100)+'%')
