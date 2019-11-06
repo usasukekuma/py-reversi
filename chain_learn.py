@@ -68,7 +68,7 @@ trainer.extend(extensions.PlotReport(['main/loss', 'val/main/loss'], x_key='epoc
 trainer.extend(
     extensions.PlotReport(['main/accuracy', 'validation/main/accuracy'], x_key='epoch', file_name='accuracy.png'))
 '''
-
+print(saving_name)
 trainer.run()
 print('学習は終わった。保存する')
 serializers.save_npz(saving_name, model)
