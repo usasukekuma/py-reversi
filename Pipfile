@@ -9,8 +9,6 @@ verify_ssl = true
 numpy = "*"
 chainer = "*"
 pandas = "*"
-tqdm = "*"
-cupy = "*"
 
 [requires]
 python_version = "3.7"
