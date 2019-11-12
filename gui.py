@@ -15,13 +15,13 @@ board_name = ['button_0', 'button_1', 'button_2', 'button_3', 'button_4', 'butto
 class Main_Frame(wx.Frame):
 
     def __init__(self):
-        super().__init__(None, wx.ID_ANY, 'reversi', size=(1500, 700))
+        wx.Frame.__init__(self, None, wx.ID_ANY, 'reversi', size=(1500, 700))
         self.board_Panel = wx.Panel(self, wx.ID_ANY, pos=(0, 0), size=(560, 560))
         self.board_Panel.SetBackgroundColour('#191970')
-        self.control_Panel = wx.Panel(self, wx.ID_ANY, pos=(560, 0))
-        self.control_Panel.SetBackgroundColour('#ffff00')
+        self.board_make()
 
-        layout_board = wx.FlexGridSizer(rows=8, cols=8, gap=(0, 0))
+
+    def board_make(self):
 
         button_0 = wx.Button(self.board_Panel, wx.ID_ANY, '0', size=(70, 70))
         button_1 = wx.Button(self.board_Panel, wx.ID_ANY, '1', size=(70, 70))
@@ -88,21 +88,28 @@ class Main_Frame(wx.Frame):
         button_62 = wx.Button(self.board_Panel, wx.ID_ANY, '62', size=(70, 70))
         button_63 = wx.Button(self.board_Panel, wx.ID_ANY, '63', size=(70, 70))
 
-        button_start = wx.Button(self.control_Panel, wx.ID_ANY, 'START', size=(150, 30))
-
-        board_name = [button_0, button_1, button_2, button_3, button_4, button_5, button_6, button_7,
+        self.board_name = [button_0, button_1, button_2, button_3, button_4, button_5, button_6, button_7,
                       button_8, button_9, button_10, button_11, button_12, button_13, button_14, button_15,
                       button_16, button_17, button_18, button_19, button_20, button_21, button_22, button_23,
                       button_24, button_25, button_26, button_27, button_28, button_29, button_30, button_31,
                       button_32, button_33, button_34, button_35, button_36, button_37, button_38, button_39,
                       button_40, button_41, button_42, button_43, button_44, button_45, button_46, button_47,
                       button_48, button_49, button_50, button_51, button_52, button_53, button_54, button_55,
-                      button_56, button_57, button_58, button_59, button_60, button_61, button_62,  button_63,
+                      button_56, button_57, button_58, button_59, button_60, button_61, button_62, button_63,
                       ]
-        for button_name in board_name:
+
+        self.board_dict = {}
+        layout_board = wx.FlexGridSizer(8, 8, 0, 0)
+
+        for button_name in self.board_name:
+            dict_reg = 0
             button_name.SetBackgroundColour('#228b22')
             layout_board.Add(button_name)
+            self.board_dict[str(dict_reg)] = button_name
+            dict_reg += 1
         self.board_Panel.SetSizer(layout_board)
+
+
 
 
 reversi = wx.App()
