@@ -181,8 +181,8 @@ if __name__ == "__main__":
         sys.exit()
     print(str(p_b)+'VS'+str(p_w)+'の'+str(battle_time)+'回の試合を開始するなっしー！')
 
-    #  ゲーム開始
     time_s = time.perf_counter()
+    #  ゲームをするコード
     for n in range(0, battle_time):
         othello = game_master()
         othello.view()
@@ -226,6 +226,7 @@ if __name__ == "__main__":
                 k += 50
             if othello.can_put_list(WHITE) == []:
                 k += 50
+        # ゲームのコードは終わり以下スコアとかのコード
         tmp_w, score_B, score_W = othello.end()
         print(str(tmp_w) + 'です.黒' + str(score_B) + '石,白' + str(score_W) + '石です.')
         print(str(n+1)+'回目の試合が終わりました')
