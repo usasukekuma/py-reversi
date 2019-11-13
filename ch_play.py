@@ -22,10 +22,10 @@ t_mul = 1
 loser_mul = 1.5
 # モデルのパス
 f_npz_path = 'model/SGD/20sb_11042brwr_1000e_5n.npz'
-s_npz_path = 'model/SGD/45627brwr_1000e_5n.npz'
+s_npz_path = 'model/SGD/30sb_10000brwr_1000e_5n.npz'
 # player_num=2のときはt_npz_pathは読み込まれないbut空にはできないので。1とかいれておく
-t_npz_path = 'model/SGD/10sb_2957brwr_1000e_5n.npz'
-loser_path = 'model/SGD/20sbloser_10000brwr_1000e_5n.npz'
+t_npz_path = 'model/SGD/loser_30sb_10000brwr_1000e_5n.npz'
+loser_path = 'model/SGD/loser_30000brwr_1000e_5n.npz'
 switch_first_half = 'model/SGD/20sb_11042brwr_1000e_5n.npz'
 switch_second_half = 'LOSER'
 # ↑LOSERにすると負けモデルのマイナス評価を取り入れたswitchができる＊switch_modelのelse以下をch_multi_playerにしておく

@@ -11,10 +11,13 @@ board_name = ['button_0', 'button_1', 'button_2', 'button_3', 'button_4', 'butto
               'button_56', 'button_57', 'button_58', 'button_59', 'button_60', 'button_61', 'button_62', 'button_63',
               ]
 
+
 class Main_Frame(wx.Frame):
 
     def __init__(self):
         self.gui_turn = 0
+        self.vs = self.for_human
+
         self.for_convert = [(0, 0), (1, 0), (2, 0), (3, 0), (4, 0), (5, 0), (6, 0), (7, 0),
                        (0, 1), (1, 1), (2, 1), (3, 1), (4, 1), (5, 1), (6, 1), (7, 1),
                        (0, 2), (1, 2), (2, 2), (3, 2), (4, 2), (5, 2), (6, 2), (7, 2),
@@ -32,7 +35,6 @@ class Main_Frame(wx.Frame):
         self.othello = game_master()
         self.board_color_update()
         self.button_enable(BLACK)
-
 
 
     def board_make(self):
@@ -117,7 +119,7 @@ class Main_Frame(wx.Frame):
         for button_name in self.board_name:
             button_name.SetBackgroundColour('#228b22')
             button_name.SetForegroundColour('#bc8f8f')
-            button_name.Bind(wx.EVT_BUTTON, self.click_board)
+            button_name.Bind(wx.EVT_BUTTON, self.vs)
             button_name.Disable()
             self.layout_board.Add(button_name)
             self.board_dict[str(dict_reg)] = button_name
@@ -139,7 +141,7 @@ class Main_Frame(wx.Frame):
                     button_idx = bx + by * 8
                     self.board_name[button_idx].SetBackgroundColour('#ffffff')
 
-    def click_board(self, a):
+    def for_human(self, a):
         b = a.GetId()
         b_idx = 0
         for button_put in self.board_name:
@@ -148,6 +150,24 @@ class Main_Frame(wx.Frame):
                 print(b_idx)
                 g_p = self.turn_check()
                 self.put_button(b_idx, g_p)
+                if self.gui_turn >= 59:
+                    if [d for c in [b for a in self.othello.board for b in a] for d in c].count(0) == 0:
+                        self.othello.end()
+            else:
+                b_idx += 1
+
+    def for_random(self, a):
+        b = a.GetId()
+        b_idx = 0
+        for button_put in self.board_name:
+            c = button_put.GetId()
+            if b == c:
+                print(b_idx)
+                while(True):
+                    g_p = self.turn_check()
+                    if g_p == WHITE:
+                        self.put_button(b_idx, g_p)
+
                 if self.gui_turn >= 59:
                     if [d for c in [b for a in self.othello.board for b in a] for d in c].count(0) == 0:
                         self.othello.end()
