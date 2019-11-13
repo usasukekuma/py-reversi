@@ -31,8 +31,6 @@ def conve(put_st):
     t_x, t_y = t
     return t_x, t_y
 
-
-
 #  ファイル名とか初期設定
 tmp_count = []
 print('input file path csv/.csv')

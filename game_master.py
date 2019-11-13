@@ -2,7 +2,6 @@ from board import *
 from ch_play import *
 from basic_player import *
 import time
-import numpy as np
 import csv
 
 B_winner_count = 0
@@ -20,17 +19,18 @@ w_ep = 0
 repo = []
 
 class game_master(Board):
-    def put_stone(self, x, y, player):  # 石を置くメソッド
+    def put_stone(self, px, py, player):  # 石を置くメソッド
         # すでに石があればおけない(Noneでないところ＝石がある）
-        if self.board[y][x] is not EMP:  # Noneの比較は＝ではなくisをつかう。リストy行目のｘ列目だから
+        if self.board[py][px] is not EMP:  # Noneの比較は＝ではなくisをつかう。リストy行目のｘ列目だから
             return False  # Falseでおけないよ！ってする
         # ひっくり返せないときはおけない
-        turn_over = self.turn_over_list(x, y, player)
+        turn_over = self.turn_over_list(px, py, player)
         if turn_over == [] :  # リストがからのとき＝ひっくり返す石がない
+            print('ERROR32')
             return False
-        self.board[y][x] = player  # 置けるときにそのWorBを代入
-        for x, y in turn_over:
-            self.board[y][x] = player  # ひっくり返せる石をひっくり返す
+        self.board[py][px] = player  # 置けるときにそのWorBを代入
+        for sx, sy in turn_over:
+            self.board[sy][sx] = player  # ひっくり返せる石をひっくり返す
         return True
 
     def turn_over_list(self, x, y, player):  # ひっくり返せる石のリスト
