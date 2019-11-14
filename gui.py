@@ -16,7 +16,7 @@ class Main_Frame(wx.Frame):
 
     def __init__(self):
         self.gui_turn = 0
-        self.vs = self.for_random
+        self.vs = self.for_ch
 
         self.for_convert = [(0, 0), (1, 0), (2, 0), (3, 0), (4, 0), (5, 0), (6, 0), (7, 0),
                             (0, 1), (1, 1), (2, 1), (3, 1), (4, 1), (5, 1), (6, 1), (7, 1),
@@ -27,7 +27,7 @@ class Main_Frame(wx.Frame):
                             (0, 6), (1, 6), (2, 6), (3, 6), (4, 6), (5, 6), (6, 6), (7, 6),
                             (0, 7), (1, 7), (2, 7), (3, 7), (4, 7), (5, 7), (6, 7), (7, 7)]
         wx.Frame.__init__(self, None, wx.ID_ANY, 'Reversi', size=(1500, 700))
-        icon = wx.Icon('icon.ico', wx.BITMAP_TYPE_ICO)
+        icon = wx.Icon('img/icon.ico', wx.BITMAP_TYPE_ICO)
         wx.Frame.SetIcon(self, icon)
         self.board_Panel = wx.Panel(self, wx.ID_ANY, pos=(0, 0), size=(560, 560))
         self.layout_board = wx.FlexGridSizer(8, 8, 0, 0)
@@ -39,6 +39,12 @@ class Main_Frame(wx.Frame):
         self.button_enable(BLACK)
         if self.vs == self.for_random:
             px, py = random_action(self.othello.can_put_list(BLACK), 0, 0)
+            self.othello.put_stone(px, py, BLACK)
+            self.board_color_update()
+            self.button_enable(WHITE)
+            self.gui_turn += 1
+        elif self.vs == self.for_ch:
+            px, py = ch_multi_player(self.othello.can_put_list(BLACK), [self.othello.board], 'LOSER')
             self.othello.put_stone(px, py, BLACK)
             self.board_color_update()
             self.button_enable(WHITE)
@@ -187,6 +193,7 @@ class Main_Frame(wx.Frame):
                 self.othello.put_stone(px, py, BLACK)
                 self.board_color_update()
                 self.gui_turn += 1
+                self.end_check()
                 if not self.othello.can_put_list(WHITE) == []:
                     self.button_enable(WHITE)
                     break
@@ -197,26 +204,27 @@ class Main_Frame(wx.Frame):
                 break
         self.gui_turn += 1
 
-        def for_ch(self, a):
-            self.end_check()
-            self.click_action(a, WHITE)
-            self.board_color_update()
-            self.end_check()
-            while (True):
-                if not self.othello.can_put_list(BLACK) == []:
-                    px, py = ch_multi_player(self.othello.can_put_list(BLACK), self.othello.board, 'LOSER')
-                    self.othello.put_stone(px, py, BLACK)
-                    self.board_color_update()
-                    self.gui_turn += 1
-                    if not self.othello.can_put_list(WHITE) == []:
-                        self.button_enable(WHITE)
-                        break
-                    else:
-                        continue
-                else:
+    def for_ch(self, a):
+        self.end_check()
+        self.click_action(a, WHITE)
+        self.board_color_update()
+        self.end_check()
+        while (True):
+            if not self.othello.can_put_list(BLACK) == []:
+                px, py = ch_multi_player(self.othello.can_put_list(BLACK), [self.othello.board], 'LOSER')
+                self.othello.put_stone(px, py, BLACK)
+                self.board_color_update()
+                self.gui_turn += 1
+                self.end_check()
+                if not self.othello.can_put_list(WHITE) == []:
                     self.button_enable(WHITE)
                     break
-            self.gui_turn += 1
+                else:
+                    continue
+            else:
+                self.button_enable(WHITE)
+                break
+        self.gui_turn += 1
 
 
     def button_enable(self, player):

@@ -15,17 +15,22 @@ n_out = 65
 gpu_id = -1
 # player_numは、ch_winnerの用いるモデル数
 player_num = 2
+loser_num = 2
 # f_mul~loser_mulは、それぞれのモデルが出力した評価値の対する重み付け
 f_mul = 1.2
 s_mul = 1.1
 t_mul = 1
-loser_mul = 1.5
+loser_mul_1 = 1.5
+loser_mul_2 = 1
 # モデルのパス
 f_npz_path = 'model/SGD/20sb_11042brwr_1000e_5n.npz'
 s_npz_path = 'model/SGD/30sb_10000brwr_1000e_5n.npz'
 # player_num=2のときはt_npz_pathは読み込まれないbut空にはできないので。1とかいれておく
 t_npz_path = 'model/SGD/loser_30sb_10000brwr_1000e_5n.npz'
-loser_path = 'model/SGD/loser_30000brwr_1000e_5n.npz'
+
+loser_path = 'model/SGD/loser_30sb_10000brwr_1000e_5n.npz'
+loser_path2 = 'model/SGD/loser_30000brwr_1000e_5n.npz'
+
 switch_first_half = 'model/SGD/20sb_11042brwr_1000e_5n.npz'
 switch_second_half = 'LOSER'
 # ↑LOSERにすると負けモデルのマイナス評価を取り入れたswitchができる＊switch_modelのelse以下をch_multi_playerにしておく
@@ -153,25 +158,28 @@ def ch_winner(can_put_list, current_board):
 def ch_loser(can_put_list, current_board):
     eval_list_l = []
     put_perl = []
+    put_perl2 = []
+
     eval_list_w = ch_winner(can_put_list, current_board)
     l_putting_list = load_predict(current_board, npz_path=loser_path)
+    if loser_num == 2:
+        l_putting_list_2 = load_predict(current_board, npz_path=loser_path2)
 
     for xy in can_put_list:
         x, y = xy
         z = x + y * 8
         put_perl.append(l_putting_list.index(z))
+        if loser_num == 2:
+            put_perl2.append(l_putting_list_2.index(z))
 
-    for eval_idx in range(0,len(eval_list_w)):
+    for eval_idx in range(0, len(eval_list_w)):
         w_p = eval_list_w[eval_idx]
-        ppl = (put_perl[eval_idx]) * loser_mul
-        if ppl == 0:
-            ppl = 0
+        ppl = (put_perl[eval_idx]) * (-loser_mul_1)
+        if loser_num == 2:
+            ppl2 = (put_perl2[eval_idx]) * (-loser_mul_2)
+            eval_put_l = w_p + ppl +ppl2
         else:
-            ppl = -ppl
-        print(ppl)
-        print(w_p)
-        eval_put_l = w_p + ppl
-        print(eval_put_l)
+            eval_put_l = w_p + ppl
         eval_list_l.append(eval_put_l)
     return eval_list_l
 
@@ -198,9 +206,20 @@ def switch_model(can_put_list, current_board, npz_path):
     tmp_2 = [d for c in tmp1 for d in c]
     if len(can_put_list) == 1:
         x, y = can_put_list[0]
-    elif tmp_2.count(0) <= 20:
+    elif tmp_2.count(0) <= 10:
         x, y = single_ch(can_put_list, current_board, npz_path=switch_first_half)
     else:
-        x, y = ch_multi_player(can_put_list, current_board, npz_path=switch_second_half)
+        x, y = ch_multi_player(can_put_list, current_board, npz_path = switch_second_half)
     return x, y
+
+'''
+def ch_mini(can_put_list, current_board, npz_path):
+    tmp1 = [b for a in current_board for b in a]
+    tmp_2 = [d for c in tmp1 for d in c]
+    if len(can_put_list) == 1:
+        x, y = can_put_list[0]
+    elif tmp_2.count(0) <= 10:
+        
+'''
+
 

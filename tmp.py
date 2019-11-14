@@ -1,6 +1,7 @@
 import wx
 from game_master import *
 
+
 board_name = ['button_0', 'button_1', 'button_2', 'button_3', 'button_4', 'button_5', 'button_6', 'button_7',
               'button_8', 'button_9', 'button_10', 'button_11', 'button_12', 'button_13', 'button_14', 'button_15',
               'button_16', 'button_17', 'button_18', 'button_19', 'button_20', 'button_21', 'button_22', 'button_23',
@@ -11,22 +12,23 @@ board_name = ['button_0', 'button_1', 'button_2', 'button_3', 'button_4', 'butto
               'button_56', 'button_57', 'button_58', 'button_59', 'button_60', 'button_61', 'button_62', 'button_63',
               ]
 
-
 class Main_Frame(wx.Frame):
 
     def __init__(self):
         self.gui_turn = 0
-        self.vs = self.for_human
+        self.vs = self.for_random
 
         self.for_convert = [(0, 0), (1, 0), (2, 0), (3, 0), (4, 0), (5, 0), (6, 0), (7, 0),
-                       (0, 1), (1, 1), (2, 1), (3, 1), (4, 1), (5, 1), (6, 1), (7, 1),
-                       (0, 2), (1, 2), (2, 2), (3, 2), (4, 2), (5, 2), (6, 2), (7, 2),
-                       (0, 3), (1, 3), (2, 3), (3, 3), (4, 3), (5, 3), (6, 3), (7, 3),
-                       (0, 4), (1, 4), (2, 4), (3, 4), (4, 4), (5, 4), (6, 4), (7, 4),
-                       (0, 5), (1, 5), (2, 5), (3, 5), (4, 5), (5, 5), (6, 5), (7, 5),
-                       (0, 6), (1, 6), (2, 6), (3, 6), (4, 6), (5, 6), (6, 6), (7, 6),
-                       (0, 7), (1, 7), (2, 7), (3, 7), (4, 7), (5, 7), (6, 7), (7, 7)]
-        wx.Frame.__init__(self, None, wx.ID_ANY, 'reversi', size=(1500, 700))
+                            (0, 1), (1, 1), (2, 1), (3, 1), (4, 1), (5, 1), (6, 1), (7, 1),
+                            (0, 2), (1, 2), (2, 2), (3, 2), (4, 2), (5, 2), (6, 2), (7, 2),
+                            (0, 3), (1, 3), (2, 3), (3, 3), (4, 3), (5, 3), (6, 3), (7, 3),
+                            (0, 4), (1, 4), (2, 4), (3, 4), (4, 4), (5, 4), (6, 4), (7, 4),
+                            (0, 5), (1, 5), (2, 5), (3, 5), (4, 5), (5, 5), (6, 5), (7, 5),
+                            (0, 6), (1, 6), (2, 6), (3, 6), (4, 6), (5, 6), (6, 6), (7, 6),
+                            (0, 7), (1, 7), (2, 7), (3, 7), (4, 7), (5, 7), (6, 7), (7, 7)]
+        wx.Frame.__init__(self, None, wx.ID_ANY, 'Reversi', size=(1500, 700))
+        icon = wx.Icon('img/icon.ico', wx.BITMAP_TYPE_ICO)
+        wx.Frame.SetIcon(self, icon)
         self.board_Panel = wx.Panel(self, wx.ID_ANY, pos=(0, 0), size=(560, 560))
         self.layout_board = wx.FlexGridSizer(8, 8, 0, 0)
         self.board_make()
@@ -35,7 +37,12 @@ class Main_Frame(wx.Frame):
         self.othello = game_master()
         self.board_color_update()
         self.button_enable(BLACK)
-
+        if self.vs == self.for_random:
+            px, py = random_action(self.othello.can_put_list(BLACK), 0, 0)
+            self.othello.put_stone(px, py, BLACK)
+            self.board_color_update()
+            self.button_enable(WHITE)
+            self.gui_turn += 1
 
     def board_make(self):
         self.board_Panel.SetBackgroundColour('#191970')
@@ -125,9 +132,6 @@ class Main_Frame(wx.Frame):
             self.board_dict[str(dict_reg)] = button_name
             dict_reg += 1
 
-
-
-
     def board_color_update(self):
         for bx in range(BOARD_SIZE):
             for by in range(BOARD_SIZE):
@@ -141,38 +145,79 @@ class Main_Frame(wx.Frame):
                     button_idx = bx + by * 8
                     self.board_name[button_idx].SetBackgroundColour('#ffffff')
 
-    def for_human(self, a):
+    def click_action(self, a, g_p):
         b = a.GetId()
         b_idx = 0
         for button_put in self.board_name:
             c = button_put.GetId()
             if b == c:
-                print(b_idx)
-                g_p = self.turn_check()
                 self.put_button(b_idx, g_p)
-                if self.gui_turn >= 59:
-                    if [d for c in [b for a in self.othello.board for b in a] for d in c].count(0) == 0:
-                        self.othello.end()
             else:
                 b_idx += 1
+
+    def for_human(self, a):
+        g_p = self.turn_check()
+        self.click_action(a, g_p)
+        if g_p == BLACK:
+            self.button_enable(WHITE)
+        else:
+            self.button_enable(BLACK)
+        self.end_check()
+        self.gui_turn += 1
+
+    def end_check(self):
+        kop = 0
+        if self.othello.can_put_list(BLACK) == []:
+            kop += 50
+        if self.othello.can_put_list(WHITE) == []:
+            kop += 50
+        if kop == 100:
+            tmp_w, score_B, score_W = self.othello.end()
+            print(str(tmp_w) + 'です.黒' + str(score_B) + '石,白' + str(score_W) + '石です.')
+            sys.exit()
 
     def for_random(self, a):
-        b = a.GetId()
-        b_idx = 0
-        for button_put in self.board_name:
-            c = button_put.GetId()
-            if b == c:
-                print(b_idx)
-                while(True):
-                    g_p = self.turn_check()
-                    if g_p == WHITE:
-                        self.put_button(b_idx, g_p)
-
-                if self.gui_turn >= 59:
-                    if [d for c in [b for a in self.othello.board for b in a] for d in c].count(0) == 0:
-                        self.othello.end()
+        self.end_check()
+        self.click_action(a, WHITE)
+        self.board_color_update()
+        self.end_check()
+        while(True):
+            if not self.othello.can_put_list(BLACK) == []:
+                px, py = random_action(self.othello.can_put_list(BLACK), 0, 0)
+                self.othello.put_stone(px, py, BLACK)
+                self.board_color_update()
+                self.gui_turn += 1
+                if not self.othello.can_put_list(WHITE) == []:
+                    self.button_enable(WHITE)
+                    break
+                else:
+                    continue
             else:
-                b_idx += 1
+                self.button_enable(WHITE)
+                break
+        self.gui_turn += 1
+
+        def for_ch(self, a):
+            self.end_check()
+            self.click_action(a, WHITE)
+            self.board_color_update()
+            self.end_check()
+            while (True):
+                if not self.othello.can_put_list(BLACK) == []:
+                    px, py = ch_multi_player(self.othello.can_put_list(BLACK), self.othello.board, 'LOSER')
+                    self.othello.put_stone(px, py, BLACK)
+                    self.board_color_update()
+                    self.gui_turn += 1
+                    if not self.othello.can_put_list(WHITE) == []:
+                        self.button_enable(WHITE)
+                        break
+                    else:
+                        continue
+                else:
+                    self.button_enable(WHITE)
+                    break
+            self.gui_turn += 1
+
 
     def button_enable(self, player):
         for button_name in self.board_name:
@@ -185,22 +230,19 @@ class Main_Frame(wx.Frame):
     def turn_check(self):
         print(self.gui_turn)
         if self.gui_turn == 0:
-            self.gui_turn += 1
             print('f b')
             print(self.gui_turn)
             return BLACK
         elif self.gui_turn % 2 == 0:
             if not self.othello.can_put_list(BLACK) == []:
-                self.gui_turn += 1
                 print('b')
                 return BLACK
             else:
-                self.gui_turn += 1
                 print('pass w')
+                self.gui_turn += 1
                 return WHITE
         else:
             if not self.othello.can_put_list(WHITE) == []:
-                self.gui_turn += 1
                 print('w')
                 return WHITE
             else:
@@ -213,10 +255,6 @@ class Main_Frame(wx.Frame):
         self.othello.put_stone(px, py, g_p)
         self.othello.view()
         self.board_color_update()
-        if g_p == BLACK:
-            self.button_enable(WHITE)
-        else:
-            self.button_enable(BLACK)
 
 
 reversi = wx.App()
