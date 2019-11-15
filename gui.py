@@ -17,8 +17,7 @@ class Main_Frame(wx.Frame):
     def __init__(self):
         self.gui_turn = 0
         self.vs = self.for_ch
-        self.count_b = 0
-        self.count_w = 0
+        self.selection = ('85%model', '75%model', 'random')
 
         self.for_convert = [(0, 0), (1, 0), (2, 0), (3, 0), (4, 0), (5, 0), (6, 0), (7, 0),
                             (0, 1), (1, 1), (2, 1), (3, 1), (4, 1), (5, 1), (6, 1), (7, 1),
@@ -29,20 +28,19 @@ class Main_Frame(wx.Frame):
                             (0, 6), (1, 6), (2, 6), (3, 6), (4, 6), (5, 6), (6, 6), (7, 6),
                             (0, 7), (1, 7), (2, 7), (3, 7), (4, 7), (5, 7), (6, 7), (7, 7)]
 
-        wx.Frame.__init__(self, None, wx.ID_ANY, 'Reversi', size=(1120, 700))
+        wx.Frame.__init__(self, None, wx.ID_ANY, 'Reversi', size=(728, 700))
         icon = wx.Icon('img/icon.ico', wx.BITMAP_TYPE_ICO)
         wx.Frame.SetIcon(self, icon)
         self.main_Panel = wx.Panel(self)
-
         self.board_Panel = wx.Panel(self.main_Panel, pos=(0, 0), size=(560, 560))
-
         self.control_Panel = wx.Panel(self.main_Panel, pos=(560, 0), size=(560, 700))
-        self.control_Panel.SetBackgroundColour('#008080')
-
+        self.control_Panel.SetBackgroundColour('#7fbfff')
         self.status_Panel = wx.Panel(self.main_Panel, pos=(0, 560), size=(560, 140))
-        self.status_Panel.SetBackgroundColour('#008b8b')
-
+        self.status_Panel.SetBackgroundColour('#8484ff')
+        self.othello = game_master()
         self.board_make()
+        self.make_status()
+        self.make_control()
 
         main_layout = wx.GridBagSizer()
         main_layout.Add(self.board_Panel, (0, 0), (1, 1))
@@ -52,24 +50,10 @@ class Main_Frame(wx.Frame):
         main_layout.AddGrowableRow(1)
         main_layout.AddGrowableCol(0)
         main_layout.AddGrowableCol(1)
-
         self.main_Panel.SetSizer(main_layout)
 
-        self.othello = game_master()
         self.board_color_update()
-        self.button_enable(BLACK)
-        if self.vs == self.for_random:
-            px, py = random_action(self.othello.can_put_list(BLACK), 0, 0)
-            self.othello.put_stone(px, py, BLACK)
-            self.board_color_update()
-            self.button_enable(WHITE)
-            self.gui_turn += 1
-        elif self.vs == self.for_ch:
-            px, py = ch_multi_player(self.othello.can_put_list(BLACK), [self.othello.board], 'LOSER')
-            self.othello.put_stone(px, py, BLACK)
-            self.board_color_update()
-            self.button_enable(WHITE)
-            self.gui_turn += 1
+
 
     def board_make(self):
         button_0 = wx.Button(self.board_Panel, wx.ID_ANY, '0', size=(70, 70))
@@ -159,18 +143,69 @@ class Main_Frame(wx.Frame):
         self.board_Panel.SetSizer(layout_board)
 
     def make_control(self):
-        button_start = wx.Button(self.control_Panel, wx.ID_ANY, 'START', size=(150, 70))
+        control_layout = wx.BoxSizer(wx.VERTICAL)
+        text1 = wx.StaticText(self.control_Panel, wx.ID_ANY, '戦う相手', size=(150, 30))
+        text1.SetFont(wx.Font(20, wx.FONTFAMILY_MODERN, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL))
+        self.button_start = wx.Button(self.control_Panel, wx.ID_ANY, 'START', size=(150, 70))
+        self.button_start.SetBackgroundColour('#ffe4b5')
+        self.button_start.Bind(wx.EVT_BUTTON, self.click_start)
+        self.selectin_box = wx.ComboBox(self.control_Panel, wx.ID_ANY, '選択してください',
+                                   choices=self.selection, style=wx.CB_READONLY, size=(150, 30))
+        self.selectin_box.SetFont(wx.Font(20, wx.FONTFAMILY_MODERN, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL))
+        self.selectin_box.SetSelection(0)
+        self.WINNER = wx.StaticText(self.control_Panel, wx.ID_ANY, '', size=(150, 70), style=wx.TE_CENTER)
+        self.WINNER.SetBackgroundColour('#20b2aa')
+        self.WINNER.SetFont(wx.Font(28, wx.FONTFAMILY_MODERN, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL))
+        control_layout.Add(text1)
+        control_layout.Add(self.selectin_box)
+        control_layout.Add(self.button_start)
+        control_layout.Add(self.WINNER)
+        self.control_Panel.SetSizer(control_layout)
+
+    def click_start(self, a):
+        self.button_start.Disable()
+        self.button_enable(BLACK)
+        select_p = self.selectin_box.GetStringSelection()
+        if  select_p == '85%model':
+            px, py = ch_multi_player(self.othello.can_put_list(BLACK), [self.othello.board], 'LOSER')
+            self.othello.put_stone(px, py, BLACK)
+            self.board_color_update()
+            self.button_enable(WHITE)
+            self.gui_turn += 1
+
+        elif select_p == 'random':
+            px, py = random_action(self.othello.can_put_list(BLACK), 0, 0)
+            self.othello.put_stone(px, py, BLACK)
+            self.board_color_update()
+            self.button_enable(WHITE)
+            self.gui_turn += 1
+
+        else:
+            sys.exit()
 
     def make_status(self):
-        color_b = wx.StaticText(self.status_Panel, wx.ID_ANY, '黒')
-        color_w = wx.StaticText(self.status_Panel, wx.ID_ANY, '白')
-        sc_b = wx.StaticText(self.status_Panel, wx.ID_ANY, '0')
-        sc_w = wx.StaticText(self.status_Panel, wx.ID_ANY, '0')
+        layout_status = wx.BoxSizer(wx.HORIZONTAL)
+        status_font = wx.Font(50, wx.FONTFAMILY_MODERN, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL)
+        color_b = wx.StaticText(self.status_Panel, wx.ID_ANY, 'BLACK ')
+        color_w = wx.StaticText(self.status_Panel, wx.ID_ANY, 'WHITE ')
+        self.sc_b = wx.StaticText(self.status_Panel, wx.ID_ANY, '0')
+        self.sc_w = wx.StaticText(self.status_Panel, wx.ID_ANY, '0')
+        color_b.SetFont(status_font)
+        self.sc_b.SetFont(status_font)
+        self.sc_w.SetFont(status_font)
+        color_w.SetFont(status_font)
+        self.sc_w.SetForegroundColour('WHITE')
+        color_w.SetForegroundColour('WHITE')
 
-
-
+        layout_status.Add(color_b, proportion=1)
+        layout_status.Add(self.sc_b, proportion=1)
+        layout_status.Add(color_w, proportion=1)
+        layout_status.Add(self.sc_w, proportion=1)
+        self.status_Panel.SetSizer(layout_status)
 
     def board_color_update(self):
+        self.count_b = 0
+        self.count_w = 0
         for bx in range(BOARD_SIZE):
             for by in range(BOARD_SIZE):
                 if self.othello.board[by][bx] == 0:
@@ -184,6 +219,9 @@ class Main_Frame(wx.Frame):
                     button_idx = bx + by * 8
                     self.board_name[button_idx].SetBackgroundColour('#ffffff')
                     self.count_w += 1
+        self.sc_b.SetLabel(str(self.count_b))
+        self.sc_w.SetLabel(str(self.count_w))
+
 
     def click_action(self, a, g_p):
         b = a.GetId()
@@ -212,9 +250,8 @@ class Main_Frame(wx.Frame):
         if self.othello.can_put_list(WHITE) == []:
             kop += 50
         if kop == 100:
-            tmp_w, score_B, score_W = self.othello.end()
-            print(str(tmp_w) + 'です.黒' + str(score_B) + '石,白' + str(score_W) + '石です.')
-            sys.exit()
+            judge, sb, sw = self.othello.end()
+            self.WINNER.SetLabel(judge)
 
     def for_random(self, a):
         self.end_check()
@@ -259,7 +296,6 @@ class Main_Frame(wx.Frame):
                 self.button_enable(WHITE)
                 break
         self.gui_turn += 1
-
 
     def button_enable(self, player):
         for button_name in self.board_name:
