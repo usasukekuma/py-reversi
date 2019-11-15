@@ -19,6 +19,7 @@
 1000,model/SGD/10sb_29803brwr_1000e_5n.npz,ランダムくん,679,278,43,67.9,27.8,4.3,,,,,
 1000,model/SGD/30sb_10000brwr_1000e_5n.npz,ランダムくん,740,218,42,74,21.8,4.2,,,,,
 1000,model/SGD/45627brwr_1000e_5n.npz,ランダムくん,708,253,39,70.8,25.3,3.9,,,,,
+1000,model/SGD/30sb_30000brwr_1000e_5n.npz,ランダムくん,778,192,30,77.8,19.2,3.0
 1000,multi,ランダムくん,650,298,52,65,29.8,5.2,SGD/10sb_2957brwr_1000e_5n.npz//SGD/20sb_1462brwr_1000e_3n.npz/SGD/4458b_brwr_1000e_5n.npz,1.2/1.1/0.8,,,
 1000,multi,ランダムくん,643,309,48,64.3,30.9,4.8,SGD/10sb_2957brwr_1000e_5n.npz//SGD/20sb_1462brwr_1000e_3n.npz/SGD/4458b_brwr_1000e_5n.npz,2001/1/1,,,
 1000,multi,ランダムくん,644,313,43,64.4,31.3,4.3,SGD/10sb_2957brwr_1000e_5n.npz//SGD/20sb_1462brwr_1000e_3n.npz/SGD/4458b_brwr_1000e_5n.npz,1.2/1/1,,,
@@ -53,4 +54,4 @@
 1000,loser,ランダムくん,841,131,28,84.1,13.1,2.8,'model/SGD/20sb_11042brwr_1000e_5n.npz'/'model/SGD/30sb_10000brwr_1000e_5n.npz',1.2/1.1, 'model/SGD/loser_30sb_10000brwr_1000e_5n.npz',1.5,
 1000,loser,ランダムくん,822,156,22,82.2,15.6,2.2,model/SGD/20sb_11042brwr_1000e_5n.npz'/'model/SGD/30sb_10000brwr_1000e_5n.npz',1.2/1.1, 'model/SGD/loser_30sb_10000brwr_1000e_5n.npz',1.5,r0.5
 1000,loser,ランダムくん,816,153,31,81.6,15.3,3.1,model/SGD/20sb_11042brwr_1000e_5n.npz'/'model/SGD/30sb_10000brwr_1000e_5n.npz',1.2/1.1, 'model/SGD/loser_30sb_10000brwr_1000e_5n.npz'/'model/SGD/loser_30000brwr_1000e_5n.npz',1.5/1,
-1000,model/SGD/30sb_30000brwr_1000e_5n.npz,ランダムくん,778,192,30,77.8,19.2,3.0
+1000,loser,ランダムくん,860,125,15,86.0,12.5,1.5,'model/SGD/30sb_30000brwr_1000e_5n.npz'/'model/SGD/20sb_11042brwr_1000e_5n.npz',LO'model/SGD/loser_30sb_10000brwr_1000e_5n.npz'/'model/SGD/loser_30000brwr_1000e_5n.npz',1.2/1.1,lo1.5/1

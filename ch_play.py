@@ -23,8 +23,8 @@ t_mul = 1
 loser_mul_1 = 1.5
 loser_mul_2 = 1
 # モデルのパス
-f_npz_path = 'model/SGD/20sb_11042brwr_1000e_5n.npz'
-s_npz_path = 'model/SGD/30sb_10000brwr_1000e_5n.npz'
+f_npz_path = 'model/SGD/30sb_30000brwr_1000e_5n.npz'
+s_npz_path = 'model/SGD/20sb_11042brwr_1000e_5n.npz'
 # player_num=2のときはt_npz_pathは読み込まれないbut空にはできないので。1とかいれておく
 t_npz_path = 'model/SGD/loser_30sb_10000brwr_1000e_5n.npz'
 
