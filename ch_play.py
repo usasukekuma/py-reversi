@@ -194,8 +194,6 @@ def ch_multi_player(can_put_list, current_board, npz_path):
             eval_list = ch_loser(can_put_list, current_board)
         else:
             eval_list = ch_winner(can_put_list, current_board)
-    print(eval_list)
-    print(can_put_list)
     txy = can_put_list[eval_list.index(max(eval_list))]
     x, y = txy
     return x, y
@@ -209,17 +207,39 @@ def switch_model(can_put_list, current_board, npz_path):
     elif tmp_2.count(0) <= 10:
         x, y = single_ch(can_put_list, current_board, npz_path=switch_first_half)
     else:
-        x, y = ch_multi_player(can_put_list, current_board, npz_path = switch_second_half)
+        x, y = ch_multi_player(can_put_list, current_board, npz_path=switch_second_half)
     return x, y
 
-'''
 def ch_mini(can_put_list, current_board, npz_path):
     tmp1 = [b for a in current_board for b in a]
     tmp_2 = [d for c in tmp1 for d in c]
     if len(can_put_list) == 1:
         x, y = can_put_list[0]
-    elif tmp_2.count(0) <= 10:
-        
-'''
+    else:
+        if npz_path == 'LOSER':
+            eval_list = ch_loser(can_put_list, current_board)
+        else:
+            eval_list = ch_winner(can_put_list, current_board)
+        if (0, 0) in can_put_list:
+            id1 = eval_list[can_put_list.index((0, 0))]
+            eval_list[can_put_list.index((0, 0))] = id1 + 20
+        if (7, 0) in can_put_list:
+            id2 = eval_list[can_put_list.index((7, 0))]
+            eval_list[can_put_list.index((7, 0))] = id2 + 20
+        if (0, 7) in can_put_list:
+            id3 = eval_list[can_put_list.index((0, 7))]
+            eval_list[can_put_list.index((0, 7))] = id3 + 20
+        if (7, 7) in can_put_list:
+            id4 = eval_list[can_put_list.index((7, 7))]
+            eval_list[can_put_list.index((7, 7))] = id4 + 20
+
+        txy = can_put_list[eval_list.index(max(eval_list))]
+        x, y = txy
+    return x, y
+
+
+
+
+
 
 

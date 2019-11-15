@@ -140,6 +140,9 @@ def player_type(t_player):
     elif t_player == 7:
         tp = switch_model
         pp = 'switch'
+    elif t_player == 8:
+        tp = ch_mini
+        pp = 'mini'
     else:
         sys.exit()
     return tp, pp
@@ -154,7 +157,8 @@ if __name__ == "__main__":
         r_name = str(input())
         if r_name == '':
             r_name = 'repo.csv'
-    print('黒プレーヤーを選択なっし\ndeep(single)くん→1\nランダムくん→2\n人→3\n棋譜→4\ndeepくん(multi)→5\ndeepくん負け→6\nswitch→7')
+    print('黒プレーヤーを選択なっし\ndeep(single)くん→1\nランダムくん→2\n人→3\n棋譜→4\ndeepくん(multi)→5\ndeepくん負け→6'
+          '\nswitch→7\nmini→8')
     t_player_b = int(input())
     player_1, p_b = player_type(t_player_b)
     print('白プレーヤーを選択なっし\ndeepくん→1\nランダムくん→2\n人→3')
@@ -164,7 +168,7 @@ if __name__ == "__main__":
         print('input black model path model/')
         black_npz_path = input()
         p_b = str(black_npz_path)
-    elif t_player_b == 6:
+    elif t_player_b == 6 or t_player_b == 8:
         black_npz_path = 'LOSER'
     else:
         black_npz_path = None

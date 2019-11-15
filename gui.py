@@ -2,22 +2,12 @@ import wx
 from game_master import *
 
 
-board_name = ['button_0', 'button_1', 'button_2', 'button_3', 'button_4', 'button_5', 'button_6', 'button_7',
-              'button_8', 'button_9', 'button_10', 'button_11', 'button_12', 'button_13', 'button_14', 'button_15',
-              'button_16', 'button_17', 'button_18', 'button_19', 'button_20', 'button_21', 'button_22', 'button_23',
-              'button_24', 'button_25', 'button_26', 'button_27', 'button_28', 'button_29', 'button_30', 'button_31',
-              'button_32', 'button_33', 'button_34', 'button_35', 'button_36', 'button_37', 'button_38', 'button_39',
-              'button_40', 'button_41', 'button_42', 'button_43', 'button_44', 'button_45', 'button_46', 'button_47',
-              'button_48', 'button_49', 'button_50', 'button_51', 'button_52', 'button_53', 'button_54', 'button_55',
-              'button_56', 'button_57', 'button_58', 'button_59', 'button_60', 'button_61', 'button_62', 'button_63',
-              ]
-
 class Main_Frame(wx.Frame):
 
     def __init__(self):
         self.gui_turn = 0
         self.vs = self.for_ch
-        self.selection = ('85%model', '75%model', 'random')
+        self.selection = ('model','random')
 
         self.for_convert = [(0, 0), (1, 0), (2, 0), (3, 0), (4, 0), (5, 0), (6, 0), (7, 0),
                             (0, 1), (1, 1), (2, 1), (3, 1), (4, 1), (5, 1), (6, 1), (7, 1),
@@ -166,7 +156,7 @@ class Main_Frame(wx.Frame):
         self.button_start.Disable()
         self.button_enable(BLACK)
         select_p = self.selectin_box.GetStringSelection()
-        if  select_p == '85%model':
+        if select_p == 'model':
             px, py = ch_multi_player(self.othello.can_put_list(BLACK), [self.othello.board], 'LOSER')
             self.othello.put_stone(px, py, BLACK)
             self.board_color_update()
@@ -331,7 +321,6 @@ class Main_Frame(wx.Frame):
     def put_button(self, b_idx, g_p):
         px, py = self.for_convert[b_idx]
         self.othello.put_stone(px, py, g_p)
-        self.othello.view()
         self.board_color_update()
 
 
