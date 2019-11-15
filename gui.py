@@ -17,6 +17,8 @@ class Main_Frame(wx.Frame):
     def __init__(self):
         self.gui_turn = 0
         self.vs = self.for_ch
+        self.count_b = 0
+        self.count_w = 0
 
         self.for_convert = [(0, 0), (1, 0), (2, 0), (3, 0), (4, 0), (5, 0), (6, 0), (7, 0),
                             (0, 1), (1, 1), (2, 1), (3, 1), (4, 1), (5, 1), (6, 1), (7, 1),
@@ -26,16 +28,32 @@ class Main_Frame(wx.Frame):
                             (0, 5), (1, 5), (2, 5), (3, 5), (4, 5), (5, 5), (6, 5), (7, 5),
                             (0, 6), (1, 6), (2, 6), (3, 6), (4, 6), (5, 6), (6, 6), (7, 6),
                             (0, 7), (1, 7), (2, 7), (3, 7), (4, 7), (5, 7), (6, 7), (7, 7)]
+
         wx.Frame.__init__(self, None, wx.ID_ANY, 'Reversi', size=(1120, 700))
         icon = wx.Icon('img/icon.ico', wx.BITMAP_TYPE_ICO)
         wx.Frame.SetIcon(self, icon)
         self.main_Panel = wx.Panel(self)
+
         self.board_Panel = wx.Panel(self.main_Panel, pos=(0, 0), size=(560, 560))
-        self.control_Panel = wx.Panel(self.main_Panel, pos=(560, 0), size=(700, 560))
+
+        self.control_Panel = wx.Panel(self.main_Panel, pos=(560, 0), size=(560, 700))
         self.control_Panel.SetBackgroundColour('#008080')
-        self.status_Panel = wx.Panel(self.main_Panel, pos=(0, 560), size=(1120, 140))
+
+        self.status_Panel = wx.Panel(self.main_Panel, pos=(0, 560), size=(560, 140))
         self.status_Panel.SetBackgroundColour('#008b8b')
+
         self.board_make()
+
+        main_layout = wx.GridBagSizer()
+        main_layout.Add(self.board_Panel, (0, 0), (1, 1))
+        main_layout.Add(self.control_Panel, (0, 1), (2, 1))
+        main_layout.Add(self.status_Panel, (1, 0), (1, 1))
+        main_layout.AddGrowableRow(0)
+        main_layout.AddGrowableRow(1)
+        main_layout.AddGrowableCol(0)
+        main_layout.AddGrowableCol(1)
+
+        self.main_Panel.SetSizer(main_layout)
 
         self.othello = game_master()
         self.board_color_update()
@@ -138,10 +156,17 @@ class Main_Frame(wx.Frame):
             layout_board.Add(button_name)
             self.board_dict[str(dict_reg)] = button_name
             dict_reg += 1
-        self.main_Panel.SetSizer(layout_board)
+        self.board_Panel.SetSizer(layout_board)
 
     def make_control(self):
         button_start = wx.Button(self.control_Panel, wx.ID_ANY, 'START', size=(150, 70))
+
+    def make_status(self):
+        color_b = wx.StaticText(self.status_Panel, wx.ID_ANY, '黒')
+        color_w = wx.StaticText(self.status_Panel, wx.ID_ANY, '白')
+        sc_b = wx.StaticText(self.status_Panel, wx.ID_ANY, '0')
+        sc_w = wx.StaticText(self.status_Panel, wx.ID_ANY, '0')
+
 
 
 
@@ -154,9 +179,11 @@ class Main_Frame(wx.Frame):
                 elif self.othello.board[by][bx] == 1:
                     button_idx = bx + by * 8
                     self.board_name[button_idx].SetBackgroundColour('#000000')
+                    self.count_b += 1
                 else:
                     button_idx = bx + by * 8
                     self.board_name[button_idx].SetBackgroundColour('#ffffff')
+                    self.count_w += 1
 
     def click_action(self, a, g_p):
         b = a.GetId()
