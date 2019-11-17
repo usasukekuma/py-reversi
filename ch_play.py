@@ -218,15 +218,28 @@ def mini_check(can_put_list, eval_list):
                  (0, 1), (0, 2), (0, 3), (0, 4), (0, 5), (0, 6),
                  (7, 1), (7, 2), (7, 3), (7, 4), (7, 5), (7, 6)
                  ]
+    mini_cor2 = [(1, 1), (6, 1),  (1, 6), (6, 6)]
+    mini_side2 = [(1, 2), (1, 3), (1, 4), (1, 5), (2, 1), (3, 1), (4, 1), (5, 1),
+                  (6, 2), (6, 3), (6, 4), (6, 5), (2, 6), (3, 6), (4, 6), (5, 6)]
 
     for idc in mini_corner:
         if idc in can_put_list:
             ind1 = eval_list[can_put_list.index(idc)]
-            eval_list[can_put_list.index(idc)] = ind1 + 50
+            eval_list[can_put_list.index(idc)] = ind1 + 30
     for ids in mini_side:
         if ids in can_put_list:
             ind2 = eval_list[can_put_list.index(ids)]
-            eval_list[can_put_list.index(ids)] = ind2 + 30
+            eval_list[can_put_list.index(ids)] = ind2 + 15
+
+    for idc2 in mini_cor2:
+        if idc2 in can_put_list:
+            ind3 = eval_list[can_put_list.index(idc2)]
+            eval_list[can_put_list.index(idc2)] = ind3 - 30
+    for ids2 in mini_side2:
+        if ids2 in can_put_list:
+            ind4 = eval_list[can_put_list.index(ids2)]
+            eval_list[can_put_list.index(ids2)] = ind4 - 15
+
     return eval_list
 
 
@@ -240,12 +253,7 @@ def ch_mini(can_put_list, current_board, npz_path):
             eval_list = ch_loser(can_put_list, current_board)
         else:
             eval_list = ch_winner(can_put_list, current_board)
-        if (0, 0) in can_put_list:
-            id1 = eval_list[can_put_list.index((0, 0))]
-            eval_list[can_put_list.index((0, 0))] = id1 + 20
         eval_list = mini_check(can_put_list, eval_list)
-
-
         txy = can_put_list[eval_list.index(max(eval_list))]
         x, y = txy
     return x, y

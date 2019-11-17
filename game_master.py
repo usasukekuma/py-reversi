@@ -26,7 +26,6 @@ class game_master(Board):
         # ひっくり返せないときはおけない
         turn_over = self.turn_over_list(px, py, player)
         if turn_over == [] :  # リストがからのとき＝ひっくり返す石がない
-            print('ERROR32')
             return False
         self.board[py][px] = player  # 置けるときにそのWorBを代入
         for sx, sy in turn_over:
