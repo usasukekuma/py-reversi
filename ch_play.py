@@ -222,11 +222,11 @@ def mini_check(can_put_list, eval_list):
     for idc in mini_corner:
         if idc in can_put_list:
             ind1 = eval_list[can_put_list.index(idc)]
-            eval_list[can_put_list.index(idc)] = ind1 + 30
+            eval_list[can_put_list.index(idc)] = ind1 + 50
     for ids in mini_side:
         if ids in can_put_list:
             ind2 = eval_list[can_put_list.index(ids)]
-            eval_list[can_put_list.index(ids)] = ind2 + 20
+            eval_list[can_put_list.index(ids)] = ind2 + 30
     return eval_list
 
 
