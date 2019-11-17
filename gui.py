@@ -119,7 +119,6 @@ class Main_Frame(wx.Frame):
                            button_48, button_49, button_50, button_51, button_52, button_53, button_54, button_55,
                            button_56, button_57, button_58, button_59, button_60, button_61, button_62, button_63,
                            ]
-        self.board_dict = {}
         dict_reg = 0
         layout_board = wx.FlexGridSizer(8, 8, 0, 0)
         for button_name in self.board_name:
@@ -128,7 +127,6 @@ class Main_Frame(wx.Frame):
             button_name.Bind(wx.EVT_BUTTON, self.vs)
             button_name.Disable()
             layout_board.Add(button_name)
-            self.board_dict[str(dict_reg)] = button_name
             dict_reg += 1
         self.board_Panel.SetSizer(layout_board)
 
@@ -272,7 +270,7 @@ class Main_Frame(wx.Frame):
         self.end_check()
         while (True):
             if not self.othello.can_put_list(BLACK) == []:
-                px, py = ch_multi_player(self.othello.can_put_list(BLACK), [self.othello.board], 'LOSER')
+                px, py = ch_mini(self.othello.can_put_list(BLACK), [self.othello.board], 'LOSER')
                 self.othello.put_stone(px, py, BLACK)
                 self.board_color_update()
                 self.gui_turn += 1

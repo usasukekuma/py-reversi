@@ -210,6 +210,15 @@ def switch_model(can_put_list, current_board, npz_path):
         x, y = ch_multi_player(can_put_list, current_board, npz_path=switch_second_half)
     return x, y
 
+def mini_check(can_put_list, eval_list):
+    minic = [(0, 0), (7, 0), (0, 7), (7, 7)
+             ]
+    for idc in minic:
+        if idc in can_put_list:
+            idev = eval_list[can_put_list.index(idc)]
+
+
+
 def ch_mini(can_put_list, current_board, npz_path):
     tmp1 = [b for a in current_board for b in a]
     tmp_2 = [d for c in tmp1 for d in c]
@@ -232,6 +241,8 @@ def ch_mini(can_put_list, current_board, npz_path):
         if (7, 7) in can_put_list:
             id4 = eval_list[can_put_list.index((7, 7))]
             eval_list[can_put_list.index((7, 7))] = id4 + 20
+        if
+
 
         txy = can_put_list[eval_list.index(max(eval_list))]
         x, y = txy
