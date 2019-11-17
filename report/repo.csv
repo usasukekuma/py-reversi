@@ -57,3 +57,4 @@
 1000,loser,ランダムくん,860,125,15,86,12.5,1.5,'model/SGD/30sb_30000brwr_1000e_5n.npz'/'model/SGD/20sb_11042brwr_1000e_5n.npz',LO'model/SGD/loser_30sb_10000brwr_1000e_5n.npz'/'model/SGD/loser_30000brwr_1000e_5n.npz',1.2/1.1,lo1.5/1,
 1000,mini,ランダムくん,795,172,33,79.5,17.2,3.3000000000000003,'model/SGD/30sb_30000brwr_1000e_5n.npz'/'model/SGD/20sb_11042brwr_1000e_5n.npz','model/SGD/loser_30sb_10000brwr_1000e_5n.npz'/'model/SGD/loser_30000brwr_1000e_5n.npz',1.2/1.1,1.5/1,50/20
 1000,mini,ランダムくん,846,130,24,84.6,13.0,2.4,'model/SGD/30sb_30000brwr_1000e_5n.npz'/'model/SGD/20sb_11042brwr_1000e_5n.npz','model/SGD/loser_30sb_10000brwr_1000e_5n.npz'/'model/SGD/loser_30000brwr_1000e_5n.npz',1.2/1.1,1.5/1,30/15
+1000,mini,ランダムくん,847,134,19,84.7,13.4,1.9,'model/SGD/30sb_30000brwr_1000e_5n.npz'/'model/SGD/20sb_11042brwr_1000e_5n.npz','model/SGD/loser_30sb_10000brwr_1000e_5n.npz'/'model/SGD/loser_30000brwr_1000e_5n.npz',1.2/1.1,1.5/1,30/15/30/15
