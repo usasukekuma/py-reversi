@@ -26,7 +26,7 @@ loser_mul_2 = 1
 f_npz_path = 'model/SGD/30sb_30000brwr_1000e_5n.npz'
 s_npz_path = 'model/SGD/20sb_11042brwr_1000e_5n.npz'
 # player_num=2のときはt_npz_pathは読み込まれないbut空にはできないので。1とかいれておく
-t_npz_path = 'model/SGD/loser_30sb_10000brwr_1000e_5n.npz'
+t_npz_path = 'loser'
 
 loser_path = 'model/SGD/loser_30sb_10000brwr_1000e_5n.npz'
 loser_path2 = 'model/SGD/loser_30000brwr_1000e_5n.npz'
@@ -210,13 +210,24 @@ def switch_model(can_put_list, current_board, npz_path):
         x, y = ch_multi_player(can_put_list, current_board, npz_path=switch_second_half)
     return x, y
 
-def mini_check(can_put_list, eval_list):
-    minic = [(0, 0), (7, 0), (0, 7), (7, 7)
-             ]
-    for idc in minic:
-        if idc in can_put_list:
-            idev = eval_list[can_put_list.index(idc)]
 
+def mini_check(can_put_list, eval_list):
+    mini_corner = [(0, 0), (7, 0), (0, 7), (7, 7)]
+    mini_side = [(1, 0), (2, 0), (3, 0), (4, 0), (5, 0), (6, 0),
+                 (1, 7), (2, 7), (3, 7), (4, 7), (5, 7), (6, 7),
+                 (0, 1), (0, 2), (0, 3), (0, 4), (0, 5), (0, 6),
+                 (7, 1), (7, 2), (7, 3), (7, 4), (7, 5), (7, 6)
+                 ]
+
+    for idc in mini_corner:
+        if idc in can_put_list:
+            ind1 = eval_list[can_put_list.index(idc)]
+            eval_list[can_put_list.index(idc)] = ind1 + 30
+    for ids in mini_side:
+        if ids in can_put_list:
+            ind2 = eval_list[can_put_list.index(ids)]
+            eval_list[can_put_list.index(ids)] = ind2 + 20
+    return eval_list
 
 
 def ch_mini(can_put_list, current_board, npz_path):
@@ -232,16 +243,7 @@ def ch_mini(can_put_list, current_board, npz_path):
         if (0, 0) in can_put_list:
             id1 = eval_list[can_put_list.index((0, 0))]
             eval_list[can_put_list.index((0, 0))] = id1 + 20
-        if (7, 0) in can_put_list:
-            id2 = eval_list[can_put_list.index((7, 0))]
-            eval_list[can_put_list.index((7, 0))] = id2 + 20
-        if (0, 7) in can_put_list:
-            id3 = eval_list[can_put_list.index((0, 7))]
-            eval_list[can_put_list.index((0, 7))] = id3 + 20
-        if (7, 7) in can_put_list:
-            id4 = eval_list[can_put_list.index((7, 7))]
-            eval_list[can_put_list.index((7, 7))] = id4 + 20
-        if
+        eval_list = mini_check(can_put_list, eval_list)
 
 
         txy = can_put_list[eval_list.index(max(eval_list))]
