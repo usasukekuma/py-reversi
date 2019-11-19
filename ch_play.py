@@ -11,6 +11,7 @@ from chainer.training import extensions
 
 n_in = 64
 n_hidden = 100
+n_hidden2 = 84
 n_out = 65
 gpu_id = -1
 # player_numは、ch_winnerの用いるモデル数
@@ -53,6 +54,24 @@ class N5(chainer.Chain):
         return h
 
 
+class U84(chainer.Chain):
+
+    def __init__(self):
+        super().__init__()
+        with self.init_scope():
+            self.l1 = L.Linear(n_in, n_hidden2)
+            self.l2 = L.Linear(n_hidden2, n_hidden2)
+            self.l3 = L.Linear(n_hidden2, n_hidden2)
+            self.l4 = L.Linear(n_hidden2, n_out)
+
+    def __call__(self, x):
+        h = F.relu(self.l1(x))
+        h = F.relu(self.l2(h))
+        h = F.relu(self.l3(h))
+        h = self.l4(h)
+        return h
+
+
 class N3(chainer.Chain):
 
     def __init__(self):
@@ -69,6 +88,30 @@ class N3(chainer.Chain):
         return h
 
 
+class N8(chainer.Chain):
+
+    def __init__(self):
+        super().__init__()
+        with self.init_scope():
+            self.l1 = L.Linear(n_in, n_hidden)
+            self.l2 = L.Linear(n_hidden, n_hidden)
+            self.l3 = L.Linear(n_hidden, n_hidden)
+            self.l4 = L.Linear(n_hidden, n_hidden)
+            self.l5 = L.Linear(n_hidden, n_hidden)
+            self.l6 = L.Linear(n_hidden, n_hidden)
+            self.l7 = L.Linear(n_hidden, n_out)
+
+    def __call__(self, x):
+        h = F.relu(self.l1(x))
+        h = F.relu(self.l2(h))
+        h = F.relu(self.l3(h))
+        h = F.relu(self.l4(h))
+        h = F.relu(self.l5(h))
+        h = F.relu(self.l6(h))
+        h = self.l7(h)
+        return h
+
+
 def conv(put_st):  # ０～６４の出力を座標に変換
     for_convert = [(0, 0), (1, 0), (2, 0), (3, 0), (4, 0), (5, 0), (6, 0), (7, 0),
                    (0, 1), (1, 1), (2, 1), (3, 1), (4, 1), (5, 1), (6, 1), (7, 1),
@@ -81,20 +124,28 @@ def conv(put_st):  # ０～６４の出力を座標に変換
     t_x, t_y = for_convert[put_st]
     return t_x, t_y
 
-
+N8 = N8()
 N5 = N5()
 N3 = N3()  # ネットをつくるお
+U84 = U84()
+model8 = L.Classifier(N8)
 model5 = L.Classifier(N5)
 model3 = L.Classifier(N3)
+model84 = L.Classifier(U84)
+
 # classfierのデフォ損失関数はF.softmax_cross_entropy
 
 
 def load_predict(current_board, npz_path):
     # モデルのファイル名にふくまれる文字で学習時のネット構造を判別している
-    if '5n' in str(npz_path):
+    if '84u' in str(npz_path):
+        model = model84
+    elif '5n' in str(npz_path):
         model = model5
     elif '3n' in str(npz_path):
         model = model3
+    elif '8n' in str(npz_path):
+        model = model8
     serializers.load_npz(npz_path, model)
     X1 = np.array(current_board, dtype=np.float32)
     y1 = F.softmax(model.predictor(X1))
