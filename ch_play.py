@@ -276,27 +276,31 @@ def mini_check(can_put_list, eval_list):
     for idc in mini_corner:
         if idc in can_put_list:
             ind1 = eval_list[can_put_list.index(idc)]
-            eval_list[can_put_list.index(idc)] = ind1 + 30
+            eval_list[can_put_list.index(idc)] = ind1 + 20
     for ids in mini_side:
         if ids in can_put_list:
             ind2 = eval_list[can_put_list.index(ids)]
-            eval_list[can_put_list.index(ids)] = ind2 + 15
+            eval_list[can_put_list.index(ids)] = ind2 + 10
+    '''
 
     for idc2 in mini_cor2:
         if idc2 in can_put_list:
             ind3 = eval_list[can_put_list.index(idc2)]
-            eval_list[can_put_list.index(idc2)] = ind3 - 30
+            eval_list[can_put_list.index(idc2)] = ind3 - 10
     for ids2 in mini_side2:
         if ids2 in can_put_list:
             ind4 = eval_list[can_put_list.index(ids2)]
-            eval_list[can_put_list.index(ids2)] = ind4 - 15
+            eval_list[can_put_list.index(ids2)] = ind4 - 5
+    '''
 
     return eval_list
 
 
 def ch_mini(can_put_list, current_board, npz_path):
+    '''
     tmp1 = [b for a in current_board for b in a]
     tmp_2 = [d for c in tmp1 for d in c]
+    '''
     if len(can_put_list) == 1:
         x, y = can_put_list[0]
     else:
