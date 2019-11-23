@@ -281,8 +281,8 @@ def mini_check(can_put_list, eval_list):
         if ids in can_put_list:
             ind2 = eval_list[can_put_list.index(ids)]
             eval_list[can_put_list.index(ids)] = ind2 + 10
-    '''
 
+    '''
     for idc2 in mini_cor2:
         if idc2 in can_put_list:
             ind3 = eval_list[can_put_list.index(idc2)]
