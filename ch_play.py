@@ -24,13 +24,13 @@ t_mul = 1
 loser_mul_1 = 1.5
 loser_mul_2 = 1
 # モデルのパス
-f_npz_path = 'model/SGD/30sb_30000brwr_1000e_5n.npz'
-s_npz_path = 'model/SGD/20sb_11042brwr_1000e_5n.npz'
+f_npz_path = 'model/SGD/30sb_80000brwr_1000e_5n.npz'
+s_npz_path = 'model/SGD/20sb_20000brwr_1000e_3n.npz'
 # player_num=2のときはt_npz_pathは読み込まれないbut空にはできないので。1とかいれておく
 t_npz_path = 'loser'
 
-loser_path = 'model/SGD/loser_30sb_10000brwr_1000e_5n.npz'
-loser_path2 = 'model/SGD/loser_30000brwr_1000e_5n.npz'
+loser_path = 'model/SGD/loser_20sb_30000brwr_1000e_5n.npz'
+loser_path2 = 'model/SGD/loser_10sb_30000brwr_1000e_3n.npz'
 
 switch_first_half = 'model/SGD/20sb_11042brwr_1000e_5n.npz'
 switch_second_half = 'LOSER'
@@ -281,7 +281,7 @@ def mini_check(can_put_list, eval_list):
         if ids in can_put_list:
             ind2 = eval_list[can_put_list.index(ids)]
             eval_list[can_put_list.index(ids)] = ind2 + 10
-
+    '''
     for idc2 in mini_cor2:
         if idc2 in can_put_list:
             ind3 = eval_list[can_put_list.index(idc2)]
@@ -290,15 +290,11 @@ def mini_check(can_put_list, eval_list):
         if ids2 in can_put_list:
             ind4 = eval_list[can_put_list.index(ids2)]
             eval_list[can_put_list.index(ids2)] = ind4 - 5
-
+    '''
     return eval_list
 
 
 def ch_mini(can_put_list, current_board, npz_path):
-    '''
-    tmp1 = [b for a in current_board for b in a]
-    tmp_2 = [d for c in tmp1 for d in c]
-    '''
     if len(can_put_list) == 1:
         x, y = can_put_list[0]
     else:
