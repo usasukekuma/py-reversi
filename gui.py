@@ -270,7 +270,7 @@ class Main_Frame(wx.Frame):
         self.end_check()
         while (True):
             if not self.othello.can_put_list(BLACK) == []:
-                px, py = ch_mini(self.othello.can_put_list(BLACK), [self.othello.board], 'LOSER')
+                px, py = ch_multi_player(self.othello.can_put_list(BLACK), [self.othello.board], 'LOSER')
                 self.othello.put_stone(px, py, BLACK)
                 self.board_color_update()
                 self.gui_turn += 1
