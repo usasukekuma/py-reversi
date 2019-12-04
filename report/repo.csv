@@ -108,3 +108,5 @@
 1000,mini,ランダムくん,920,69,11,92.0,6.9,1.0999999999999999,model/SGD/30sb_80000brwr_1000e_5n.npz'/'model/SGD/30sb_50000brwr_1000e_5n.npz',1.2/1.1,'model/SGD/loser_30sb_30000brwr_1000e_3n.npz'/'model/SGD/loser_20sb_30000brwr_1000e_5n.npz',1.5/1/20/10
 1000,mini,ランダムくん,901,87,12,90.10000000000001,8.7,1.2,model/SGD/30sb_80000brwr_1000e_5n.npz'/'model/SGD/30sb_50000brwr_1000e_5n.npz',1.2/1.1,'model/SGD/loser_30sb_30000brwr_1000e_3n.npz'/'model/SGD/loser_20sb_30000brwr_1000e_5n.npz',1.5/1/20/10/-10/-5
 
+1000,model/SGD/20000brwr_1000e_3n.npz,ランダムくん,698,263,39,69.8,26.3,3.9
+1000,model/SGD/30sb_50000brwr_1000e_3n.npz,ランダムくん,733,242,25,73.3,24.2,2.5
