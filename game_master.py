@@ -148,7 +148,7 @@ def player_type(t_player):
 
 
 if __name__ == "__main__":
-    print('オセロゲームなっし')
+    print('オセロゲーム')
     print('レポートｃｓｖを作りますか？新規作成→ new  追記 →　append, a　 作らない→ no ')
     q = str(input())
     if not q == 'no':
@@ -156,7 +156,7 @@ if __name__ == "__main__":
         r_name = str(input())
         if r_name == '':
             r_name = 'repo.csv'
-    print('黒プレーヤーを選択なっし\ndeep(single)くん→1\nランダムくん→2\n人→3\n棋譜→4\ndeepくん(multi)→5\ndeepくん負け→6'
+    print('黒プレーヤーを選択\ndeep(single)→1\nランダム→2\n人→3\n棋譜→4\ndeep(multi)→5\ndeep負け→6'
           '\nswitch→7\nmini→8')
     t_player_b = int(input())
     player_1, p_b = player_type(t_player_b)
@@ -177,12 +177,12 @@ if __name__ == "__main__":
         p_w = str(white_npz_path)
     elif not p_w == 'deepくん':
         white_npz_path = None
-    print('試合数を選ぶなっし(0以外を入力してくださいなっし)')
+    print('試合数を選ぶなっし(0以外を入力してください)')
     battle_time = int(input())
     if battle_time == 0:
         print('ERROR')
         sys.exit()
-    print(str(p_b)+'VS'+str(p_w)+'の'+str(battle_time)+'回の試合を開始するなっしー！')
+    print(str(p_b)+'VS'+str(p_w)+'の'+str(battle_time)+'回の試合を開始する！')
 
     time_s = time.perf_counter()
     #  ゲームをするコード

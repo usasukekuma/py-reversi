@@ -24,7 +24,7 @@ def xy_converter(x, y):
 
 
 
-print('input数を選ぶなっし(0以外を入力してくださいなっし)')
+print('input数を選ぶ(0以外を入力してください)')
 battle_time = int(input())
 print('b_win or w_win')
 sha = str(input())
@@ -39,7 +39,7 @@ print('resultの保存パスを選ぶ（results以下を選択)')
 result_out = str(input())
 print('終了後シャットダウンしますか？ Y or N')
 shut = str(input())
-print(str(battle_time)+'回でデータ生成をはじめるなっし')
+print(str(battle_time)+'回でデータ生成をはじめる')
 turn_count = 0
 while not turn_count == battle_time:
     print(str((turn_count/battle_time)*100)+'%')
