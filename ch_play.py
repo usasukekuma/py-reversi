@@ -18,19 +18,19 @@ gpu_id = -1
 player_num = 2
 loser_num = 2
 # f_mul~loser_mulは、それぞれのモデルが出力した評価値の対する重み付け
-f_mul = 1.2
-s_mul = 1.1
+f_mul = 1
+s_mul = 1
 t_mul = 1
 loser_mul_1 = 1.5
 loser_mul_2 = 1
 # モデルのパス
-f_npz_path = 'model/SGD/30sb_80000brwr_1000e_5n.npz'
-s_npz_path = 'model/SGD/30sb_50000brwr_1000e_5n.npz'
+f_npz_path = 'model/SGD/10sb_80000brwr_1000e_3n.npz'
+s_npz_path = 'model/SGD/30sb_80000brwr_1000e_5n.npz'
 # player_num=2のときはt_npz_pathは読み込まれないbut空にはできないので。1とかいれておく
 t_npz_path = 'loser'
 
-loser_path = 'model/SGD/loser_30sb_30000brwr_1000e_3n.npz'
-loser_path2 = 'model/SGD/loser_20sb_30000brwr_1000e_5n.npz'
+loser_path = 'model/SGD/loser_30sb_80000brwr_1000e_5n.npz'
+loser_path2 = 'model/SGD/loser_20sb_80000brwr_1000e_5n.npz'
 
 switch_first_half = 'model/SGD/20sb_11042brwr_1000e_5n.npz'
 switch_second_half = 'LOSER'
