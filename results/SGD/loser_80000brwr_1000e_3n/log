@@ -142,5 +142,14 @@
         "epoch": 800,
         "iteration": 15484256,
         "elapsed_time": 60859.052347000004
+    },
+    {
+        "main/loss": 2.361339103009966,
+        "main/accuracy": 0.1628115064206723,
+        "validation/main/loss": 2.364141711246182,
+        "validation/main/accuracy": 0.1621391538323422,
+        "epoch": 850,
+        "iteration": 16452022,
+        "elapsed_time": 64944.7815485
     }
 ]
