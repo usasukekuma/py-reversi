@@ -151,5 +151,32 @@
         "epoch": 850,
         "iteration": 16452022,
         "elapsed_time": 64944.7815485
+    },
+    {
+        "main/loss": 2.362009534347003,
+        "main/accuracy": 0.16262937561588828,
+        "validation/main/loss": 2.3666444439226795,
+        "validation/main/accuracy": 0.1619287573813924,
+        "epoch": 900,
+        "iteration": 17419788,
+        "elapsed_time": 69042.1273772
+    },
+    {
+        "main/loss": 2.362500165146832,
+        "main/accuracy": 0.1627005498431882,
+        "validation/main/loss": 2.3658557121831043,
+        "validation/main/accuracy": 0.16228364898150935,
+        "epoch": 950,
+        "iteration": 18387554,
+        "elapsed_time": 73067.79250129999
+    },
+    {
+        "main/loss": 2.3627342624698087,
+        "main/accuracy": 0.16266330942928545,
+        "validation/main/loss": 2.3663392878174903,
+        "validation/main/accuracy": 0.1621999241330544,
+        "epoch": 1000,
+        "iteration": 19355320,
+        "elapsed_time": 77028.7715056
     }
 ]
