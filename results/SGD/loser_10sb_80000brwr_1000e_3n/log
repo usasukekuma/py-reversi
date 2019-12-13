@@ -1,0 +1,65 @@
+[
+    {
+        "main/loss": 2.43916621164207,
+        "main/accuracy": 0.16391394524871378,
+        "validation/main/loss": 2.4354346157578095,
+        "validation/main/accuracy": 0.16338793670090268,
+        "epoch": 50,
+        "iteration": 968008,
+        "elapsed_time": 4236.219832499999
+    },
+    {
+        "main/loss": 2.365780610455432,
+        "main/accuracy": 0.16547381873069225,
+        "validation/main/loss": 2.36652597379842,
+        "validation/main/accuracy": 0.16468886628203702,
+        "epoch": 100,
+        "iteration": 1936016,
+        "elapsed_time": 8497.829499200001
+    },
+    {
+        "main/loss": 2.359154999195791,
+        "main/accuracy": 0.16560508831174908,
+        "validation/main/loss": 2.361771902950852,
+        "validation/main/accuracy": 0.16493348514670816,
+        "epoch": 150,
+        "iteration": 2904024,
+        "elapsed_time": 12749.0821798
+    },
+    {
+        "main/loss": 2.357408571422936,
+        "main/accuracy": 0.16584127438112878,
+        "validation/main/loss": 2.3601642555595554,
+        "validation/main/accuracy": 0.16504771774318058,
+        "epoch": 200,
+        "iteration": 3872032,
+        "elapsed_time": 16980.3786534
+    },
+    {
+        "main/loss": 2.3577507769664656,
+        "main/accuracy": 0.16575365113171264,
+        "validation/main/loss": 2.3601913000798076,
+        "validation/main/accuracy": 0.16505110546633328,
+        "epoch": 250,
+        "iteration": 4840040,
+        "elapsed_time": 20717.3083478
+    },
+    {
+        "main/loss": 2.358345507155654,
+        "main/accuracy": 0.16564235039355568,
+        "validation/main/loss": 2.3598408874744377,
+        "validation/main/accuracy": 0.1650539974364564,
+        "epoch": 300,
+        "iteration": 5808048,
+        "elapsed_time": 24271.588961799996
+    },
+    {
+        "main/loss": 2.3595882326526088,
+        "main/accuracy": 0.16545364328255233,
+        "validation/main/loss": 2.3615622326146224,
+        "validation/main/accuracy": 0.16488221473148465,
+        "epoch": 350,
+        "iteration": 6776056,
+        "elapsed_time": 27872.875194800003
+    }
+]
