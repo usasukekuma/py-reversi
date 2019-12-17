@@ -15,22 +15,22 @@ n_hidden2 = 84
 n_out = 65
 gpu_id = -1
 # player_numは、ch_winnerの用いるモデル数
-player_num = 2
+player_num = 1
 loser_num = 2
 # f_mul~loser_mulは、それぞれのモデルが出力した評価値の対する重み付け
 f_mul = 1
 s_mul = 1
 t_mul = 1
-loser_mul_1 = 1.5
-loser_mul_2 = 1
+loser_mul_1 = 1
+loser_mul_2 = 1.2
 # モデルのパス
-f_npz_path = 'model/SGD/10sb_80000brwr_1000e_3n.npz'
-s_npz_path = 'model/SGD/30sb_80000brwr_1000e_5n.npz'
+f_npz_path = 'model/SGD/30sb_80000brwr_1000e_5n.npz'
+s_npz_path = 0
 # player_num=2のときはt_npz_pathは読み込まれないbut空にはできないので。1とかいれておく
-t_npz_path = 'loser'
+t_npz_path = 0
 
-loser_path = 'model/SGD/loser_30sb_80000brwr_1000e_5n.npz'
-loser_path2 = 'model/SGD/loser_20sb_80000brwr_1000e_5n.npz'
+loser_path = 'model/SGD/loser_20000brwr_1000e_3n.npz'
+loser_path2 = 'model/SGD/loser_30sb_50000brwr_1000e_3n.npz'
 
 switch_first_half = 'model/SGD/20sb_11042brwr_1000e_5n.npz'
 switch_second_half = 'LOSER'
@@ -151,6 +151,7 @@ def load_predict(current_board, npz_path):
     y1 = F.softmax(model.predictor(X1))
     tm1 = y1.data.argsort()
     putting_list = [x1 for a1 in tm1 for x1 in a1]  # １次元配列に変換
+    print(s_mul)
     return putting_list
 
 
@@ -179,11 +180,12 @@ def single_ch(can_put_list, current_board, npz_path):
 def ch_winner(can_put_list, current_board):
     eval_list_w = []
     put_perf = []
-    put_pers = []
-    put_pert = []
     f_putting_list = load_predict(current_board, npz_path=f_npz_path)
-    s_putting_list = load_predict(current_board, npz_path=s_npz_path)
-    if player_num == 3:
+    if player_num == 2:
+        put_pers = []
+        s_putting_list = load_predict(current_board, npz_path=s_npz_path)
+    elif player_num == 3:
+        put_pert = []
         t_putting_list = load_predict(current_board, npz_path=t_npz_path)
     len_can_put_list = len(can_put_list)
 
@@ -191,14 +193,17 @@ def ch_winner(can_put_list, current_board):
         x, y = xy
         z = x + y * 8
         put_perf.append(f_putting_list.index(z))  # それぞれのモデルで予測した置ける場所に対する順位（評価値）
-        put_pers.append(s_putting_list.index(z))  # putting_listは低→高順なので　index番号が大きほど勝てそうと予測したということ
-        if player_num == 3:
+        if player_num == 2:
+            put_pers.append(s_putting_list.index(z))  # putting_listは低→高順なので　index番号が大きほど勝てそうと予測したということ
+        elif player_num == 3:
             put_pert.append(t_putting_list.index(z))  # なのでインデックス番号を取得して、can_put_listのインデックス番号と対応するように保存
 
     for eval_index in range(0, len_can_put_list):
         ppf = (put_perf[eval_index]) * f_mul  # 格納された順位（評価値を取得）
-        pps = (put_pers[eval_index]) * s_mul
-        eval_put = ppf + pps
+        eval_put = ppf
+        if player_num == 2:
+            pps = (put_pers[eval_index]) * s_mul
+            eval_put += pps
         if player_num == 3:
             ppt = (put_pert[eval_index]) * t_mul  # can_put_list[0]に格納された座標の評価値
             eval_put += ppt
@@ -282,6 +287,7 @@ def mini_check(can_put_list, eval_list):
             ind2 = eval_list[can_put_list.index(ids)]
             eval_list[can_put_list.index(ids)] = ind2 + 10
 
+
     for idc2 in mini_cor2:
         if idc2 in can_put_list:
             ind3 = eval_list[can_put_list.index(idc2)]
@@ -290,7 +296,6 @@ def mini_check(can_put_list, eval_list):
         if ids2 in can_put_list:
             ind4 = eval_list[can_put_list.index(ids2)]
             eval_list[can_put_list.index(ids2)] = ind4 - 5
-
     return eval_list
 
 
